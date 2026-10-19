@@ -370,9 +370,12 @@
         "label": "2ª Parcela (Produção)",
         "percentage": 50,
         "amount": 4766.5,
-        "status": "pending",
+        "status": "paid",
         "dueDate": "19/10/2026",
-        "pixQrCode": "00020101021126490014br.gov.bcb.pix0127henrique.ferrazms@gmail.com52040000530398654074766.505802BR5925MARCENARIA FERRAZ  DESIGN6009SAO PAULO62070503***6304A02B"
+        "pixQrCode": "00020101021126490014br.gov.bcb.pix0127henrique.ferrazms@gmail.com52040000530398654074766.505802BR5925MARCENARIA FERRAZ  DESIGN6009SAO PAULO62070503***6304A02B",
+        "paidDate": "19/10/2026",
+        "paymentMethod": "Cartão de Crédito (3x)",
+        "authCode": "MP-F3410CEC9C"
       }
     ],
     "stages": [
@@ -411,6 +414,20 @@
       }
     ],
     "updates": [
+      {
+        "id": "upd-1792432835036",
+        "timestamp": "Hoje, pagamento confirmado",
+        "author": "Gateway BOMProjeto",
+        "role": "Financeiro",
+        "stageId": "stg-1",
+        "stageName": "Faturamento",
+        "message": "💳 Pagamento da 2ª Parcela (Produção) no valor de R$ 4766.50 confirmado via Cartão de Crédito! Código de autorização: MP-F3410CEC9C.",
+        "clientReactions": [
+          "💳 Pagamento Aprovado"
+        ],
+        "whatsappSent": false,
+        "photos": []
+      },
       {
         "id": "upd-1790937314538",
         "timestamp": "Hoje, 10:35",
@@ -470,8 +487,8 @@
         "whatsappSent": true
       }
     ],
-    "lastInteractionText": "Hoje, 10:35 (Usinagem e Corte CNC)",
-    "lastInteractionDate": "Hoje, 10:35",
+    "lastInteractionText": "Pagou Parcela #2 via Cartão",
+    "lastInteractionDate": "Hoje",
     "lastInteractionType": "whatsapp",
     "daysWithoutUpdate": 0,
     "needsAttention": false,

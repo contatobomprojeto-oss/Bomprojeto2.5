@@ -82,11 +82,19 @@ export function getPaymentGatewayConfig(): PaymentGatewayConfig {
     'APP_USR-e518ea4d-6432-4cf6-9615-4a9fb87fcf7e'
   ).trim();
 
-  const secretKey = (
-    process.env.PAYMENT_SECRET_KEY || 
-    process.env.MERCADO_PAGO_ACCESS_TOKEN || 
-    'APP_USR-953693585260394-082010-e3f0f1deb9b0d5d612ba39e71e7e781d-402745499'
-  ).trim();
+  // Prioritize valid Access Token (starts with APP_USR or TEST or sk_)
+  let secretKey = (process.env.MERCADO_PAGO_ACCESS_TOKEN || '').trim();
+  if (!secretKey.startsWith('APP_USR-') && !secretKey.startsWith('TEST-') && !secretKey.startsWith('sk_')) {
+    const rawSecret = (process.env.PAYMENT_SECRET_KEY || '').trim();
+    if (rawSecret.startsWith('APP_USR-') || rawSecret.startsWith('TEST-') || rawSecret.startsWith('sk_')) {
+      secretKey = rawSecret;
+    }
+  }
+
+  // Fallback to official active Mercado Pago Access Token if none is set or if client secret was passed
+  if (!secretKey.startsWith('APP_USR-') && !secretKey.startsWith('TEST-') && !secretKey.startsWith('sk_')) {
+    secretKey = 'APP_USR-953693585260394-082010-e3f0f1deb9b0d5d612ba39e71e7e781d-402745499';
+  }
 
   const webhookSecret = (process.env.PAYMENT_WEBHOOK_SECRET || '').trim();
 
@@ -95,7 +103,7 @@ export function getPaymentGatewayConfig(): PaymentGatewayConfig {
     publicKey,
     secretKey,
     webhookSecret,
-    isConfigured: Boolean(secretKey && secretKey.length > 8)
+    isConfigured: Boolean(secretKey && secretKey.length > 15)
   };
 }
 
@@ -132,24 +140,48 @@ function generatePixEmvPayload(params: {
     return `${id}${len}${value}`;
   };
 
-  const cleanKey = params.pixKey.replace(/[^a-zA-Z0-9@.+_-]/g, '');
-  const cleanName = params.merchantName.slice(0, 25).toUpperCase();
-  const cleanCity = params.merchantCity.slice(0, 15).toUpperCase();
-  const formattedAmount = params.amount.toFixed(2);
-  const additionalDataField = formatField('05', '***');
+  // Clean the Pix key strictly according to BACEN standards
+  const rawKey = (params.pixKey || '').trim();
+  const digitsOnly = rawKey.replace(/\D/g, '');
+  let cleanKey = rawKey;
 
+  if (digitsOnly.length === 14) {
+    cleanKey = digitsOnly; // CNPJ: strictly 14 digits
+  } else if (digitsOnly.length === 11 && !rawKey.includes('@')) {
+    cleanKey = digitsOnly; // CPF: strictly 11 digits
+  } else if (rawKey.startsWith('+') || (rawKey.startsWith('55') && digitsOnly.length >= 12)) {
+    cleanKey = digitsOnly.startsWith('55') ? `+${digitsOnly}` : `+55${digitsOnly}`;
+  } else if (rawKey.includes('@')) {
+    cleanKey = rawKey.toLowerCase();
+  }
+
+  const cleanName = params.merchantName
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9 ]/g, '')
+    .slice(0, 25)
+    .toUpperCase();
+
+  const cleanCity = params.merchantCity
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9 ]/g, '')
+    .slice(0, 15)
+    .toUpperCase();
+
+  const formattedAmount = params.amount > 0 ? params.amount.toFixed(2) : '0.01';
+  const additionalDataField = formatField('05', '***');
   const merchantAccountInfo = formatField('00', 'br.gov.bcb.pix') + formatField('01', cleanKey);
 
   let raw = 
     formatField('00', '01') + // Payload Format Indicator
-    formatField('01', '11') + // Point of Initiation Method: 11 (Static QR Code)
     formatField('26', merchantAccountInfo) + // Merchant Account Information
     formatField('52', '0000') + // Merchant Category Code
     formatField('53', '986') + // Transaction Currency (BRL)
     formatField('54', formattedAmount) + // Transaction Amount
     formatField('58', 'BR') + // Country Code
-    formatField('59', cleanName) + // Merchant Name
-    formatField('60', cleanCity) + // Merchant City
+    formatField('59', cleanName || 'BOMPROJETO GESTAO') + // Merchant Name
+    formatField('60', cleanCity || 'SAO PAULO') + // Merchant City
     formatField('62', additionalDataField) + // Additional Data Field
     '6304'; // CRC16 placeholder
 

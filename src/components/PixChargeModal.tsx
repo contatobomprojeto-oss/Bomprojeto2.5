@@ -195,6 +195,11 @@ export const PixChargeModal: React.FC<PixChargeModalProps> = ({
       }
       try {
         localStorage.setItem('bomprojeto_company_pix_key', trimmed);
+        fetch('/api/company/pix-config', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pixKey: trimmed })
+        }).catch(() => {});
       } catch {}
     }
   };

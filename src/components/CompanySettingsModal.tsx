@@ -135,11 +135,20 @@ export const CompanySettingsModal: React.FC<CompanySettingsModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      localStorage.setItem('bomprojeto_company_pix_key', pixKey.trim());
       if (userEmail) {
         localStorage.setItem(`bomprojeto_company_cnpj_${userEmail}`, cnpj);
         localStorage.setItem(`bomprojeto_company_phone_${userEmail}`, phone);
-        localStorage.setItem(`bomprojeto_company_pix_key_${userEmail}`, pixKey);
+        localStorage.setItem(`bomprojeto_company_pix_key_${userEmail}`, pixKey.trim());
       }
+      fetch('/api/company/pix-config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pixKey: pixKey.trim(),
+          beneficiaryName: workshopName.trim()
+        })
+      }).catch(() => {});
     } catch {}
     onSaveSettings({
       workshopName,

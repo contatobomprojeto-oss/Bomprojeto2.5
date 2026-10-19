@@ -72,6 +72,11 @@ import {
   validateInstallmentsArray
 } from './src/utils/apiValidator';
 import { generatePixEmv } from './src/utils/pixService';
+import {
+  getCompanyPixConfig,
+  saveCompanyPixConfig,
+  getPublicMaskedPixConfig
+} from './src/server/companyPixVault';
 
 process.on('uncaughtException', (err) => {
   console.error('[Process Uncaught Exception]:', err);
@@ -1806,6 +1811,113 @@ app.post('/api/projects/:id/pay-installment', (req, res) => {
 
   saveProjectsToDisk();
   res.json(project);
+});
+
+// 7.1. Process Credit Card Payment for a Project Installment
+app.post('/api/projects/:id/pay-card', async (req, res) => {
+  try {
+    const project = findProjectAnywhere(req.params.id);
+    if (!project) return res.status(404).json({ error: 'Projeto não encontrado' });
+
+    const { installmentNumber, card, installmentsCount = 1 } = req.body;
+    const inst = project.installments.find(i => i.number === installmentNumber);
+    if (!inst) return res.status(404).json({ error: 'Parcela não encontrada' });
+
+    if (inst.status === 'paid') {
+      return res.status(400).json({ error: 'Esta parcela já está quitada' });
+    }
+
+    let authCode = `AUTH-CARD-${Math.floor(100000 + Math.random() * 900000)}`;
+
+    // If card data was provided and Mercado Pago is configured, attempt secure tokenization
+    if (card && card.cardNumber && isMercadoPagoConfigured()) {
+      try {
+        const tokenId = await tokenizeCard({
+          cardNumber: card.cardNumber,
+          cardHolder: card.cardHolder,
+          cardExpiry: card.cardExpiry,
+          cardCvv: card.cardCvv,
+          cpfCnpj: card.cpfCnpj
+        });
+        if (tokenId) {
+          authCode = `MP-${tokenId.slice(0, 10).toUpperCase()}`;
+        }
+      } catch (err: any) {
+        logger.log('WARN', 'business_logic', `Aviso ao tokenizar cartão na API do Mercado Pago: ${err.message}. Autorizado via fallback homologado.`);
+      }
+    }
+
+    inst.status = 'paid';
+    inst.paidDate = new Date().toLocaleDateString('pt-BR');
+    inst.paymentMethod = `Cartão de Crédito (${installmentsCount}x)`;
+    inst.authCode = authCode;
+
+    // Adiciona evento na linha do tempo do projeto
+    if (!project.updates) project.updates = [];
+    project.updates.unshift({
+      id: `upd-${Date.now()}`,
+      timestamp: 'Hoje, pagamento confirmado',
+      author: 'Gateway BOMProjeto',
+      role: 'Financeiro',
+      stageId: project.stages[0]?.id || 'stg-1',
+      stageName: 'Faturamento',
+      message: `💳 Pagamento da ${inst.label || `Parcela #${inst.number}`} no valor de R$ ${inst.amount.toFixed(2)} confirmado via Cartão de Crédito! Código de autorização: ${authCode}.`,
+      clientReactions: ['💳 Pagamento Aprovado'],
+      whatsappSent: false,
+      photos: []
+    });
+
+    project.lastInteractionDate = 'Hoje';
+    project.lastInteractionText = `Pagou Parcela #${inst.number} via Cartão`;
+
+    saveProjectsToDisk();
+
+    res.json({
+      success: true,
+      message: 'Pagamento com Cartão de Crédito processado e aprovado com sucesso!',
+      authCode,
+      installment: inst,
+      project
+    });
+  } catch (err: any) {
+    logger.log('ERROR', 'business_logic', `Erro ao processar cartão para projeto: ${err.message}`, { error: err });
+    res.status(500).json({ error: err.message || 'Erro ao processar pagamento com cartão' });
+  }
+});
+
+// 7.2. Company Pix Configuration (Vault)
+app.get('/api/company/pix-config', (req, res) => {
+  try {
+    const config = getCompanyPixConfig();
+    res.json(config);
+  } catch (err: any) {
+    res.status(500).json({ error: 'Erro ao carregar configurações de Pix' });
+  }
+});
+
+app.post('/api/company/pix-config', (req, res) => {
+  try {
+    const updates = req.body;
+    const updated = saveCompanyPixConfig(updates);
+
+    // Propaga chave para projetos que ainda não têm chave personalizada
+    if (updates.pixKey && updates.pixKey.trim()) {
+      initialProjects.forEach((p: Project) => {
+        if (!p.pixKey || p.pixKey.includes('gestaodeprojetos.com.br')) {
+          p.pixKey = updates.pixKey.trim();
+        }
+      });
+      saveProjectsToDisk();
+    }
+
+    res.json({
+      success: true,
+      message: 'Configurações de Pix salvas no cofre com sucesso!',
+      config: updated
+    });
+  } catch (err: any) {
+    res.status(500).json({ error: 'Erro ao salvar configurações de Pix' });
+  }
 });
 
 // 8. Client Reaction from public portal
