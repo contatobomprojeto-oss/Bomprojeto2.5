@@ -125,7 +125,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
   };
 
   const isFounder = isSaasOwner(currentUser);
-  const userName = currentUser?.name || 'Henrique Ferraz';
+  const userName = currentUser?.name || (currentUser ? 'Gestor' : 'Visitante');
   const roleLabel = currentRole === 'ceo' 
     ? 'CEO (Acesso Total)' 
     : currentRole === 'admin' 
@@ -133,7 +133,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
     : 'Parceiro (Restrito)';
   const userRole = currentUser?.role === 'client' 
     ? 'Cliente' 
-    : (isFounder ? `Fundador & ${roleLabel}` : roleLabel);
+    : (isFounder ? `Fundador & ${roleLabel}` : (currentUser ? roleLabel : 'Visitante'));
 
   return (
     <header className="h-16 bg-white border-b border-[#EAECEF] px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-3 sticky top-0 z-30 select-none shadow-2xs">

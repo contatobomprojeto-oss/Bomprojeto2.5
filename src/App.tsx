@@ -86,6 +86,7 @@ const parseCurrentUrlView = (): ActiveView => {
     const search = new URLSearchParams(window.location.search);
     const viewParam = search.get('view')?.toLowerCase();
 
+    // 1. Legal terms and privacy
     if (
       path.startsWith('/termos') || 
       path.startsWith('/terms') || 
@@ -107,6 +108,8 @@ const parseCurrentUrlView = (): ActiveView => {
     ) {
       return 'privacy';
     }
+
+    // 2. Client tracking portal
     if (
       path.startsWith('/acompanhar') || 
       path.startsWith('/portal') || 
@@ -118,6 +121,8 @@ const parseCurrentUrlView = (): ActiveView => {
     ) {
       return 'client_portal';
     }
+
+    // 3. Retenção Pro
     if (
       path.startsWith('/retencao-pro') || 
       path.startsWith('/retencaopro') || 
@@ -131,12 +136,47 @@ const parseCurrentUrlView = (): ActiveView => {
     ) {
       return 'retencao_pro';
     }
+
+    // 4. Admin dashboard
     if (hash === '#admin' || hash === '#admin_dashboard') {
       return 'admin_dashboard';
     }
-    if (hash === '#painel' || hash === '#dashboard' || viewParam === 'dashboard' || viewParam === 'app' || viewParam === 'saas' || path === '/painel' || path === '/dashboard') {
+
+    // 5. Auth callbacks, tokens or explicit dashboard routes
+    // Supabase redirects include access_token or code or token_hash
+    const isAuthCallback = 
+      hash.includes('access_token') || 
+      hash.includes('refresh_token') || 
+      hash.includes('type=recovery') || 
+      hash.includes('type=signup') || 
+      search.has('code') || 
+      search.has('token_hash') || 
+      search.has('access_token');
+
+    if (
+      isAuthCallback ||
+      hash.includes('painel') || 
+      hash.includes('dashboard') || 
+      viewParam === 'dashboard' || 
+      viewParam === 'painel' || 
+      viewParam === 'app' || 
+      viewParam === 'saas' || 
+      path.startsWith('/painel') || 
+      path.startsWith('/dashboard')
+    ) {
       return 'dashboard';
     }
+
+    // 6. If user already has an active session in storage, redirect directly to dashboard
+    try {
+      const savedUser = localStorage.getItem('bomprojeto_user');
+      if (savedUser) {
+        const parsed = JSON.parse(savedUser);
+        if (parsed && (parsed.email || parsed.id)) {
+          return 'dashboard';
+        }
+      }
+    } catch {}
   } catch {
     // fallback
   }
@@ -377,9 +417,27 @@ export default function App() {
   const handleOpenLogin = () => {
     if (currentUser) {
       setActiveView('dashboard');
+      try {
+        window.history.pushState(null, '', '/#painel');
+      } catch {}
       showToast(`Bem-vindo ao Dashboard, ${currentUser.name}!`, 'info');
       return;
     }
+    try {
+      const saved = localStorage.getItem('bomprojeto_user');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && (parsed.email || parsed.id)) {
+          setCurrentUser(parsed);
+          setActiveView('dashboard');
+          try {
+            window.history.pushState(null, '', '/#painel');
+          } catch {}
+          showToast(`Bem-vindo ao Dashboard, ${parsed.name || 'Gestor'}!`, 'info');
+          return;
+        }
+      }
+    } catch {}
     setIsLoginModalOpen(true);
   };
 
@@ -668,9 +726,9 @@ export default function App() {
 
   const currentWorkspace = workspaces.find(w => w.id === currentWorkspaceId) || workspaces[0];
 
-  const fetchWorkspaces = async () => {
+  const fetchWorkspaces = async (overrideEmail?: string) => {
     try {
-      const email = currentUser?.email || '';
+      const email = (overrideEmail || currentUser?.email || '').toLowerCase().trim();
       const wsId = currentWorkspaceId || 'ws-matriz';
       const queryParam = email ? `?userEmail=${encodeURIComponent(email)}&workspaceId=${encodeURIComponent(wsId)}` : `?workspaceId=${encodeURIComponent(wsId)}`;
       const res = await fetch(`/api/workspaces${queryParam}`, {
@@ -693,7 +751,7 @@ export default function App() {
         }
       }
     } catch (e) {
-      console.error('Error fetching workspaces', e);
+      console.warn('Error fetching workspaces', e);
     }
   };
 
@@ -923,7 +981,24 @@ export default function App() {
 
     // Check URL on mount
     const initialView = parseCurrentUrlView();
-    setActiveView(initialView);
+    setActiveView(prev => {
+      // Se a URL ou o usuário já for autenticado, prioriza dashboard para não deixar visitantes presos na landing
+      if (initialView === 'landing' && (currentUser?.email || localStorage.getItem('bomprojeto_user'))) {
+        return 'dashboard';
+      }
+      return initialView;
+    });
+
+    // Captura e notifica erros de redirecionamento OAuth na URL
+    try {
+      const hash = window.location.hash;
+      const search = new URLSearchParams(window.location.search);
+      const errorMsg = search.get('error_description') || search.get('error') || (hash.includes('error_description=') ? decodeURIComponent(hash.split('error_description=')[1].split('&')[0]) : '');
+      if (errorMsg) {
+        showToast(`Aviso de login: ${errorMsg.replace(/\+/g, ' ')}`, 'warning');
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    } catch {}
 
     // Check for Mercado Pago subscription redirect params
     try {
@@ -957,9 +1032,9 @@ export default function App() {
     };
   }, []);
 
-  const fetchSupportAlerts = async () => {
+  const fetchSupportAlerts = async (overrideEmail?: string) => {
     try {
-      const email = currentUser?.email || '';
+      const email = (overrideEmail || currentUser?.email || '').toLowerCase().trim();
       const wsId = currentWorkspaceId || 'ws-matriz';
       const queryParam = email ? `?userEmail=${encodeURIComponent(email)}&workspaceId=${encodeURIComponent(wsId)}` : `?workspaceId=${encodeURIComponent(wsId)}`;
       const res = await fetch(`/api/support-alerts${queryParam}`, {
@@ -973,7 +1048,7 @@ export default function App() {
         setSupportAlerts(Array.isArray(data) ? data : []);
       }
     } catch (e) {
-      console.error('Error fetching support alerts', e);
+      console.warn('Error fetching support alerts:', e);
     }
   };
 
@@ -1080,12 +1155,12 @@ export default function App() {
   const isFetchingProjectsRef = useRef(false);
   const hasInitialMountedRef = useRef(false);
 
-  const fetchProjects = async () => {
+  const fetchProjects = async (overrideEmail?: string) => {
     if (isFetchingProjectsRef.current) return;
     isFetchingProjectsRef.current = true;
 
     try {
-      const email = currentUser?.email?.toLowerCase().trim() || '';
+      const email = (overrideEmail || currentUser?.email || '').toLowerCase().trim();
       if (!email) {
         setProjects([]);
         setSelectedProjectId('');
@@ -1191,6 +1266,17 @@ export default function App() {
           }
           return prevView;
         });
+
+        try {
+          if (window.location.hash.includes('access_token') || window.location.search.includes('code=')) {
+            window.history.replaceState(null, '', '/#painel');
+          }
+        } catch {}
+
+        // Sincroniza dados do tenant imediatamente para o usuário logado
+        fetchProjects(userEmail);
+        fetchWorkspaces(userEmail);
+        fetchSupportAlerts(userEmail);
       }
     });
     return () => unsubscribe();
@@ -1198,14 +1284,10 @@ export default function App() {
 
   // Synchronize and isolate tenant data whenever user email or active workspace changes
   useEffect(() => {
-    if (!hasInitialMountedRef.current) {
-      hasInitialMountedRef.current = true;
-      return;
-    }
     if (currentUser?.email) {
-      fetchProjects();
-      fetchWorkspaces();
-      fetchSupportAlerts();
+      fetchProjects(currentUser.email);
+      fetchWorkspaces(currentUser.email);
+      fetchSupportAlerts(currentUser.email);
     }
   }, [currentUser?.email, currentWorkspaceId]);
 
@@ -1225,6 +1307,7 @@ export default function App() {
     try {
       localStorage.setItem('bomprojeto_user', JSON.stringify(user));
       localStorage.setItem('bomprojeto_user_email', user.email);
+      window.history.pushState(null, '', '/#painel');
     } catch (e) {
       console.error(e);
     }
@@ -1232,6 +1315,12 @@ export default function App() {
     setActiveView('dashboard');
     setIsLoginModalOpen(false);
     showToast(`Bem-vindo ao Dashboard, ${user.name}! Acesso liberado.`, 'success');
+
+    if (user.email) {
+      fetchProjects(user.email);
+      fetchWorkspaces(user.email);
+      fetchSupportAlerts(user.email);
+    }
   };
 
   const handleLogout = async () => {
@@ -1804,7 +1893,7 @@ export default function App() {
         <LegalPageView
           pageType={activeView}
           onSelectView={navigateToView}
-          onOpenLoginModal={() => setIsLoginModalOpen(true)}
+          onOpenLoginModal={handleOpenLogin}
         />
       ) : isTraditionalDashboard ? (
         <div className="min-h-screen flex bg-[#F8F9FA]">
@@ -1819,7 +1908,7 @@ export default function App() {
             currentUser={currentUser}
             selectedProjectCode={currentProject?.code}
             onOpenNewProject={() => setIsNewProjectOpen(true)}
-            onOpenLoginModal={() => setIsLoginModalOpen(true)}
+            onOpenLoginModal={handleOpenLogin}
             activeSidebarItem={activeSidebarTab}
             onSelectSidebarItem={handleSidebarItemClick}
             currentWorkspace={currentWorkspace}
@@ -1868,7 +1957,7 @@ export default function App() {
                     setIsMobileSidebarOpen(false);
                   }}
                   onOpenLoginModal={() => {
-                    setIsLoginModalOpen(true);
+                    handleOpenLogin();
                     setIsMobileSidebarOpen(false);
                   }}
                   activeSidebarItem={activeSidebarTab}
@@ -1929,7 +2018,7 @@ export default function App() {
 
             <TopHeader
               onOpenNewProject={() => setIsNewProjectOpen(true)}
-              onOpenLoginModal={() => setIsLoginModalOpen(true)}
+              onOpenLoginModal={handleOpenLogin}
               currentUser={currentUser}
               onLogout={handleLogout}
               searchQuery={globalSearch}
@@ -2230,7 +2319,7 @@ export default function App() {
           onClose={() => setIsVideoModalOpen(false)}
           onOpenSignup={() => {
             setIsVideoModalOpen(false);
-            setIsLoginModalOpen(true);
+            handleOpenLogin();
           }}
         />
       )}
