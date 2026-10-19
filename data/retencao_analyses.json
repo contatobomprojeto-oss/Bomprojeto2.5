@@ -1,0 +1,236 @@
+[
+  {
+    "id": "ret-contingency-p-9374-1791116036883",
+    "project_id": "p-9374",
+    "workspace_id": "ws-matriz",
+    "happinessScore": 65,
+    "churnRisk": "MEDIO",
+    "pillars": {
+      "communicationFriction": {
+        "score": 27,
+        "justification": "Análise vocal de 1 áudio(s): Tom amigável e tranquilo. Tempo de resposta avaliado.",
+        "level": "baixo"
+      },
+      "operationalReliability": {
+        "score": 35,
+        "justification": "Etapa atual \"2. Medição Técnica no Local\". Progresso de 17% alinhado ao cronograma.",
+        "level": "moderado"
+      },
+      "perceivedValue": {
+        "score": 70,
+        "justification": "1 boletins com fotos técnicas enviados, sustentando alta percepção de transparência.",
+        "level": "moderado"
+      },
+      "contractualRisk": {
+        "score": 100,
+        "justification": "0 de 2 parcelas quitadas. Risco financeiro sob controle.",
+        "level": "moderado"
+      }
+    },
+    "positiveWords": [
+      {
+        "text": "tom cordial no áudio",
+        "count": 1,
+        "sentimentWeight": 0.85,
+        "category": "voz",
+        "sampleContext": "[Áudio WhatsApp] Entonação positiva e receptiva em mensagens de voz."
+      },
+      {
+        "text": "acabamento impecável",
+        "count": 4,
+        "sentimentWeight": 0.9,
+        "category": "qualidade"
+      },
+      {
+        "text": "dentro do prazo",
+        "count": 2,
+        "sentimentWeight": 0.85,
+        "category": "prazo"
+      },
+      {
+        "text": "atendimento ágil",
+        "count": 3,
+        "sentimentWeight": 0.8,
+        "category": "comunicação"
+      }
+    ],
+    "negativeWords": [
+      {
+        "text": "ajuste fino",
+        "count": 1,
+        "sentimentWeight": 0.3,
+        "category": "alinhamento"
+      }
+    ],
+    "prescriptiveActions": [
+      {
+        "priority": "ALTA",
+        "diagnosis": "Excelente momento para estreitar relacionamento e reforçar satisfação.",
+        "action": "Compartilhar fotos da etapa concluída no WhatsApp e solicitar feedback informal.",
+        "whatsappTemplate": "Olá Ana! Tudo bem? Passando para te atualizar sobre o projeto #PROJ-165. Estamos avançando conforme o planejado e cuidando de cada detalhe com muito carinho. Seguem fotos do progresso!"
+      },
+      {
+        "priority": "MEDIA",
+        "diagnosis": "Prevenção de ansiedade quanto aos próximos passos da produção.",
+        "action": "Confirmar a próxima etapa do cronograma e datas estimadas de visita técnica ou entrega.",
+        "whatsappTemplate": "Oi Ana! Para seu planejamento, nossa próxima fase de 2. Medição Técnica no Local está prevista para ser concluída nos próximos dias. Qualquer dúvida nossa equipe está 100% à disposição!"
+      }
+    ],
+    "vocalToneAnalysis": {
+      "audiosAnalyzed": 1,
+      "toneSummary": "Tom calmo, cordial e satisfeito verificado em 1 mensagem(ns) de voz do WhatsApp.",
+      "hesitationLevel": "nenhuma",
+      "irritationLevel": "nenhuma",
+      "satisfactionLevel": "excelente",
+      "audioNotes": "1 áudio(s) (.ogg/.mp3) processado(s) pelo motor multimodal."
+    },
+    "aiModel": "contingency_heuristic_engine",
+    "analyzedAt": "2026-10-04T12:13:56.883Z",
+    "isContingency": true,
+    "contingencyReason": "Falha na chamada Gemini API ({\"error\":{\"code\":503,\"message\":\"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\"status\":\"UNAVAILABLE\"}}). Modo de contingência ativado."
+  },
+  {
+    "id": "ret-gemini-proj-1-1791115893488",
+    "project_id": "proj-1",
+    "workspace_id": "ws-matriz",
+    "happinessScore": 90,
+    "churnRisk": "BAIXO",
+    "pillars": {
+      "communicationFriction": {
+        "score": 10,
+        "justification": "Comunicação fluida, com atualizações no mesmo dia, envio de fotos, vídeos e alinhamentos claros sobre a etapa de corte e usinagem.",
+        "level": "BAIXO"
+      },
+      "operationalReliability": {
+        "score": 92,
+        "justification": "Cronograma rigorosamente em dia, corte CNC executado com precisão e transição organizada para a fase de montagem em bancada.",
+        "level": "ALTO"
+      },
+      "perceivedValue": {
+        "score": 90,
+        "justification": "Cliente recebe registros visuais do processo fabril, destacando cortes milimétricos e materiais de qualidade superior.",
+        "level": "ALTO"
+      },
+      "contractualRisk": {
+        "score": 12,
+        "justification": "Entrada de 50% quitada sem atrasos e segunda parcela programada conforme o fluxo produtivo contratual.",
+        "level": "BAIXO"
+      }
+    },
+    "positiveWords": [
+      {
+        "text": "perfeição",
+        "count": 1,
+        "sentimentWeight": 0.95
+      },
+      {
+        "text": "alinhamento milimétrico",
+        "count": 1,
+        "sentimentWeight": 0.9
+      },
+      {
+        "text": "aprovação",
+        "count": 2,
+        "sentimentWeight": 0.85
+      },
+      {
+        "text": "corte CNC",
+        "count": 2,
+        "sentimentWeight": 0.8
+      }
+    ],
+    "negativeWords": [
+      {
+        "text": "pendente",
+        "count": 1,
+        "sentimentWeight": -0.2
+      }
+    ],
+    "prescriptiveActions": [
+      {
+        "priority": "BAIXA",
+        "diagnosis": "Projeto em excelente ritmo produtivo com alto nível de transparência e satisfação.",
+        "action": "Enviar prévia dos módulos sendo estruturados na bancada para consolidar o encantamento antes da liberação da 2ª parcela.",
+        "whatsappTemplate": "Olá Luis Henrique, tudo bem? Passando para compartilhar que as peças da sua Cozinha Gourmet foram usinadas e fitadas com total precisão! Já estamos iniciando o pré-ajuste na bancada técnica. Seguem os registros do dia para você acompanhar de perto!"
+      }
+    ],
+    "aiModel": "gemini-3.8-flash",
+    "analyzedAt": "2026-10-04T12:11:33.488Z",
+    "isContingency": false
+  },
+  {
+    "id": "ret-contingency-p-6777-1791115719770",
+    "project_id": "p-6777",
+    "workspace_id": "ws-matriz",
+    "happinessScore": 74,
+    "churnRisk": "MEDIO",
+    "pillars": {
+      "communicationFriction": {
+        "score": 27,
+        "justification": "Comunicação assertiva e ágil com o cliente pelo WhatsApp.",
+        "level": "baixo"
+      },
+      "operationalReliability": {
+        "score": 65,
+        "justification": "Etapa atual \"Produção\". Progresso de 50% alinhado ao cronograma.",
+        "level": "moderado"
+      },
+      "perceivedValue": {
+        "score": 70,
+        "justification": "1 boletins com fotos técnicas enviados, sustentando alta percepção de transparência.",
+        "level": "moderado"
+      },
+      "contractualRisk": {
+        "score": 100,
+        "justification": "0 de 2 parcelas quitadas. Risco financeiro sob controle.",
+        "level": "moderado"
+      }
+    },
+    "positiveWords": [
+      {
+        "text": "acabamento impecável",
+        "count": 4,
+        "sentimentWeight": 0.9,
+        "category": "qualidade"
+      },
+      {
+        "text": "dentro do prazo",
+        "count": 2,
+        "sentimentWeight": 0.85,
+        "category": "prazo"
+      },
+      {
+        "text": "atendimento ágil",
+        "count": 3,
+        "sentimentWeight": 0.8,
+        "category": "comunicação"
+      }
+    ],
+    "negativeWords": [
+      {
+        "text": "ajuste fino",
+        "count": 1,
+        "sentimentWeight": 0.3,
+        "category": "alinhamento"
+      }
+    ],
+    "prescriptiveActions": [
+      {
+        "priority": "ALTA",
+        "diagnosis": "Excelente momento para estreitar relacionamento e reforçar satisfação.",
+        "action": "Compartilhar fotos da etapa concluída no WhatsApp e solicitar feedback informal.",
+        "whatsappTemplate": "Olá Cliente! Tudo bem? Passando para te atualizar sobre o projeto #PROJ-234. Estamos avançando conforme o planejado e cuidando de cada detalhe com muito carinho. Seguem fotos do progresso!"
+      },
+      {
+        "priority": "MEDIA",
+        "diagnosis": "Prevenção de ansiedade quanto aos próximos passos da produção.",
+        "action": "Confirmar a próxima etapa do cronograma e datas estimadas de visita técnica ou entrega.",
+        "whatsappTemplate": "Oi Cliente! Para seu planejamento, nossa próxima fase de Produção está prevista para ser concluída nos próximos dias. Qualquer dúvida nossa equipe está 100% à disposição!"
+      }
+    ],
+    "aiModel": "contingency_heuristic_engine",
+    "analyzedAt": "2026-10-04T12:08:39.770Z",
+    "isContingency": true,
+    "contingencyReason": "Falha na chamada Gemini API ({\"error\":{\"code\":503,\"message\":\"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\"status\":\"UNAVAILABLE\"}}). Modo de contingência ativado."
+  }
+]

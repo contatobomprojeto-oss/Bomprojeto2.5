@@ -1,0 +1,39 @@
+# Apache / LiteSpeed Configuration for Hostinger Deployments
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  
+  # Redirect legacy app subdomain to primary domain
+  RewriteCond %{HTTP_HOST} ^app\.bomprojeto\.com$ [NC]
+  RewriteRule ^(.*)$ https://bomprojeto.com/$1 [R=301,L]
+  
+  # Ensure HTTPS in production
+  # RewriteCond %{HTTPS} off
+  # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # If an existing asset or directory is requested, serve it directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Otherwise redirect all requests to index.html for React SPA Router
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Browser Caching & MIME Types
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+# Enable Gzip Compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
+</IfModule>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 180" width="100%" height="100%">
+  <!-- Símbolo dos 9 pontos à esquerda -->
+  <g transform="translate(10, 0) scale(0.42)">
+    <!-- Linha Superior -->
+    <circle cx="134" cy="92" r="18" fill="#111111" />
+    <circle cx="200" cy="92" r="17" fill="#111111" />
+    <circle cx="266" cy="92" r="17" fill="#111111" />
+
+    <!-- Linha Intermediária Laranja -->
+    <circle cx="113" cy="176" r="30" fill="#FF6515" />
+    <circle cx="200" cy="176" r="30" fill="#FF6515" />
+    <circle cx="287" cy="176" r="30" fill="#FF6515" />
+
+    <!-- Linha Inferior -->
+    <circle cx="80" cy="285" r="42" fill="#111111" />
+    <circle cx="200" cy="285" r="42" fill="#111111" />
+    <circle cx="320" cy="285" r="42" fill="#111111" />
+  </g>
+
+  <!-- Tipografia Oficial BOMProjeto -->
+  <text x="180" y="115" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="82" letter-spacing="-2px">
+    <tspan fill="#111111">BOM</tspan><tspan fill="#FF6515">Projeto</tspan>
+  </text>
+</svg>

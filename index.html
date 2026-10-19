@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="pt-BR" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Safe Window fetch compatibility shim (executes first to prevent: Cannot set property fetch of #<Window> which has only a getter) -->
+    <script>
+      (function() {
+        try {
+          if (typeof window !== 'undefined') {
+            var _curFetch = window.fetch;
+            var _active = _curFetch;
+            // Define an accessor with both get and set directly on window
+            // This guarantees window.fetch can be read and reassigned by any script or Chrome extension
+            try {
+              Object.defineProperty(window, 'fetch', {
+                get: function() {
+                  return _active;
+                },
+                set: function(v) {
+                  _active = v;
+                },
+                configurable: true,
+                enumerable: true
+              });
+            } catch (e1) {
+              try {
+                window.fetch = _curFetch;
+              } catch (e2) {}
+            }
+
+            // Also patch Window.prototype if accessible
+            try {
+              if (typeof Window !== 'undefined' && Window.prototype) {
+                var pDesc = Object.getOwnPropertyDescriptor(Window.prototype, 'fetch');
+                if (pDesc && (!pDesc.set || !pDesc.writable)) {
+                  Object.defineProperty(Window.prototype, 'fetch', {
+                    get: function() {
+                      return window.fetch || _curFetch;
+                    },
+                    set: function(val) {
+                      window.fetch = val;
+                    },
+                    configurable: true,
+                    enumerable: true
+                  });
+                }
+              }
+            } catch (eProto) {}
+          }
+        } catch (err) {}
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <title>BOMProjeto — Gestão de Projetos e Notificações com IA</title>
+    <meta name="description" content="Nossa ferramenta notifica cada etapa com IA, cobra as parcelas vencidas e responde no WhatsApp no seu lugar. Você volta a produzir, vender e receber." />
+    <link rel="canonical" href="https://bomprojeto.com/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://bomprojeto.com/" />
+    <meta property="og:title" content="BOMProjeto — Gestão de Projetos e Notificações com IA" />
+    <meta property="og:description" content="Acompanhe a produção em tempo real, etapas técnicas, fotos da bancada e cronograma. Notificações e cobranças inteligentes via WhatsApp." />
+    <meta property="og:image" content="https://bomprojeto.com/og-preview.png" />
+    <meta property="og:image:secure_url" content="https://bomprojeto.com/og-preview.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="BOMProjeto — Portal de Acompanhamento do Cliente em Tempo Real" />
+    <meta property="og:site_name" content="BOMProjeto" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://bomprojeto.com/" />
+    <meta name="twitter:title" content="BOMProjeto — Gestão de Projetos e Notificações com IA" />
+    <meta name="twitter:description" content="Acompanhe a produção em tempo real, etapas técnicas, fotos da bancada e cronograma. Notificações e cobranças inteligentes via WhatsApp." />
+    <meta name="twitter:image" content="https://bomprojeto.com/og-preview.png" />
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "BOMProjeto",
+        "url": "https://bomprojeto.com",
+        "operatingSystem": "All",
+        "applicationCategory": "BusinessApplication",
+        "description": "Gestão inteligente de projetos com notificações automáticas via WhatsApp, acompanhamento de etapas com IA e cobrança Pix.",
+        "offers": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "BRL",
+          "lowPrice": "0",
+          "highPrice": "299"
+        }
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WS5HGW2W');</script>
+    <!-- End Google Tag Manager -->
+  </head>
+  <body class="bg-[#F8F9FA] text-[#202124] antialiased selection:bg-[#FFF7ED] selection:text-[#EA580C]">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WS5HGW2W"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

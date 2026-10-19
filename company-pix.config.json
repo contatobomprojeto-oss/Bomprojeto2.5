@@ -1,0 +1,11 @@
+{
+  "pixKey": "48.912.831/0001-90",
+  "pixKeyType": "cnpj",
+  "beneficiaryName": "BOMPROJETO GESTAO DE PROJETOS LTDA",
+  "bankName": "Banco Inter S.A.",
+  "aiBillingEnabled": true,
+  "aiTone": "profissional",
+  "aiAutoAttachQr": true,
+  "aiRemindDaysBefore": 2,
+  "updatedAt": "2026-09-29T11:00:00.000Z"
+}

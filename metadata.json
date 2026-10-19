@@ -1,0 +1,6 @@
+{
+  "name": "BOMProjeto — Gestão de Projetos e Notificações com IA",
+  "description": "Nossa ferramenta notifica cada etapa com IA, cobra as parcelas vencidas e responde no WhatsApp no seu lugar. Você volta a produzir, vender e receber.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

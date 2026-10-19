@@ -1,0 +1,32 @@
+[
+  {
+    "id": "ws-matriz",
+    "name": "Gestão de Projetos (Matriz)",
+    "slug": "gestao-projetos-matriz",
+    "segment": "projetos",
+    "segmentLabel": "Projetos Gerais",
+    "type": "matriz",
+    "city": "São Paulo - SP",
+    "state": "SP",
+    "phone": "+55 (11) 98765-4321",
+    "address": "Av. Paulista, 1000 - Conjunto 80",
+    "isDefault": true,
+    "ownerEmail": "henrique.ferrazms@gmail.com",
+    "createdAt": "2026-10-17T12:34:33.478Z"
+  },
+  {
+    "id": "ws-novoempresacom",
+    "name": "Matriz Principal",
+    "slug": "matriz",
+    "segment": "projetos",
+    "segmentLabel": "Projetos Gerais",
+    "type": "matriz",
+    "city": "",
+    "state": "",
+    "phone": "",
+    "address": "",
+    "isDefault": true,
+    "ownerEmail": "novo@empresa.com",
+    "createdAt": "2026-10-17T12:34:44.401Z"
+  }
+]

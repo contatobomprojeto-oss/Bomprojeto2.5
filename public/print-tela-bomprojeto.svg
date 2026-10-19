@@ -1,0 +1,450 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="100%" height="100%" fill="none" style="background:#FAF9F5; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <!-- Filtros de Sombra Suave -->
+    <filter id="cardShadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.04" />
+    </filter>
+    <filter id="btnShadow" x="-10%" y="-10%" width="120%" height="130%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-color="#FF6515" flood-opacity="0.25" />
+    </filter>
+    <linearGradient id="headerGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#FBF9F6" />
+    </linearGradient>
+    <linearGradient id="primaryGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF6515" />
+      <stop offset="100%" stop-color="#E0550D" />
+    </linearGradient>
+  </defs>
+
+  <!-- Janela Principal com Bordas Arredondadas -->
+  <rect width="1200" height="760" rx="16" fill="#FAF9F5" stroke="#DCD6CB" stroke-width="1.5" />
+
+  <!-- ==========================================
+       1. BARRA SUPERIOR DO NAVEGADOR (macOS Style)
+       ========================================== -->
+  <rect width="1200" height="38" rx="16" fill="#EDE9E2" />
+  <rect y="22" width="1200" height="16" fill="#EDE9E2" />
+  <line x1="0" y1="38" x2="1200" y2="38" stroke="#DDD7CD" stroke-width="1" />
+  
+  <!-- Controles da Janela macOS -->
+  <circle cx="22" cy="19" r="5" fill="#EF4444" />
+  <circle cx="38" cy="19" r="5" fill="#F59E0B" />
+  <circle cx="54" cy="19" r="5" fill="#10B981" />
+
+  <!-- Barra de Endereço URL Central -->
+  <rect x="360" y="7" width="480" height="24" rx="6" fill="#FFFFFF" stroke="#D3CDC3" stroke-width="1" />
+  <!-- Ícone de Cadeado -->
+  <g transform="translate(372, 12)">
+    <rect x="2" y="5" width="9" height="7" rx="1.5" fill="#059669" />
+    <path d="M4 5V3.5a2.5 2.5 0 0 1 5 0V5" stroke="#059669" stroke-width="1.3" fill="none" stroke-linecap="round" />
+  </g>
+  <text x="392" y="23" font-size="11" font-family="ui-monospace, monospace" fill="#444440" font-weight="500">bomprojeto.com/projetos/PROJ-101</text>
+  
+  <!-- Badge lateral na barra do navegador -->
+  <rect x="1040" y="9" width="140" height="20" rx="4" fill="#FFEDE2" stroke="#FFD8C2" stroke-width="1" />
+  <text x="1110" y="23" font-size="10" font-weight="700" fill="#FF6515" text-anchor="middle">PROJ-101 • Produção</text>
+
+  <!-- ==========================================
+       2. TOPHEADER DO SISTEMA BOMPROJETO
+       ========================================== -->
+  <rect y="38" width="1200" height="48" fill="url(#headerGrad)" />
+  <line x1="0" y1="86" x2="1200" y2="86" stroke="#E6E0D6" stroke-width="1" />
+
+  <!-- Dropdown de Workspace Matriz -->
+  <g transform="translate(18, 46)">
+    <rect width="210" height="32" rx="6" fill="#F4EFE8" stroke="#DDD6CB" stroke-width="1" />
+    <!-- Ícone Prédio -->
+    <rect x="8" y="8" width="14" height="16" rx="1" fill="#FF6515" opacity="0.15" />
+    <path d="M11 11h2v2h-2zm0 4h2v2h-2zm4-4h2v2h-2zm0 4h2v2h-2zm-8-3l7-4 7 4v11H7V12z" stroke="#FF6515" stroke-width="1.2" fill="none" />
+    <text x="30" y="16" font-size="8.5" font-weight="700" fill="#88847E" letter-spacing="0.5">MATRIZ • SÃO PAULO</text>
+    <text x="30" y="26" font-size="10.5" font-weight="700" fill="#1C1C1A">Gestão de Projetos (Matriz)</text>
+    <path d="M194 18l3 3 3-3" stroke="#88847E" stroke-width="1.5" stroke-linecap="round" fill="none" />
+  </g>
+
+  <!-- Campo de Busca Central -->
+  <g transform="translate(242, 47)">
+    <rect width="320" height="30" rx="6" fill="#F8F6F2" stroke="#E2DDD5" stroke-width="1" />
+    <!-- Ícone de Lupa -->
+    <circle cx="15" cy="15" r="5" stroke="#9A948C" stroke-width="1.3" fill="none" />
+    <line x1="18.5" y1="18.5" x2="23" y2="23" stroke="#9A948C" stroke-width="1.3" stroke-linecap="round" />
+    <text x="32" y="19" font-size="11" fill="#8A8680">Buscar projetos, clientes, etapas...</text>
+  </g>
+
+  <!-- Badges & Perfil no TopHeader Direita -->
+  <g transform="translate(580, 46)">
+    <!-- Badge WhatsApp Conectado -->
+    <rect x="110" y="4" width="112" height="24" rx="12" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1" />
+    <circle cx="122" cy="16" r="3.5" fill="#10B981" />
+    <circle cx="122" cy="16" r="5" stroke="#10B981" stroke-width="1" opacity="0.4" />
+    <text x="132" y="19.5" font-size="10" font-weight="600" fill="#047857">WhatsApp Ativo</text>
+
+    <!-- Badge Plano Scala -->
+    <rect x="232" y="4" width="94" height="24" rx="6" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1" />
+    <path d="M242 16l4-7h4l-3 5h4l-5 8 1.5-6h-4.5" fill="#D97706" />
+    <text x="254" y="20" font-size="10" font-weight="700" fill="#B45309">Plano Scala</text>
+
+    <!-- Botão Novo Projeto -->
+    <rect x="336" y="2" width="110" height="28" rx="6" fill="url(#primaryGrad)" filter="url(#btnShadow)" />
+    <path d="M348 16h8M352 12v8" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+    <text x="362" y="19.5" font-size="11" font-weight="700" fill="#FFFFFF">Novo Projeto</text>
+
+    <!-- Notificações -->
+    <circle cx="466" cy="16" r="14" fill="#F4EFE8" />
+    <path d="M466 10a4 4 0 0 0-4 4v3l-1.5 1.5h11L470 17v-3a4 4 0 0 0-4-4zm-1.5 9a1.5 1.5 0 0 0 3 0" fill="none" stroke="#57534E" stroke-width="1.3" stroke-linecap="round" />
+    <circle cx="474" cy="9" r="5" fill="#FF6515" />
+    <text x="474" y="12" font-size="7.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">3</text>
+
+    <!-- Perfil do Usuário -->
+    <g transform="translate(492, 0)">
+      <circle cx="16" cy="16" r="15" fill="#1C1C1A" />
+      <text x="16" y="20" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">HF</text>
+      <text x="38" y="14" font-size="11" font-weight="700" fill="#1C1C1A">Henrique Ferraz</text>
+      <text x="38" y="25" font-size="9" fill="#78716C">Gestor de Projetos</text>
+    </g>
+  </g>
+
+  <!-- ==========================================
+       3. SIDEBAR LATERAL ESQUERDA
+       ========================================== -->
+  <g transform="translate(0, 86)">
+    <rect width="210" height="674" fill="#FFFFFF" />
+    <line x1="210" y1="0" x2="210" y2="674" stroke="#E6E0D6" stroke-width="1" />
+
+    <!-- Marca BOMProjeto -->
+    <g transform="translate(18, 16)">
+      <rect width="24" height="24" rx="6" fill="#FF6515" />
+      <path d="M7 6h6a3 3 0 0 1 3 3 3 3 0 0 1-3 3H7zm0 6h7a3 3 0 0 1 3 3 3 3 0 0 1-3 3H7z" fill="#FFFFFF" />
+      <text x="34" y="18" font-size="16" font-weight="900" fill="#111111" letter-spacing="-0.5">BOM<tspan fill="#FF6515">Projeto</tspan></text>
+    </g>
+
+    <!-- Workspace Mini Card -->
+    <g transform="translate(14, 54)">
+      <rect width="182" height="38" rx="6" fill="#FAF9F5" stroke="#E2DDD5" stroke-width="1" />
+      <text x="12" y="17" font-size="10" font-weight="700" fill="#1C1C1A">Marcenaria Ferraz &amp; Design</text>
+      <text x="12" y="29" font-size="8.5" fill="#88847E">Workspace Principal • Ativo</text>
+      <path d="M166 18l3 3 3-3" stroke="#88847E" stroke-width="1.5" stroke-linecap="round" fill="none" />
+    </g>
+
+    <!-- Menus de Navegação -->
+    <g transform="translate(14, 106)">
+      <!-- Categoria INÍCIO -->
+      <text x="8" y="10" font-size="8.5" font-weight="700" fill="#9CA3AF" letter-spacing="1">INÍCIO</text>
+      
+      <!-- Item Dashboard -->
+      <g transform="translate(0, 16)">
+        <rect width="182" height="30" rx="6" fill="transparent" />
+        <rect x="8" y="7" width="6" height="6" rx="1" fill="#71717A" />
+        <rect x="16" y="7" width="6" height="6" rx="1" fill="#71717A" />
+        <rect x="8" y="15" width="6" height="6" rx="1" fill="#71717A" />
+        <rect x="16" y="15" width="6" height="6" rx="1" fill="#71717A" />
+        <text x="30" y="19" font-size="11" font-weight="500" fill="#52525B">Dashboard</text>
+      </g>
+
+      <!-- Categoria GESTÃO -->
+      <text x="8" y="68" font-size="8.5" font-weight="700" fill="#9CA3AF" letter-spacing="1">GESTÃO</text>
+      
+      <!-- Item PROJETOS (Ativo) -->
+      <g transform="translate(0, 74)">
+        <rect width="182" height="32" rx="6" fill="#FFEDD5" />
+        <path d="M10 8h10v14H10z" fill="none" stroke="#EA580C" stroke-width="1.4" rx="1" />
+        <line x1="13" y1="12" x2="17" y2="12" stroke="#EA580C" stroke-width="1.2" stroke-linecap="round" />
+        <line x1="13" y1="15" x2="17" y2="15" stroke="#EA580C" stroke-width="1.2" stroke-linecap="round" />
+        <text x="30" y="20.5" font-size="11" font-weight="700" fill="#C2410C">Projetos</text>
+        <rect x="177" y="6" width="3" height="20" rx="1.5" fill="#FF6515" />
+      </g>
+
+      <!-- Item Clientes -->
+      <g transform="translate(0, 112)">
+        <circle cx="14" cy="12" r="3.5" stroke="#71717A" stroke-width="1.3" fill="none" />
+        <path d="M9 19c0-2.5 2-4 5-4s5 1.5 5 4" stroke="#71717A" stroke-width="1.3" fill="none" />
+        <text x="30" y="17" font-size="11" font-weight="500" fill="#52525B">Clientes</text>
+      </g>
+
+      <!-- Item Workspaces -->
+      <g transform="translate(0, 142)">
+        <path d="M10 11l4-2 4 2-4 2-4-2zm0 4l4 2 4-2M10 19l4 2 4-2" stroke="#71717A" stroke-width="1.3" stroke-linecap="round" fill="none" />
+        <text x="30" y="17" font-size="11" font-weight="500" fill="#52525B">Workspaces</text>
+        <rect x="150" y="6" width="24" height="15" rx="3" fill="#F4EFE8" />
+        <text x="162" y="17" font-size="8.5" font-weight="700" fill="#78716C" text-anchor="middle">1/6</text>
+      </g>
+
+      <!-- Categoria COMUNICAÇÃO -->
+      <text x="8" y="196" font-size="8.5" font-weight="700" fill="#9CA3AF" letter-spacing="1">COMUNICAÇÃO</text>
+      
+      <!-- Item Notificações & IA -->
+      <g transform="translate(0, 202)">
+        <path d="M9 8h10a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-4l-3 3v-3H9a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2z" stroke="#71717A" stroke-width="1.3" fill="none" />
+        <text x="30" y="18" font-size="11" font-weight="500" fill="#52525B">Notificações &amp; IA</text>
+      </g>
+
+      <!-- Categoria CONFIGURAÇÕES -->
+      <text x="8" y="250" font-size="8.5" font-weight="700" fill="#9CA3AF" letter-spacing="1">SISTEMA</text>
+      <g transform="translate(0, 256)">
+        <circle cx="14" cy="15" r="4" stroke="#71717A" stroke-width="1.3" fill="none" />
+        <text x="30" y="19" font-size="11" font-weight="500" fill="#52525B">Configurações</text>
+      </g>
+    </g>
+
+    <!-- Rodapé da Sidebar -->
+    <g transform="translate(14, 570)">
+      <rect width="182" height="74" rx="8" fill="#FBF9F5" stroke="#E6E0D6" stroke-width="1" />
+      <g transform="translate(10, 14)">
+        <text x="0" y="10" font-size="10" font-weight="700" fill="#B45309">⚡ Plano Scala Ativo</text>
+        <text x="0" y="24" font-size="8.5" fill="#78716C">Projetos Ilimitados &amp; IA</text>
+        <line x1="0" y1="32" x2="162" y2="32" stroke="#EBE5DC" stroke-width="1" />
+        <circle cx="4" cy="42" r="3" fill="#10B981" />
+        <text x="12" y="45" font-size="9" font-weight="600" fill="#047857">WhatsApp Conectado</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==========================================
+       4. CONTEÚDO PRINCIPAL (TELA DO PROJETO PROJ-101)
+       ========================================== -->
+  <g transform="translate(228, 98)">
+
+    <!-- Barra de Breadcrumbs & Ações de Etapa -->
+    <g>
+      <text x="0" y="15" font-size="11" fill="#78716C">
+        ← Voltar aos projetos / <tspan font-weight="700" fill="#1C1C1A">PROJ-101</tspan>
+      </text>
+      <rect x="180" y="3" width="168" height="18" rx="4" fill="#F4EFE8" />
+      <text x="186" y="16" font-size="9.5" fill="#57534E">Marcenaria Ferraz &amp; Design</text>
+
+      <!-- Botões de Controle da Etapa -->
+      <g transform="translate(680, -2)">
+        <!-- Voltar Etapa -->
+        <rect width="84" height="26" rx="5" fill="#FFFFFF" stroke="#D3CDC3" stroke-width="1" />
+        <text x="42" y="17" font-size="10" font-weight="600" fill="#52525B" text-anchor="middle">Voltar etapa</text>
+
+        <!-- Avançar Etapa (Destaque Laranja) -->
+        <g transform="translate(90, 0)">
+          <rect width="115" height="26" rx="5" fill="url(#primaryGrad)" filter="url(#btnShadow)" />
+          <path d="M12 9l8 4-8 4V9z" fill="#FFFFFF" />
+          <text x="24" y="17" font-size="10" font-weight="700" fill="#FFFFFF">Avançar Etapa</text>
+        </g>
+
+        <!-- Concluir -->
+        <g transform="translate(211, 0)">
+          <rect width="68" height="26" rx="5" fill="#FFFFFF" stroke="#D3CDC3" stroke-width="1" />
+          <path d="M10 13l3 3 6-6" stroke="#10B981" stroke-width="1.8" fill="none" stroke-linecap="round" />
+          <text x="40" y="17" font-size="10" font-weight="600" fill="#1C1C1A" text-anchor="middle">Concluir</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Header do Projeto: Título, Status e Botões Rápidos -->
+    <g transform="translate(0, 36)">
+      <!-- Informações do Cliente & Projeto -->
+      <text x="0" y="24" font-size="19" font-weight="800" fill="#111111" letter-spacing="-0.3">Luis Henrique Ferraz</text>
+      <rect x="206" y="8" width="65" height="20" rx="4" fill="#F4EFE8" />
+      <text x="238.5" y="22" font-size="10" font-weight="700" fill="#78716C" text-anchor="middle">PROJ-101</text>
+      
+      <!-- Badge de Status Atual da Produção -->
+      <rect x="278" y="8" width="138" height="20" rx="10" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1" />
+      <circle cx="289" cy="18" r="3" fill="#2563EB" />
+      <text x="298" y="22" font-size="9.5" font-weight="700" fill="#1D4ED8">Usinagem e Corte CNC</text>
+
+      <text x="0" y="44" font-size="11.5" fill="#57534E">
+        Cozinha Gourmet &amp; Marcenaria Integrada • Prazo: <tspan font-weight="600" fill="#1C1C1A">28/11/2026</tspan> • <tspan font-weight="700" fill="#FF6515">45% Concluído</tspan>
+      </text>
+
+      <!-- Botões de Ação Rápida -->
+      <g transform="translate(620, 10)">
+        <!-- Link do Cliente -->
+        <rect width="66" height="26" rx="5" fill="#FFFFFF" stroke="#D3CDC3" stroke-width="1" />
+        <text x="33" y="17" font-size="10" font-weight="600" fill="#444440" text-anchor="middle">🔗 Link</text>
+
+        <!-- WhatsApp -->
+        <g transform="translate(72, 0)">
+          <rect width="88" height="26" rx="5" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1" />
+          <text x="44" y="17" font-size="10" font-weight="700" fill="#047857" text-anchor="middle">💬 WhatsApp</text>
+        </g>
+
+        <!-- Portal -->
+        <g transform="translate(166, 0)">
+          <rect width="70" height="26" rx="5" fill="#FFFFFF" stroke="#D3CDC3" stroke-width="1" />
+          <text x="35" y="17" font-size="10" font-weight="600" fill="#444440" text-anchor="middle">👁️ Portal</text>
+        </g>
+
+        <!-- Termo PDF -->
+        <g transform="translate(242, 0)">
+          <rect width="96" height="26" rx="5" fill="#1C1C1A" />
+          <text x="48" y="17" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">📄 Resumo PDF</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Barra de Progresso do Cronograma -->
+    <g transform="translate(0, 96)">
+      <text x="0" y="10" font-size="11" font-weight="600" fill="#78716C">
+        Progresso do Cronograma: <tspan font-weight="700" fill="#1C1C1A">1 de 5 etapas concluídas</tspan>
+      </text>
+      <text x="948" y="10" font-size="11.5" font-weight="800" fill="#FF6515" text-anchor="end">45%</text>
+      
+      <!-- Fundo e Preenchimento da Barra -->
+      <rect y="17" width="948" height="8" rx="4" fill="#E8E2D8" />
+      <rect y="17" width="426" height="8" rx="4" fill="url(#primaryGrad)" />
+    </g>
+
+    <!-- Abas de Navegação do Projeto -->
+    <g transform="translate(0, 136)">
+      <line x1="0" y1="26" x2="948" y2="26" stroke="#E6E0D6" stroke-width="1.5" />
+      
+      <!-- Aba Ativa: Visão Geral -->
+      <text x="0" y="17" font-size="12" font-weight="800" fill="#FF6515">Visão Geral</text>
+      <rect x="0" y="24" width="70" height="3" rx="1.5" fill="#FF6515" />
+
+      <!-- Demais Abas -->
+      <text x="96" y="17" font-size="12" font-weight="500" fill="#78716C">Etapas &amp; Fotos (5)</text>
+      <text x="230" y="17" font-size="12" font-weight="500" fill="#78716C">Financeiro (Pix)</text>
+      <text x="350" y="17" font-size="12" font-weight="500" fill="#78716C">Mensagens &amp; Atualizações (1)</text>
+      <text x="546" y="17" font-size="12" font-weight="500" fill="#78716C">Arquivos &amp; Projeto 3D</text>
+    </g>
+
+    <!-- ==========================================
+         OS 3 CARDS FINANCEIROS (PIX & VALORES)
+         ========================================== -->
+    <g transform="translate(0, 180)">
+      
+      <!-- Card 1: Valor Total -->
+      <g filter="url(#cardShadow)">
+        <rect width="304" height="88" rx="8" fill="#FFFFFF" stroke="#E2DDD5" stroke-width="1" />
+        <text x="16" y="24" font-size="10" font-weight="600" fill="#88847E">VALOR TOTAL DO PROJETO</text>
+        <text x="16" y="52" font-size="20" font-weight="900" fill="#1C1C1A" letter-spacing="-0.5">R$ 9.533,00</text>
+        <text x="16" y="72" font-size="10" fill="#A8A29E">Proposta assinada em 10/09/2026</text>
+      </g>
+
+      <!-- Card 2: Valor Recebido via Pix -->
+      <g transform="translate(322, 0)" filter="url(#cardShadow)">
+        <rect width="304" height="88" rx="8" fill="#FFFFFF" stroke="#E2DDD5" stroke-width="1" />
+        <text x="16" y="24" font-size="10" font-weight="600" fill="#88847E">VALOR RECEBIDO (50%)</text>
+        <text x="16" y="52" font-size="20" font-weight="900" fill="#059669" letter-spacing="-0.5">R$ 4.766,50</text>
+        <rect x="16" y="61" width="112" height="16" rx="4" fill="#ECFDF5" />
+        <text x="22" y="73" font-size="9" font-weight="700" fill="#047857">✓ Liquidado via Pix</text>
+      </g>
+
+      <!-- Card 3: Saldo a Receber -->
+      <g transform="translate(644, 0)" filter="url(#cardShadow)">
+        <rect width="304" height="88" rx="8" fill="#FFFFFF" stroke="#E2DDD5" stroke-width="1" />
+        <text x="16" y="24" font-size="10" font-weight="600" fill="#88847E">SALDO A RECEBER</text>
+        <text x="16" y="52" font-size="20" font-weight="900" fill="#D97706" letter-spacing="-0.5">R$ 4.766,50</text>
+        <rect x="16" y="61" width="144" height="16" rx="4" fill="#FFFBEB" />
+        <text x="22" y="73" font-size="9" font-weight="700" fill="#B45309">⏰ Vencimento em 19/10/2026</text>
+      </g>
+    </g>
+
+    <!-- ==========================================
+         CARD STATUS ATUAL DA EXECUÇÃO
+         ========================================== -->
+    <g transform="translate(0, 284)" filter="url(#cardShadow)">
+      <rect width="948" height="74" rx="8" fill="#FFFFFF" stroke="#E2DDD5" stroke-width="1" />
+      
+      <!-- Informações da Etapa Atual -->
+      <text x="18" y="22" font-size="9" font-weight="700" fill="#88847E" letter-spacing="0.5">STATUS ATUAL DA EXECUÇÃO</text>
+      
+      <text x="18" y="44" font-size="13" font-weight="800" fill="#1C1C1A">Etapa Atual: Usinagem e Corte CNC</text>
+      <rect x="250" y="32" width="76" height="18" rx="9" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1" />
+      <text x="288" y="45" font-size="9" font-weight="700" fill="#1D4ED8" text-anchor="middle">Em execução</text>
+
+      <text x="18" y="62" font-size="10.5" fill="#78716C">Corte e furação milimétrica em chapas de MDF 18mm conforme projeto 3D aprovado.</text>
+
+      <!-- Botão Ver Todas as Etapas -->
+      <g transform="translate(790, 22)">
+        <rect width="140" height="30" rx="6" fill="#FAF9F5" stroke="#D3CDC3" stroke-width="1" />
+        <text x="64" y="19" font-size="10.5" font-weight="700" fill="#444440" text-anchor="middle">Ver Todas as Etapas →</text>
+      </g>
+    </g>
+
+    <!-- ==========================================
+         CARD ÚLTIMAS ATUALIZAÇÕES REGISTRADAS
+         ========================================== -->
+    <g transform="translate(0, 372)" filter="url(#cardShadow)">
+      <rect width="948" height="96" rx="8" fill="#FFFFFF" stroke="#E2DDD5" stroke-width="1" />
+      
+      <!-- Cabeçalho do Card -->
+      <text x="18" y="24" font-size="11.5" font-weight="800" fill="#1C1C1A">Últimas Atualizações Registradas</text>
+      <text x="930" y="24" font-size="10.5" font-weight="700" fill="#FF6515" text-anchor="end">Ver todas (1) →</text>
+
+      <!-- Item da Atualização com Log e WhatsApp -->
+      <g transform="translate(18, 36)">
+        <rect width="912" height="46" rx="6" fill="#FBF9F5" stroke="#EAE4DA" stroke-width="1" />
+        
+        <!-- Ícone de Check / Conclusão -->
+        <circle cx="22" cy="23" r="10" fill="#ECFDF5" />
+        <path d="M18 23l3 3 6-6" stroke="#059669" stroke-width="1.8" fill="none" stroke-linecap="round" />
+
+        <!-- Texto da Atualização -->
+        <text x="40" y="18" font-size="11" font-weight="800" fill="#1C1C1A">
+          Usinagem e Corte CNC: <tspan font-weight="500" fill="#52525B">Chapas de MDF cortadas com perfeição na CNC. Notificação enviada ao cliente via WhatsApp.</tspan>
+        </text>
+
+        <!-- Badge de envio WhatsApp -->
+        <rect x="40" y="26" width="168" height="15" rx="3" fill="#ECFDF5" />
+        <text x="46" y="37" font-size="8.5" font-weight="700" fill="#047857">📲 Notificação WhatsApp enviada às 09:30</text>
+
+        <!-- Horário -->
+        <text x="898" y="27" font-size="10" font-weight="600" fill="#A8A29E" text-anchor="end">Hoje 09:30</text>
+      </g>
+    </g>
+
+    <!-- ==========================================
+         CRONOGRAMA DAS 5 ETAPAS (MINI TIMELINE VISUAL)
+         ========================================== -->
+    <g transform="translate(0, 482)" filter="url(#cardShadow)">
+      <rect width="948" height="88" rx="8" fill="#FFFFFF" stroke="#E2DDD5" stroke-width="1" />
+      <text x="18" y="22" font-size="10" font-weight="700" fill="#88847E" letter-spacing="0.5">CRONOGRAMA COMPLETO DE ETAPAS</text>
+
+      <g transform="translate(18, 36)">
+        <!-- Etapa 1: Concluída -->
+        <circle cx="12" cy="14" r="9" fill="#10B981" />
+        <path d="M9 14l2 2 4-4" stroke="#FFFFFF" stroke-width="1.5" fill="none" stroke-linecap="round" />
+        <text x="26" y="12" font-size="10" font-weight="700" fill="#1C1C1A">1. Medição Concluída</text>
+        <text x="26" y="24" font-size="8.5" fill="#059669">Concluído c/ Fotos</text>
+
+        <!-- Linha de conexão -->
+        <line x1="126" y1="14" x2="170" y2="14" stroke="#10B981" stroke-width="2" />
+
+        <!-- Etapa 2: Atual (Usinagem) -->
+        <g transform="translate(178, 0)">
+          <circle cx="12" cy="14" r="9" fill="#3B82F6" />
+          <circle cx="12" cy="14" r="4" fill="#FFFFFF" />
+          <text x="26" y="12" font-size="10" font-weight="800" fill="#1D4ED8">2. Usinagem CNC</text>
+          <text x="26" y="24" font-size="8.5" font-weight="700" fill="#2563EB">Em Execução (Hoje)</text>
+        </g>
+
+        <!-- Linha de conexão -->
+        <line x1="316" y1="14" x2="360" y2="14" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="4 2" />
+
+        <!-- Etapa 3: Montagem -->
+        <g transform="translate(368, 0)">
+          <circle cx="12" cy="14" r="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.5" />
+          <text x="26" y="12" font-size="10" font-weight="600" fill="#64748B">3. Montagem na Bancada</text>
+          <text x="26" y="24" font-size="8.5" fill="#94A3B8">Início: 12/10/2026</text>
+        </g>
+
+        <!-- Linha de conexão -->
+        <line x1="516" y1="14" x2="560" y2="14" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="4 2" />
+
+        <!-- Etapa 4: Acabamento -->
+        <g transform="translate(568, 0)">
+          <circle cx="12" cy="14" r="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.5" />
+          <text x="26" y="12" font-size="10" font-weight="600" fill="#64748B">4. Pintura &amp; Acabamento</text>
+          <text x="26" y="24" font-size="8.5" fill="#94A3B8">Início: 22/10/2026</text>
+        </g>
+
+        <!-- Linha de conexão -->
+        <line x1="716" y1="14" x2="760" y2="14" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="4 2" />
+
+        <!-- Etapa 5: Entrega & Garantia -->
+        <g transform="translate(768, 0)">
+          <circle cx="12" cy="14" r="9" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.5" />
+          <text x="26" y="12" font-size="10" font-weight="600" fill="#64748B">5. Entrega &amp; Termo PDF</text>
+          <text x="26" y="24" font-size="8.5" fill="#94A3B8">Prazo: 28/11/2026</text>
+        </g>
+      </g>
+    </g>
+
+  </g>
+</svg>
