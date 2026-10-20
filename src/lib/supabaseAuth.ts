@@ -37,7 +37,7 @@ export function mapSupabaseUserToProfile(
       (isOwner ? 'Henrique Ferraz' : 'Gestor de Projetos'),
     email: email,
     role: assignedRole,
-    teamRole: extraProfileData?.teamRole || (isOwner ? 'ceo' : 'admin'),
+    teamRole: extraProfileData?.teamRole || (isOwner ? 'admin' : (assignedRole === 'admin' ? 'admin' : 'ceo')),
     phone: extraProfileData?.phone || userMeta.phone,
     workshopName:
       extraProfileData?.workshopName ||

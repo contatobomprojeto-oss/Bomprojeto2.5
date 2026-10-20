@@ -3014,17 +3014,17 @@ export interface ServerTeamMember {
 
 let serverTeamMembers: ServerTeamMember[] = [
   {
-    id: 'member-ceo-1',
+    id: 'member-admin-1',
     name: 'Luis Henrique Ferraz',
     email: 'henrique.ferrazms@gmail.com',
     ownerEmail: 'henrique.ferrazms@gmail.com',
-    role: 'ceo',
+    role: 'admin',
     phone: '+55 62 98220-0944',
     status: 'active',
     workspaceAccess: 'all',
     invitedAt: '24/09/2026',
     joinedAt: '24/09/2026',
-    invitedBy: 'Titular da Conta'
+    invitedBy: 'Administrador Titular'
   }
 ];
 
@@ -3043,29 +3043,29 @@ app.get('/api/team', (req, res) => {
   // Filtrar estritamente membros da equipe pertencentes a este assinante
   let userMembers = serverTeamMembers.filter(m => (m.ownerEmail || '').toLowerCase().trim() === userEmail);
 
-  // Se o novo assinante ainda não possuir nenhum registro de time no servidor, inicializa ele próprio como CEO
+  // Se o novo assinante ainda não possuir nenhum registro de time no servidor, inicializa ele próprio como admin
   if (userMembers.length === 0) {
-    const defaultCeo: ServerTeamMember = {
-      id: `member-ceo-${Date.now().toString().slice(-6)}`,
+    const defaultAdmin: ServerTeamMember = {
+      id: `member-admin-${Date.now().toString().slice(-6)}`,
       name: userEmail.split('@')[0],
       email: userEmail,
       ownerEmail: userEmail,
-      role: 'ceo',
+      role: 'admin',
       status: 'active',
       workspaceAccess: 'all',
       invitedAt: new Date().toLocaleDateString('pt-BR'),
       joinedAt: new Date().toLocaleDateString('pt-BR'),
       invitedBy: 'Titular da Conta'
     };
-    serverTeamMembers.push(defaultCeo);
-    userMembers = [defaultCeo];
+    serverTeamMembers.push(defaultAdmin);
+    userMembers = [defaultAdmin];
   }
 
-  // Garantir que o titular Henrique Ferraz esteja sempre como CEO com acesso total
+  // Garantir que o titular Henrique Ferraz esteja sempre como Administrador com acesso total
   if (userEmail === 'henrique.ferrazms@gmail.com') {
     userMembers.forEach(m => {
       if (m.email.toLowerCase() === 'henrique.ferrazms@gmail.com') {
-        m.role = 'ceo';
+        m.role = 'admin';
       }
     });
   }

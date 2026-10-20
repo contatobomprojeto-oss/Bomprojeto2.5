@@ -367,32 +367,37 @@ export const SAAS_OWNER_EMAIL = 'henrique.ferrazms@gmail.com';
 
 /**
  * Funções de controle de acesso e permissões (RBAC) do Modo Time:
- * - CEO: Acesso irrestrito a todas as suas workspaces, faturamento, equipe e configurações.
- * - Administrador: Gerencia cadastro de projeto, Clientes e Notificação IA.
+ * - Administrador & CEO: Acesso irrestrito a todas as suas workspaces, faturamento, equipe e configurações.
  * - Parceiro: Acesso somente a dados de dashboard, abertura de OS, SEM acesso a dados financeiros.
  */
-export function canAccessFinancials(role: TeamRole = 'ceo'): boolean {
-  return role === 'ceo' || role === 'admin';
+export function canAccessFinancials(role: TeamRole = 'admin', userEmail?: string): boolean {
+  if (userEmail && userEmail.toLowerCase().trim() === SAAS_OWNER_EMAIL.toLowerCase()) return true;
+  return role === 'admin' || role === 'ceo';
 }
 
-export function canManageProjects(role: TeamRole = 'ceo'): boolean {
-  return role === 'ceo' || role === 'admin' || role === 'parceiro';
+export function canManageProjects(role: TeamRole = 'admin', userEmail?: string): boolean {
+  if (userEmail && userEmail.toLowerCase().trim() === SAAS_OWNER_EMAIL.toLowerCase()) return true;
+  return role === 'admin' || role === 'ceo' || role === 'parceiro';
 }
 
-export function canDeleteProject(role: TeamRole = 'ceo'): boolean {
-  return role === 'ceo' || role === 'admin';
+export function canDeleteProject(role: TeamRole = 'admin', userEmail?: string): boolean {
+  if (userEmail && userEmail.toLowerCase().trim() === SAAS_OWNER_EMAIL.toLowerCase()) return true;
+  return role === 'admin' || role === 'ceo';
 }
 
-export function canManageAiNotifications(role: TeamRole = 'ceo'): boolean {
-  return role === 'ceo' || role === 'admin';
+export function canManageAiNotifications(role: TeamRole = 'admin', userEmail?: string): boolean {
+  if (userEmail && userEmail.toLowerCase().trim() === SAAS_OWNER_EMAIL.toLowerCase()) return true;
+  return role === 'admin' || role === 'ceo';
 }
 
-export function canManageTeam(role: TeamRole = 'ceo'): boolean {
-  return role === 'ceo';
+export function canManageTeam(role: TeamRole = 'admin', userEmail?: string): boolean {
+  if (userEmail && userEmail.toLowerCase().trim() === SAAS_OWNER_EMAIL.toLowerCase()) return true;
+  return role === 'admin' || role === 'ceo';
 }
 
-export function canManageCompanySettings(role: TeamRole = 'ceo'): boolean {
-  return role === 'ceo';
+export function canManageCompanySettings(role: TeamRole = 'admin', userEmail?: string): boolean {
+  if (userEmail && userEmail.toLowerCase().trim() === SAAS_OWNER_EMAIL.toLowerCase()) return true;
+  return role === 'admin' || role === 'ceo';
 }
 
 /**
@@ -405,6 +410,20 @@ export const TEAM_ROLE_CONFIGS: Record<TeamRole, {
   description: string;
   permissionsList: string[];
 }> = {
+  admin: {
+    label: 'Administrador',
+    badge: 'Acesso Total',
+    badgeClass: 'bg-indigo-100 text-indigo-800 border-indigo-200',
+    description: 'Acesso total: gerencia projetos, faturamento financeiro, equipe, clientes, configurações e notificações IA.',
+    permissionsList: [
+      'Acesso total e irrestrito ao sistema',
+      'Gestão de equipe e convite de membros',
+      'Gestão financeira completa (faturamento, parcelas, Pix e Cartão)',
+      'Cadastro e exclusão de projetos',
+      'Configurações gerais e fiscais',
+      'Disparos de Notificações com IA'
+    ]
+  },
   ceo: {
     label: 'CEO',
     badge: 'Acesso Total',
@@ -416,19 +435,6 @@ export const TEAM_ROLE_CONFIGS: Record<TeamRole, {
       'Gestão de equipe (convidar membros e alterar cargos)',
       'Configurações gerais e fiscais da empresa',
       'Cadastro de projetos e Notificações IA'
-    ]
-  },
-  admin: {
-    label: 'Administrador',
-    badge: 'Projetos, Clientes & IA',
-    badgeClass: 'bg-blue-100 text-blue-800 border-blue-200',
-    description: 'Gerencia cadastro de projeto, clientes e notificações com IA.',
-    permissionsList: [
-      'Cadastro e edição de projetos e etapas',
-      'Diretório de clientes e contatos',
-      'Configuração e disparos de Notificações com IA',
-      'Acesso aos dados financeiros dos projetos',
-      'Sem permissão para alterar faturamento da conta do CEO'
     ]
   },
   parceiro: {
@@ -447,12 +453,11 @@ export const TEAM_ROLE_CONFIGS: Record<TeamRole, {
 };
 
 /**
- * Verifica estritamente se o usuário logado é o proprietário e fundador do SaaS (Henrique Ferraz).
- * Ninguém mais tem acesso ao Console do Fundador / Gestão de Dados SaaS.
+ * Verifica estritamente se o usuário logado é o proprietário e fundador do SaaS (Henrique Ferraz) ou Administrador.
  */
 export function isSaasOwner(user: UserProfile | null | undefined): boolean {
   if (!user || !user.email) return false;
-  return user.email.trim().toLowerCase() === SAAS_OWNER_EMAIL.toLowerCase();
+  return user.email.trim().toLowerCase() === SAAS_OWNER_EMAIL.toLowerCase() || user.role === 'admin';
 }
 
 // Re-exportação dos tipos e schemas de persistência (Templates por Setor & Módulo Financeiro Flexível)

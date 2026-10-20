@@ -751,8 +751,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     <p className="text-xs font-semibold text-slate-900 truncate leading-tight">
                       {currentUser.name}
                     </p>
-                    <p className="text-[10px] text-slate-400 truncate leading-tight mt-0.5">
-                      {currentUser.role === 'admin' ? 'Administrador' : 'Gestor'}
+                    <p className="text-[10px] text-indigo-600 font-semibold truncate leading-tight mt-0.5">
+                      {currentUser.role === 'admin' ? 'Administrador • Acesso Total' : 'Gestor'}
                     </p>
                   </div>
                 </div>

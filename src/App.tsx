@@ -214,12 +214,11 @@ export default function App() {
       if (saved) {
         const parsed = JSON.parse(saved);
         const emailClean = (parsed.email || '').trim().toLowerCase();
-        // Verificação estrita de autorização: Apenas o e-mail oficial do fundador pode ter a role 'admin'
+        // O perfil oficial henrique.ferrazms@gmail.com é estritamente Administrador com Acesso Total
         if (emailClean === SAAS_OWNER_EMAIL.toLowerCase()) {
           parsed.role = 'admin';
-        } else if (parsed.role === 'admin') {
-          // Revoga imediatamente qualquer privilégio indevido persistido no storage
-          parsed.role = 'marcenaria';
+          parsed.teamRole = 'admin';
+          parsed.plan = 'escala';
         }
         return parsed;
       }
@@ -1303,10 +1302,26 @@ export default function App() {
 
   // Auth Handlers: Sempre direciona para o dashboard principal ao validar o login
   const handleLoginSuccess = (user: UserProfile, _redirectView?: ActiveView) => {
-    setCurrentUser(user);
+    const isOwner = (user.email || '').trim().toLowerCase() === SAAS_OWNER_EMAIL.toLowerCase();
+    const effectiveUser: UserProfile = isOwner ? {
+      ...user,
+      role: 'admin',
+      teamRole: 'admin',
+      plan: 'escala',
+      workshopName: user.workshopName || 'Gestão de Projetos Integrada'
+    } : user;
+
+    if (isOwner || effectiveUser.role === 'admin') {
+      setCurrentTeamRole('admin');
+      try {
+        localStorage.setItem('bomprojeto_current_team_role', 'admin');
+      } catch {}
+    }
+
+    setCurrentUser(effectiveUser);
     try {
-      localStorage.setItem('bomprojeto_user', JSON.stringify(user));
-      localStorage.setItem('bomprojeto_user_email', user.email);
+      localStorage.setItem('bomprojeto_user', JSON.stringify(effectiveUser));
+      localStorage.setItem('bomprojeto_user_email', effectiveUser.email);
       window.history.pushState(null, '', '/#painel');
     } catch (e) {
       console.error(e);
@@ -1314,12 +1329,12 @@ export default function App() {
     // Redireciona imediatamente para o dashboard principal para aprimorar a experiência
     setActiveView('dashboard');
     setIsLoginModalOpen(false);
-    showToast(`Bem-vindo ao Dashboard, ${user.name}! Acesso liberado.`, 'success');
+    showToast(`Bem-vindo ao Dashboard, ${effectiveUser.name}! Nível Administrador com Acesso Total liberado.`, 'success');
 
-    if (user.email) {
-      fetchProjects(user.email);
-      fetchWorkspaces(user.email);
-      fetchSupportAlerts(user.email);
+    if (effectiveUser.email) {
+      fetchProjects(effectiveUser.email);
+      fetchWorkspaces(effectiveUser.email);
+      fetchSupportAlerts(effectiveUser.email);
     }
   };
 
@@ -1922,8 +1937,8 @@ export default function App() {
             onToggleCollapse={handleToggleSidebarCollapse}
             currentRole={currentTeamRole}
             onOpenTeamSettings={() => {
-              if (!canManageTeam(currentTeamRole)) {
-                showToast('Modo Time e gestão de equipe restritos ao CEO.', 'info');
+              if (!canManageTeam(currentTeamRole, currentUser?.email)) {
+                showToast('Modo Time e gestão de equipe restritos ao Administrador e CEO.', 'info');
                 return;
               }
               setSettingsModalTab('team');
@@ -1983,8 +1998,8 @@ export default function App() {
                   currentRole={currentTeamRole}
                   onOpenTeamSettings={() => {
                     setIsMobileSidebarOpen(false);
-                    if (!canManageTeam(currentTeamRole)) {
-                      showToast('Modo Time e gestão de equipe restritos ao CEO.', 'info');
+                    if (!canManageTeam(currentTeamRole, currentUser?.email)) {
+                      showToast('Modo Time e gestão de equipe restritos ao Administrador e CEO.', 'info');
                       return;
                     }
                     setSettingsModalTab('team');

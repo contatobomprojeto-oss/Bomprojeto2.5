@@ -174,7 +174,8 @@ function generatePixEmvPayload(params: {
   const merchantAccountInfo = formatField('00', 'br.gov.bcb.pix') + formatField('01', cleanKey);
 
   let raw = 
-    formatField('00', '01') + // Payload Format Indicator
+    formatField('00', '01') + // Payload Format Indicator ('01')
+    formatField('01', '11') + // Point of Initiation Method ('11' = QR Estático BACEN)
     formatField('26', merchantAccountInfo) + // Merchant Account Information
     formatField('52', '0000') + // Merchant Category Code
     formatField('53', '986') + // Transaction Currency (BRL)

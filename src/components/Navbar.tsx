@@ -349,8 +349,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </div>
                   <div className="text-left hidden sm:block">
                     <div className="font-bold text-white text-xs leading-none">{currentUser.name}</div>
-                    <div className="text-[10px] text-white/60 leading-tight">
-                      {currentUser.role === 'admin' ? 'Fundador / Admin' : 'Gestor'}
+                    <div className="text-[10px] text-emerald-400 font-semibold leading-tight mt-0.5">
+                      {currentUser.role === 'admin' ? 'Administrador • Acesso Total' : 'Gestor'}
                     </div>
                   </div>
                   <ChevronDown className="w-3 h-3 text-white/60" />
@@ -361,6 +361,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <div className="p-2 border-b border-white/10 mb-1">
                       <p className="font-bold text-white">{currentUser.name}</p>
                       <p className="text-[11px] text-white/60 truncate">{currentUser.email}</p>
+                      {currentUser.role === 'admin' && (
+                        <span className="inline-block mt-1 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-500/30 text-indigo-300 border border-indigo-400/30">
+                          Administrador • Acesso Total
+                        </span>
+                      )}
                     </div>
 
                     <button
@@ -377,7 +382,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                         className="w-full text-left p-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-200 flex items-center gap-2 cursor-pointer font-semibold"
                       >
                         <ShieldCheck className="w-4 h-4 text-amber-400" />
-                        <span>Console SaaS (Fundador)</span>
+                        <span>Console SaaS (Administrador)</span>
                       </button>
                     )}
 

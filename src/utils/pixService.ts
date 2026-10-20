@@ -303,12 +303,12 @@ export function generatePixEmv(params: {
   }
   const additionalDataField = formatTlv('05', cleanTxId);
 
-  // Payload Format Indicator (00) -> Merchant Account Info (26)
-  // Nota: A omissão da Tag 01 (Point of Initiation Method) segue a recomendação do BACEN
-  // e do Mercado Pago para QR Codes universais, garantindo 100% de leitura em todos os bancos
-  // (Nubank, Itaú, Bradesco, BB, Inter, Santander, Caixa, C6, PicPay, etc.)
+  // Payload Format Indicator (00) -> Point of Initiation Method (01) -> Merchant Account Info (26)
+  // Nota: A inclusão da Tag 01 com '11' (QR Estático) é obrigatória pela norma do BACEN (BR Code)
+  // e é exigida expressamente por aplicativos bancários como Nubank, Itaú, Bradesco, BB, Caixa, etc.
   let raw = 
     formatTlv('00', '01') + // 00: Payload Format Indicator ('01')
+    formatTlv('01', '11') + // 01: Point of Initiation Method ('11' = QR Estático reutilizável)
     formatTlv('26', merchantAccountInfo) + // 26: Merchant Account Information (br.gov.bcb.pix + chave)
     formatTlv('52', '0000') + // 52: Merchant Category Code ('0000')
     formatTlv('53', '986'); // 53: Currency Code (BRL = 986)
@@ -508,18 +508,76 @@ export async function buildClientPixDetails(
 
   const cleanMerchant = merchantName || project.workspaceName || 'BOM PROJETO';
   
-  // Gera o Copia e Cola oficial com validação BACEN
+  // 1. Se já havia um payload dinâmico oficial salvo na parcela com QR Code, aproveita diretamente
+  if (installment.pixQrCode && installment.pixQrCode.startsWith('000201')) {
+    const qrBase64 = installment.pixQrCodeBase64 || await generatePixQrCodeBase64(installment.pixQrCode);
+    return {
+      rawKey: activeKey,
+      cleanKey: detected.clean,
+      keyType: detected.type,
+      keyTypeLabel: detected.label,
+      merchantName: cleanMerchant,
+      merchantCity: 'SAO PAULO',
+      amount,
+      formattedAmount,
+      txId: displayTxId,
+      copiaECola: installment.pixQrCode,
+      qrCodeBase64: qrBase64,
+      isPlaceholder: false
+    };
+  }
+
+  // 2. Tenta gerar via gateway oficial (/api/payment/pix) para registrar no BACEN / Mercado Pago
+  if (typeof window !== 'undefined' && amount > 0) {
+    try {
+      const resp = await fetch('/api/payment/pix', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount,
+          description: `OS ${project.code} - ${installment.label || `Parcela #${installment.number}`}`,
+          payer: {
+            email: project.clientPhone ? `${project.clientPhone.replace(/\D/g, '')}@cliente.bomprojeto.com` : 'cliente@empresa.com',
+            name: project.clientName || 'Cliente'
+          },
+          projectId: project.id,
+          installmentNumber: installment.number
+        }),
+        signal: AbortSignal.timeout(3000)
+      });
+      if (resp.ok) {
+        const orderData = await resp.json();
+        if (orderData.qrCode && orderData.qrCode.startsWith('000201')) {
+          installment.pixQrCode = orderData.qrCode;
+          installment.pixQrCodeBase64 = orderData.qrCodeBase64;
+          return {
+            rawKey: activeKey,
+            cleanKey: detected.clean,
+            keyType: detected.type,
+            keyTypeLabel: detected.label,
+            merchantName: cleanMerchant,
+            merchantCity: 'SAO PAULO',
+            amount,
+            formattedAmount,
+            txId: orderData.paymentId || displayTxId,
+            copiaECola: orderData.qrCode,
+            qrCodeBase64: orderData.qrCodeBase64,
+            isPlaceholder: false
+          };
+        }
+      }
+    } catch {
+      // Continua para o gerador nativo BACEN homologado
+    }
+  }
+
+  // 3. Gera o Copia e Cola oficial estático com validação BACEN completa (Tag 01 incluída)
   let copiaECola = detected.clean ? generatePixEmv({
     pixKey: detected.clean,
     merchantName: cleanMerchant,
     merchantCity: 'SAO PAULO',
     amount
   }) : '';
-
-  // Se porventura já havia um payload EMV válido salvo na parcela, utiliza como garantia
-  if (!copiaECola && installment.pixQrCode && installment.pixQrCode.startsWith('000201')) {
-    copiaECola = installment.pixQrCode;
-  }
 
   copiaECola = sanitizePixCopiaECola(copiaECola);
   const qrCodeBase64 = copiaECola ? await generatePixQrCodeBase64(copiaECola) : '';
