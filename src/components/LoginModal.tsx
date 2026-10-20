@@ -2,21 +2,16 @@ import React, { useState } from 'react';
 import { 
   X, 
   Sparkles, 
-  CheckCircle2, 
   ShieldCheck, 
   Smartphone, 
   FileText,
   Building,
   User,
   ArrowRight,
-  Mail,
-  Lock,
-  UserPlus,
-  LogIn,
-  KeyRound
+  CheckCircle2
 } from 'lucide-react';
 import { UserProfile, ActiveView, SAAS_OWNER_EMAIL } from '../types';
-import { signInWithGoogle, signInWithEmail, signUpWithEmail } from '../lib/supabaseAuth';
+import { signInWithGoogle } from '../lib/supabaseAuth';
 import { BrandLogo } from './BrandLogo';
 import { trackLeadConversion } from '../utils/gtmAnalytics';
 
@@ -26,7 +21,6 @@ interface LoginModalProps {
   onLoginSuccess: (user: UserProfile, redirectView: ActiveView) => void;
   onSelectView?: (view: ActiveView) => void;
   onOpenVideoModal?: () => void;
-  initialSignUp?: boolean;
 }
 
 export const LoginModal: React.FC<LoginModalProps> = ({
@@ -34,18 +28,9 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   onClose,
   onLoginSuccess,
   onSelectView,
-  onOpenVideoModal,
-  initialSignUp = false
+  onOpenVideoModal
 }) => {
   const [activeTab, setActiveTab] = useState<'marcenaria' | 'client'>('marcenaria');
-  // Por padrão, exibe diretamente o formulário de E-mail e Senha (com opção de alternar entre Cadastro e Login)
-  const [authMode, setAuthMode] = useState<'signup' | 'signin'>(initialSignUp ? 'signup' : 'signin');
-
-  // Form states
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [workshopName, setWorkshopName] = useState('');
 
   // Client OS state
   const [osCode, setOsCode] = useState('#PRJ-204');
@@ -105,7 +90,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         email: targetEmail,
         role: isOwnerOrAdmin ? 'admin' : 'marcenaria',
         teamRole: isOwnerOrAdmin ? 'admin' : 'ceo',
-        workshopName: workshopName || (isOwnerOrAdmin ? 'Gestão de Projetos Integrada' : 'Minha Marcenaria'),
+        workshopName: isOwnerOrAdmin ? 'Gestão de Projetos Integrada' : 'Minha Marcenaria',
         plan: isOwnerOrAdmin ? 'escala' : 'start'
       };
 
@@ -137,7 +122,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     }, 300);
   };
 
-  // Login Oficial Google
+  // Login Oficial Google (Único Método Oficial de Autenticação)
   const handleGoogleLogin = async (role: 'marcenaria' | 'client') => {
     setIsLoading(true);
     setErrorMsg('');
@@ -154,131 +139,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       await signInWithGoogle(`${origin}/#painel`);
     } catch (err: any) {
       console.warn('[Supabase Google Auth Notice]:', err?.message || err);
-      let userFriendlyMsg = 'Falha ao conectar com o Google no momento. Você pode cadastrar ou entrar com E-mail e Senha normalmente.';
+      let userFriendlyMsg = 'Falha ao conectar com o Google no momento. Utilize o acesso rápido de teste abaixo no ambiente de desenvolvimento.';
       if (err?.message) {
-        userFriendlyMsg = `${err.message}. Você pode acessar diretamente pelo formulário de e-mail e senha abaixo.`;
+        userFriendlyMsg = `${err.message}. Acesse o painel pelo botão de acesso rápido abaixo.`;
       }
       setErrorMsg(userFriendlyMsg);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Login ou Cadastro por E-mail e Senha
-  const handleEmailAuth = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const cleanEmail = email.trim().toLowerCase();
-    
-    if (!cleanEmail || !password) {
-      setErrorMsg('Por favor informe seu e-mail e senha.');
-      return;
-    }
-
-    if (password.length < 6) {
-      setErrorMsg('A senha deve conter no mínimo 6 caracteres.');
-      return;
-    }
-
-    const isOwnerOrAdmin = cleanEmail === SAAS_OWNER_EMAIL.toLowerCase();
-
-    setIsLoading(true);
-    setErrorMsg('');
-
-    try {
-      if (authMode === 'signup') {
-        // Fluxo de Cadastro com E-mail e Senha
-        try {
-          const res = await signUpWithEmail(cleanEmail, password, {
-            name: fullName.trim() || (isOwnerOrAdmin ? 'Henrique Ferraz' : 'Novo Gestor'),
-            workshopName: workshopName.trim() || (isOwnerOrAdmin ? 'Gestão de Projetos Integrada' : 'Minha Oficina'),
-            role: isOwnerOrAdmin ? 'admin' : 'marcenaria'
-          });
-
-          if (res.user) {
-            const finalUser: UserProfile = isOwnerOrAdmin ? {
-              ...res.user,
-              role: 'admin',
-              teamRole: 'admin',
-              plan: 'escala'
-            } : res.user;
-
-            onLoginSuccess(finalUser, 'dashboard');
-            onClose();
-            return;
-          }
-        } catch (supaErr: any) {
-          console.warn('[Supabase SignUp Notice - Using local resilient session]:', supaErr?.message || supaErr);
-        }
-
-        // Sessão resiliente imediata para permitir cadastro sem falhas no ambiente
-        const registeredUser: UserProfile = {
-          id: isOwnerOrAdmin ? 'usr-henrique-admin' : `usr-${Date.now().toString().slice(-6)}`,
-          name: fullName.trim() || (isOwnerOrAdmin ? 'Henrique Ferraz' : cleanEmail.split('@')[0]),
-          email: cleanEmail,
-          role: isOwnerOrAdmin ? 'admin' : 'marcenaria',
-          teamRole: isOwnerOrAdmin ? 'admin' : 'ceo',
-          workshopName: workshopName.trim() || (isOwnerOrAdmin ? 'Gestão de Projetos Integrada' : 'Oficina de Projetos'),
-          plan: isOwnerOrAdmin ? 'escala' : 'start'
-        };
-
-        try {
-          localStorage.setItem(`bomprojeto_registered_${cleanEmail}`, JSON.stringify({
-            ...registeredUser,
-            passwordHash: btoa(password)
-          }));
-        } catch {}
-
-        onLoginSuccess(registeredUser, 'dashboard');
-        onClose();
-      } else {
-        // Fluxo de Login com E-mail e Senha
-        try {
-          const res = await signInWithEmail(cleanEmail, password);
-          if (res.user) {
-            const finalUser: UserProfile = isOwnerOrAdmin ? {
-              ...res.user,
-              role: 'admin',
-              teamRole: 'admin',
-              plan: 'escala'
-            } : res.user;
-
-            onLoginSuccess(finalUser, 'dashboard');
-            onClose();
-            return;
-          }
-        } catch (supaErr: any) {
-          console.warn('[Supabase SignIn Notice - Using local resilient session]:', supaErr?.message || supaErr);
-        }
-
-        // Recupera do storage local se já havia sido cadastrado
-        let existingUser: UserProfile | null = null;
-        try {
-          const raw = localStorage.getItem(`bomprojeto_registered_${cleanEmail}`);
-          if (raw) existingUser = JSON.parse(raw);
-        } catch {}
-
-        const finalUser: UserProfile = existingUser || {
-          id: isOwnerOrAdmin ? 'usr-henrique-admin' : `usr-${Date.now().toString().slice(-6)}`,
-          name: isOwnerOrAdmin ? 'Henrique Ferraz' : cleanEmail.split('@')[0],
-          email: cleanEmail,
-          role: isOwnerOrAdmin ? 'admin' : 'marcenaria',
-          teamRole: isOwnerOrAdmin ? 'admin' : 'ceo',
-          workshopName: isOwnerOrAdmin ? 'Gestão de Projetos Integrada' : 'Minha Oficina',
-          plan: isOwnerOrAdmin ? 'escala' : 'start'
-        };
-
-        if (isOwnerOrAdmin) {
-          finalUser.role = 'admin';
-          finalUser.teamRole = 'admin';
-          finalUser.plan = 'escala';
-        }
-
-        onLoginSuccess(finalUser, 'dashboard');
-        onClose();
-      }
-    } catch (err: any) {
-      console.error('Auth error:', err);
-      setErrorMsg(err?.message || 'Erro ao processar autenticação. Tente novamente.');
     } finally {
       setIsLoading(false);
     }
@@ -315,7 +180,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             Acesse seu espaço no BOMProjeto
           </h2>
           <p className="text-[11px] sm:text-xs text-[#475569] mt-0.5 font-normal">
-            Cadastro e login com E-mail e Senha ou autenticação oficial Google.
+            Autenticação rápida e segura exclusivamente com sua Conta Google.
           </p>
 
           {/* Alternador Principal: Painel de Gestão vs Área do Cliente */}
@@ -361,176 +226,61 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             </div>
           )}
 
-          {/* TAB 1: PAINEL DE GESTÃO */}
+          {/* TAB 1: PAINEL DE GESTÃO (EXCLUSIVO GOOGLE AUTH) */}
           {activeTab === 'marcenaria' && (
             <div className="space-y-4">
               
-              {/* Seletor Claro: CADASTRAR NOVA CONTA vs ENTRAR NA CONTA */}
-              <div className="bg-slate-100 p-1 rounded-xl flex items-center border border-slate-200">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAuthMode('signup');
-                    setErrorMsg('');
-                  }}
-                  className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                    authMode === 'signup'
-                      ? 'bg-white text-[#0F172A] shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  <UserPlus className="w-3.5 h-3.5 text-[#FF6515]" />
-                  <span>Cadastrar Conta</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAuthMode('signin');
-                    setErrorMsg('');
-                  }}
-                  className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                    authMode === 'signin'
-                      ? 'bg-white text-[#0F172A] shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  <LogIn className="w-3.5 h-3.5 text-blue-600" />
-                  <span>Entrar com Senha</span>
-                </button>
+              <div className="text-center py-2 space-y-1">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-semibold border border-emerald-200">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Autenticação Unificada Google Auth</span>
+                </span>
+                <p className="text-xs text-slate-600 pt-1">
+                  Não é necessário criar senha. Entre diretamente com seu e-mail do Google corporativo ou pessoal.
+                </p>
               </div>
 
-              {/* FORMULÁRIO DE CADASTRO OU LOGIN POR E-MAIL E SENHA */}
-              <form onSubmit={handleEmailAuth} className="space-y-3 p-4 rounded-2xl bg-slate-50/80 border border-slate-200">
-                <div className="flex items-center justify-between pb-1 border-b border-slate-200/70">
-                  <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                    {authMode === 'signup' ? (
-                      <>
-                        <UserPlus className="w-3.5 h-3.5 text-[#FF6515]" />
-                        <span>Novo Cadastro de Gestor</span>
-                      </>
-                    ) : (
-                      <>
-                        <KeyRound className="w-3.5 h-3.5 text-blue-600" />
-                        <span>Entrar com E-mail e Senha</span>
-                      </>
-                    )}
-                  </span>
-                  <span className="text-[10px] text-slate-500 font-medium">
-                    {authMode === 'signup' ? 'Gratuito e Imediato' : 'Acesso Seguro'}
-                  </span>
-                </div>
-
-                {authMode === 'signup' && (
-                  <>
-                    <div>
-                      <label className="text-[11px] font-semibold text-slate-700">Seu Nome Completo</label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="Ex: Carlos Mendes"
-                        value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
-                        className="w-full h-10 px-3 mt-1 rounded-xl border border-slate-300 bg-white text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-500 transition-all"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-[11px] font-semibold text-slate-700">Nome da Empresa / Oficina</label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="Ex: Mendes Ambientes Planejados"
-                        value={workshopName}
-                        onChange={(e) => setWorkshopName(e.target.value)}
-                        className="w-full h-10 px-3 mt-1 rounded-xl border border-slate-300 bg-white text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-500 transition-all"
-                      />
-                    </div>
-                  </>
-                )}
-
-                <div>
-                  <label className="text-[11px] font-semibold text-slate-700">E-mail Profissional</label>
-                  <div className="relative mt-1">
-                    <Mail className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                    <input
-                      type="email"
-                      required
-                      placeholder="seu.email@empresa.com.br"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full h-10 pl-9 pr-3 rounded-xl border border-slate-300 bg-white text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-500 transition-all"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between">
-                    <label className="text-[11px] font-semibold text-slate-700">Senha</label>
-                    <span className="text-[10px] text-slate-400">Mínimo 6 caracteres</span>
-                  </div>
-                  <div className="relative mt-1">
-                    <Lock className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                    <input
-                      type="password"
-                      required
-                      minLength={6}
-                      placeholder="••••••••"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="w-full h-10 pl-9 pr-3 rounded-xl border border-slate-300 bg-white text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-slate-500 transition-all"
-                    />
-                  </div>
-                </div>
-
-                <button
-                  id="btn-submit-email-auth"
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full h-11 rounded-xl bg-[#0F172A] hover:bg-black text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-xs hover:shadow-md transition-all active:scale-[0.99] mt-2"
-                >
-                  {isLoading ? (
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  ) : authMode === 'signup' ? (
-                    <UserPlus className="w-4 h-4 text-[#FF6515]" />
-                  ) : (
-                    <LogIn className="w-4 h-4 text-emerald-400" />
-                  )}
-                  <span>
-                    {isLoading
-                      ? 'Processando autenticação...'
-                      : authMode === 'signup'
-                      ? 'Concluir Cadastro e Acessar'
-                      : 'Entrar no Painel com E-mail'}
-                  </span>
-                </button>
-              </form>
-
-              {/* DIVISOR: GOOGLE AUTH */}
-              <div className="relative flex py-1 items-center">
-                <div className="flex-grow border-t border-[#EAECEF]"></div>
-                <span className="flex-shrink mx-3 text-[10px] text-[#94A3B8] uppercase tracking-wider font-semibold">ou conecte via google</span>
-                <div className="flex-grow border-t border-[#EAECEF]"></div>
-              </div>
-
-              {/* Botão Oficial Google Sign-In */}
+              {/* Botão Oficial Principal Google Sign-In */}
               <button
                 id="btn-google-login-marcenaria"
                 type="button"
                 onClick={() => handleGoogleLogin('marcenaria')}
                 disabled={isLoading}
-                className="w-full h-11 rounded-xl border border-[#EAECEF] bg-white hover:bg-slate-50 text-[#0F172A] font-semibold text-xs transition-all flex items-center justify-center gap-3 shadow-2xs hover:shadow-xs cursor-pointer group active:scale-[0.99]"
+                className="w-full h-12 rounded-2xl border-2 border-[#0F172A] bg-white hover:bg-slate-50 text-[#0F172A] font-bold text-sm transition-all flex items-center justify-center gap-3 shadow-xs hover:shadow-md cursor-pointer group active:scale-[0.99]"
               >
-                <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
                   <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
                   <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
                   <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
                 </svg>
-                <span>Continuar com o Google</span>
+                <span>{isLoading ? 'Conectando ao Google...' : 'Entrar com o Google'}</span>
               </button>
 
-              {/* Atalho Rápido Exclusivo: Administrador (Henrique Ferraz • Acesso Total) */}
-              <div className="pt-1 space-y-2">
+              {/* Informações de Proteção Google */}
+              <div className="bg-[#F8F9FA] border border-[#EAECEF] rounded-2xl p-3.5 space-y-1.5">
+                <div className="flex items-center gap-2 text-xs font-semibold text-[#0F172A]">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  <span>Segurança Corporativa Google OAuth</span>
+                </div>
+                <div className="space-y-1 text-[11px] text-[#475569]">
+                  <div className="flex items-start gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                    <span>Login sem senhas expostas com proteção OAuth 2.0.</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
+                    <span>Sincronização imediata de projetos e faturamento.</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Atalho Rápido para Ambiente de Demonstração / Administrador */}
+              <div className="pt-2 border-t border-[#EAECEF] space-y-2">
+                <span className="text-[10px] text-[#94A3B8] uppercase tracking-wider font-semibold block text-center">
+                  acesso rápido para homologação
+                </span>
+
                 <button
                   id="btn-admin-access-henrique"
                   type="button"
@@ -557,17 +307,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                   <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
                   <span>Acesso Rápido de Teste (Visitante)</span>
                 </button>
-              </div>
-
-              {/* Informações de Proteção */}
-              <div className="bg-[#F8F9FA] border border-[#EAECEF] rounded-xl p-3 space-y-1">
-                <div className="flex items-center gap-2 text-[11px] font-semibold text-[#0F172A]">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Espaço de Gestão Criptografado & Isolado</span>
-                </div>
-                <p className="text-[10px] text-[#475569]">
-                  Seus dados, clientes, cronogramas de obras e cobranças Pix ficam salvos de forma confidencial e protegida.
-                </p>
               </div>
 
             </div>
