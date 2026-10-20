@@ -527,7 +527,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 </span>
               </div>
               <p className="font-subtitle font-montserrat font-medium text-xs text-[#5F6368] mt-0.5">
-                Painel exclusivo de {currentUser?.name || 'Henrique Ferraz'} • Telemetria, faturamento recorrente (MRR) e consumo real desde 24/09/2026
+                Painel exclusivo de {currentUser?.name || 'Administrador'} • Telemetria, faturamento recorrente (MRR) e consumo real desde 24/09/2026
               </p>
             </div>
           </div>

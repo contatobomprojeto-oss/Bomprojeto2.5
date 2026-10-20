@@ -1091,14 +1091,14 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
 
             </div>
 
-            {/* Painel Exclusivo: Modo Criador & Testes (Henrique Ferraz) */}
+            {/* Painel de Administrador: Testes de Cota e Planos */}
             {isFounder && (
               <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 space-y-2.5 shadow-xs">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Crown className="w-5 h-5 text-amber-700" />
+                    <ShieldCheck className="w-5 h-5 text-amber-700" />
                     <span className="font-bold text-xs text-amber-950 uppercase tracking-wide">
-                      Perfil Criador (Henrique Ferraz) — Modo de Testes Sem Restrições
+                      Ambiente do Administrador — Acesso Total &amp; Teste de Planos
                     </span>
                   </div>
                   <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-amber-200 text-amber-900 border border-amber-300">
@@ -1106,7 +1106,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
                   </span>
                 </div>
                 <p className="text-xs text-amber-900/90 leading-relaxed">
-                  Como criador da ferramenta, você pode alterar seu plano livremente para testar qualquer cota e funcionalidade (Grátis, Start ou Scala) instantaneamente, sem precisar passar pelo gateway de pagamento:
+                  Como administrador do sistema, você pode alternar o plano da sua conta para simular cotas e limites (Grátis, Start ou Scala) instantaneamente:
                 </p>
                 <div className="flex flex-wrap items-center gap-2 pt-1">
                   <span className="text-[11px] font-bold text-amber-950">Mudar plano ativo agora:</span>

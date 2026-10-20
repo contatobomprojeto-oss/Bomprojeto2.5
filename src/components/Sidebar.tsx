@@ -582,20 +582,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 </button>
               )}
 
-              {/* Console Fundador (Exclusivo henrique.ferrazms@gmail.com) */}
+              {/* Área de Admin (Exclusivo henrique.ferrazms@gmail.com / Administrador) */}
               {isFounder && (
                 effectiveCollapsed ? (
                   <button
                     id="sidebar-nav-admin"
                     onClick={() => handleItemClick('admin')}
                     className={navItemClassCollapsed(isNavActive('admin'))}
-                    aria-label="Console Fundador"
+                    aria-label="Área de Admin"
                   >
                     <ShieldCheck className={`w-[19px] h-[19px] ${isNavActive('admin') ? 'text-white' : 'text-[#64748B]'}`} />
                     <div className="absolute left-[calc(100%+12px)] top-1/2 -translate-y-1/2 px-2.5 py-1.5 bg-[#0F172A] text-white text-xs font-medium rounded-lg shadow-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap flex items-center gap-1.5">
-                      <span>Console Fundador</span>
-                      <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-amber-500 text-white">
-                        SaaS
+                      <span>Área de Admin</span>
+                      <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-indigo-600 text-white">
+                        Admin
                       </span>
                     </div>
                   </button>
@@ -607,12 +607,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   >
                     <div className="flex items-center gap-2.5">
                       <ShieldCheck className={`w-[18px] h-[18px] ${isNavActive('admin') ? 'text-white' : 'text-[#64748B]'}`} />
-                      <span>Console Fundador</span>
+                      <span>Área de Admin</span>
                     </div>
                     <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-md ${
-                      isNavActive('admin') ? 'bg-white/20 text-white' : 'bg-amber-100 text-amber-900'
+                      isNavActive('admin') ? 'bg-white/20 text-white' : 'bg-indigo-100 text-indigo-900'
                     }`}>
-                      SaaS
+                      Admin
                     </span>
                   </button>
                 )

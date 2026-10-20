@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { 
   X, 
-  Sparkles, 
   ShieldCheck, 
   Smartphone, 
   FileText,
@@ -10,7 +9,7 @@ import {
   ArrowRight,
   CheckCircle2
 } from 'lucide-react';
-import { UserProfile, ActiveView, SAAS_OWNER_EMAIL } from '../types';
+import { UserProfile, ActiveView } from '../types';
 import { signInWithGoogle } from '../lib/supabaseAuth';
 import { BrandLogo } from './BrandLogo';
 import { trackLeadConversion } from '../utils/gtmAnalytics';
@@ -50,56 +49,6 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
   if (!isOpen) return null;
 
-  // Login de Demonstração Oficial do Administrador / Fundador
-  const handleAdminDemoLogin = () => {
-    setIsLoading(true);
-    setErrorMsg('');
-
-    setTimeout(() => {
-      setIsLoading(false);
-      const user: UserProfile = {
-        id: 'usr-henrique-admin',
-        name: 'Henrique Ferraz',
-        email: SAAS_OWNER_EMAIL,
-        role: 'admin',
-        teamRole: 'admin',
-        workshopName: 'Gestão de Projetos Integrada',
-        plan: 'escala',
-        avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80'
-      };
-      onLoginSuccess(user, 'dashboard');
-      trackLeadConversion('login_admin_demo', user.email);
-      onClose();
-    }, 250);
-  };
-
-  // Acesso Direto para Visitantes / Teste Rápido no Dashboard
-  const handleVisitorInstantAccess = (customEmail?: string, customName?: string) => {
-    setIsLoading(true);
-    setErrorMsg('');
-
-    setTimeout(() => {
-      setIsLoading(false);
-      const randomSuffix = Math.random().toString(36).substring(2, 7);
-      const targetEmail = (customEmail || `visitante_${randomSuffix}@bomprojeto.com`).toLowerCase().trim();
-      const isOwnerOrAdmin = targetEmail === SAAS_OWNER_EMAIL.toLowerCase();
-
-      const user: UserProfile = {
-        id: isOwnerOrAdmin ? 'usr-henrique-admin' : `usr-visitante-${randomSuffix}`,
-        name: isOwnerOrAdmin ? 'Henrique Ferraz' : (customName || 'Gestor Visitante'),
-        email: targetEmail,
-        role: isOwnerOrAdmin ? 'admin' : 'marcenaria',
-        teamRole: isOwnerOrAdmin ? 'admin' : 'ceo',
-        workshopName: isOwnerOrAdmin ? 'Gestão de Projetos Integrada' : 'Minha Marcenaria',
-        plan: isOwnerOrAdmin ? 'escala' : 'start'
-      };
-
-      onLoginSuccess(user, 'dashboard');
-      trackLeadConversion('login_visitante_direto', user.email);
-      onClose();
-    }, 250);
-  };
-
   // Login do Cliente (OS + WhatsApp)
   const handleClientLogin = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -122,7 +71,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     }, 300);
   };
 
-  // Login Oficial Google (Único Método Oficial de Autenticação)
+  // Login Oficial com Google OAuth (Único Método de Autenticação)
   const handleGoogleLogin = async (role: 'marcenaria' | 'client') => {
     setIsLoading(true);
     setErrorMsg('');
@@ -139,11 +88,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       await signInWithGoogle(`${origin}/#painel`);
     } catch (err: any) {
       console.warn('[Supabase Google Auth Notice]:', err?.message || err);
-      let userFriendlyMsg = 'Falha ao conectar com o Google no momento. Utilize o acesso rápido de teste abaixo no ambiente de desenvolvimento.';
-      if (err?.message) {
-        userFriendlyMsg = `${err.message}. Acesse o painel pelo botão de acesso rápido abaixo.`;
-      }
-      setErrorMsg(userFriendlyMsg);
+      setErrorMsg(err?.message || 'Falha ao autenticar com o Google. Por favor, tente novamente.');
     } finally {
       setIsLoading(false);
     }
@@ -180,7 +125,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             Acesse seu espaço no BOMProjeto
           </h2>
           <p className="text-[11px] sm:text-xs text-[#475569] mt-0.5 font-normal">
-            Autenticação rápida e segura exclusivamente com sua Conta Google.
+            Autenticação segura via Conta Google.
           </p>
 
           {/* Alternador Principal: Painel de Gestão vs Área do Cliente */}
@@ -233,10 +178,10 @@ export const LoginModal: React.FC<LoginModalProps> = ({
               <div className="text-center py-2 space-y-1">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-semibold border border-emerald-200">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Autenticação Unificada Google Auth</span>
+                  <span>Autenticação Oficial Google</span>
                 </span>
                 <p className="text-xs text-slate-600 pt-1">
-                  Não é necessário criar senha. Entre diretamente com seu e-mail do Google corporativo ou pessoal.
+                  Entre com sua conta Google. Gestores e administradores são reconhecidos automaticamente pelo seu e-mail.
                 </p>
               </div>
 
@@ -266,47 +211,13 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                 <div className="space-y-1 text-[11px] text-[#475569]">
                   <div className="flex items-start gap-2">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                    <span>Login sem senhas expostas com proteção OAuth 2.0.</span>
+                    <span>Autenticação protegida diretamente pelos servidores da Google.</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
-                    <span>Sincronização imediata de projetos e faturamento.</span>
+                    <span>Permissões de Administrador concedidas automaticamente ao perfil autorizado.</span>
                   </div>
                 </div>
-              </div>
-
-              {/* Atalho Rápido para Ambiente de Demonstração / Administrador */}
-              <div className="pt-2 border-t border-[#EAECEF] space-y-2">
-                <span className="text-[10px] text-[#94A3B8] uppercase tracking-wider font-semibold block text-center">
-                  acesso rápido para homologação
-                </span>
-
-                <button
-                  id="btn-admin-access-henrique"
-                  type="button"
-                  onClick={handleAdminDemoLogin}
-                  disabled={isLoading}
-                  className="w-full py-2.5 px-3 rounded-xl border border-indigo-200 bg-indigo-50/70 hover:bg-indigo-100 text-indigo-950 font-bold text-xs transition-all flex items-center justify-between cursor-pointer group shadow-2xs"
-                >
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-indigo-600" />
-                    <span>Entrar como Administrador (Henrique Ferraz)</span>
-                  </div>
-                  <span className="text-[10px] bg-indigo-600 text-white font-semibold px-2 py-0.5 rounded-full">
-                    Acesso Total
-                  </span>
-                </button>
-
-                <button
-                  id="btn-visitor-direct-access"
-                  type="button"
-                  onClick={() => handleVisitorInstantAccess()}
-                  disabled={isLoading}
-                  className="w-full h-9 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-medium text-[11px] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Acesso Rápido de Teste (Visitante)</span>
-                </button>
               </div>
 
             </div>

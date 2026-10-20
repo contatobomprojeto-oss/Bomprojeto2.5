@@ -570,14 +570,14 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
                 {onOpenAdminDashboard && isFounder && (
                   <button
                     onClick={onOpenAdminDashboard}
-                    className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-[#EA580C] bg-[#FFF7ED] hover:bg-[#FFEDD5] transition-colors text-left cursor-pointer"
+                    className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold text-indigo-900 bg-indigo-50 hover:bg-indigo-100 transition-colors text-left cursor-pointer"
                   >
                     <div className="flex items-center gap-2">
-                      <ShieldCheck className="w-4 h-4 text-[#EA580C]" />
-                      <span>Console Fundador (SaaS)</span>
+                      <ShieldCheck className="w-4 h-4 text-indigo-700" />
+                      <span>Área de Admin</span>
                     </div>
-                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-md bg-[#FEF7E0] text-[#B06000]">
-                      CEO
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-indigo-200 text-indigo-900">
+                      ADMIN
                     </span>
                   </button>
                 )}

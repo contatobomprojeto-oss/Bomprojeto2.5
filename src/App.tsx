@@ -167,12 +167,16 @@ const parseCurrentUrlView = (): ActiveView => {
       return 'dashboard';
     }
 
-    // 6. If user already has an active session in storage, redirect directly to dashboard
+    // 6. If user already has an active session in storage, redirect directly to admin_dashboard or dashboard
     try {
       const savedUser = localStorage.getItem('bomprojeto_user');
       if (savedUser) {
         const parsed = JSON.parse(savedUser);
         if (parsed && (parsed.email || parsed.id)) {
+          const userEmail = (parsed.email || '').trim().toLowerCase();
+          if (userEmail === SAAS_OWNER_EMAIL.toLowerCase()) {
+            return 'admin_dashboard';
+          }
           return 'dashboard';
         }
       }
@@ -981,9 +985,10 @@ export default function App() {
     // Check URL on mount
     const initialView = parseCurrentUrlView();
     setActiveView(prev => {
-      // Se a URL ou o usuário já for autenticado, prioriza dashboard para não deixar visitantes presos na landing
+      // Se a URL ou o usuário já for autenticado, prioriza a visão adequada (admin_dashboard para Administrador)
       if (initialView === 'landing' && (currentUser?.email || localStorage.getItem('bomprojeto_user'))) {
-        return 'dashboard';
+        const isOwner = (currentUser?.email || localStorage.getItem('bomprojeto_user_email') || '').toLowerCase().trim() === SAAS_OWNER_EMAIL.toLowerCase();
+        return isOwner ? 'admin_dashboard' : 'dashboard';
       }
       return initialView;
     });
@@ -1224,14 +1229,14 @@ export default function App() {
 
           const updated: UserProfile = {
             id: sbUser.id,
-            name: sbUser.name || (isSameUser ? prev?.name : 'Usuário') || 'Usuário',
+            name: sbUser.name || (isSameUser ? prev?.name : (isOwner ? 'Henrique Ferraz' : 'Usuário')) || 'Usuário',
             email: userEmail,
             role: assignedRole,
-            teamRole: sbUser.teamRole || (isOwner ? 'ceo' : 'admin'),
-            workshopName: (isSameUser && prev?.workshopName ? prev.workshopName : (sbUser.workshopName || '')),
+            teamRole: isOwner ? 'admin' : (sbUser.teamRole || 'ceo'),
+            workshopName: (isSameUser && prev?.workshopName ? prev.workshopName : (sbUser.workshopName || (isOwner ? 'Gestão de Projetos Integrada' : ''))),
             projectCode: isSameUser ? prev?.projectCode : undefined,
             avatarUrl: sbUser.avatarUrl || (isSameUser ? prev?.avatarUrl : undefined),
-            plan: sbUser.plan || prev?.plan || 'free',
+            plan: isOwner ? 'escala' : (sbUser.plan || prev?.plan || 'free'),
             pixKey: sbUser.pixKey || (isSameUser ? prev?.pixKey : '') || '',
             pixKeyType: sbUser.pixKeyType || prev?.pixKeyType
           };
@@ -1240,13 +1245,20 @@ export default function App() {
             localStorage.setItem('bomprojeto_user_email', userEmail);
           } catch (e) {}
 
+          if (isOwner) {
+            setCurrentTeamRole('admin');
+            try {
+              localStorage.setItem('bomprojeto_current_team_role', 'admin');
+            } catch {}
+          }
+
           // Mantém a lista de membros do time pertencente exclusivamente ao usuário logado
           setTeamMembers([
             {
               id: `tm-${sbUser.id}`,
               name: updated.name,
               email: userEmail,
-              role: 'ceo',
+              role: isOwner ? 'admin' : 'ceo',
               phone: '',
               status: 'active',
               workspaceAccess: 'all',
@@ -1257,18 +1269,25 @@ export default function App() {
           return updated;
         });
 
-        // Quando o login for validado com sucesso, fecha o modal e direciona para a página do dashboard principal
+        // Quando o login for validado com sucesso, fecha o modal e direciona para a área correspondente
         setIsLoginModalOpen(false);
         setActiveView(prevView => {
+          if (isOwner) {
+            return 'admin_dashboard';
+          }
           if (prevView === 'landing' || prevView === 'client_portal') {
             return 'dashboard';
           }
           return prevView;
         });
 
+        if (isOwner) {
+          showToast('Bem-vindo, Henrique Ferraz! Autenticado com sucesso como Administrador com Acesso Total.', 'success');
+        }
+
         try {
           if (window.location.hash.includes('access_token') || window.location.search.includes('code=')) {
-            window.history.replaceState(null, '', '/#painel');
+            window.history.replaceState(null, '', isOwner ? '/#admin' : '/#painel');
           }
         } catch {}
 
@@ -1300,7 +1319,7 @@ export default function App() {
 
   const currentProject = projects.find(p => p.id === selectedProjectId || p.code.toLowerCase() === selectedProjectId?.toLowerCase()) || (projects.length > 0 ? projects[0] : null);
 
-  // Auth Handlers: Sempre direciona para o dashboard principal ao validar o login
+  // Auth Handlers: Direciona para a área correspondente ao validar o login
   const handleLoginSuccess = (user: UserProfile, _redirectView?: ActiveView) => {
     const isOwner = (user.email || '').trim().toLowerCase() === SAAS_OWNER_EMAIL.toLowerCase();
     const effectiveUser: UserProfile = isOwner ? {
@@ -1322,14 +1341,16 @@ export default function App() {
     try {
       localStorage.setItem('bomprojeto_user', JSON.stringify(effectiveUser));
       localStorage.setItem('bomprojeto_user_email', effectiveUser.email);
-      window.history.pushState(null, '', '/#painel');
+      window.history.pushState(null, '', isOwner ? '/#admin' : '/#painel');
     } catch (e) {
       console.error(e);
     }
-    // Redireciona imediatamente para o dashboard principal para aprimorar a experiência
-    setActiveView('dashboard');
+    // Redireciona imediatamente para Área de Admin (se Administrador) ou Dashboard
+    setActiveView(isOwner ? 'admin_dashboard' : 'dashboard');
     setIsLoginModalOpen(false);
-    showToast(`Bem-vindo ao Dashboard, ${effectiveUser.name}! Nível Administrador com Acesso Total liberado.`, 'success');
+    showToast(isOwner 
+      ? `Bem-vindo, ${effectiveUser.name}! Autenticado com sucesso na sua Área de Administrador.`
+      : `Bem-vindo ao Dashboard, ${effectiveUser.name}!`, 'success');
 
     if (effectiveUser.email) {
       fetchProjects(effectiveUser.email);

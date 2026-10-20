@@ -72,32 +72,31 @@ export const Navbar: React.FC<NavbarProps> = ({
   if (currentView === 'landing') {
     return (
       <header className="sticky top-0 z-40 select-none">
-        {/* BARRA EXCLUSIVA DO DONO (Visível SOMENTE quando Henrique está autenticado) */}
+        {/* BARRA DO ADMINISTRADOR (Visível quando Administrador está autenticado) */}
         {isOwner && (
           <div className="bg-[#111827] text-white px-3 sm:px-6 py-2 border-b border-white/10 text-xs shadow-md">
             <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span className="font-bold text-amber-300">Modo Proprietário • Henrique Ferraz</span>
+                <span className="font-bold text-amber-300">Modo Administrador • Acesso Total</span>
                 <span className="text-white/40 text-[11px] hidden md:inline">
-                  (Barra de gestão privada — visível apenas para você)
+                  (Ambiente administrativo restrito)
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <button
+                  onClick={() => handleNavClick('admin_dashboard')}
+                  className="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5 text-black" />
+                  <span>Área de Admin</span>
+                </button>
+                <button
                   onClick={() => handleNavClick('dashboard')}
-                  className="px-3 py-1 rounded-lg bg-[#FF6515] hover:bg-[#e0550d] text-white font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  className="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-medium text-xs transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
                 >
                   <LayoutDashboard className="w-3.5 h-3.5" />
                   <span>Painel de Projetos</span>
-                  <ArrowRight className="w-3 h-3" />
-                </button>
-                <button
-                  onClick={() => handleNavClick('admin_dashboard')}
-                  className="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer hidden sm:flex"
-                >
-                  <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Console SaaS</span>
                 </button>
                 <button
                   onClick={onLogout}
@@ -293,8 +292,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-                <span>Console Fundador</span>
-                <span className="text-[9px] bg-amber-400/20 text-amber-200 px-1 py-0.2 rounded font-bold uppercase">CEO</span>
+                <span>Área de Admin</span>
+                <span className="text-[9px] bg-amber-400/20 text-amber-200 px-1 py-0.2 rounded font-bold uppercase">ADMIN</span>
               </button>
             )}
 
@@ -382,7 +381,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                         className="w-full text-left p-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-200 flex items-center gap-2 cursor-pointer font-semibold"
                       >
                         <ShieldCheck className="w-4 h-4 text-amber-400" />
-                        <span>Console SaaS (Administrador)</span>
+                        <span>Área de Admin (Acesso Total)</span>
                       </button>
                     )}
 
