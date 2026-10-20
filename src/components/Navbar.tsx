@@ -281,21 +281,19 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>Painel de Projetos</span>
             </button>
 
-            {isOwner && (
-              <button
-                id="nav-admin-dashboard-btn"
-                onClick={() => handleNavClick('admin_dashboard')}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                  currentView === 'admin_dashboard'
-                    ? 'bg-amber-500 text-black shadow-xs font-bold'
-                    : 'text-amber-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-                <span>Área de Admin</span>
-                <span className="text-[9px] bg-amber-400/20 text-amber-200 px-1 py-0.2 rounded font-bold uppercase">ADMIN</span>
-              </button>
-            )}
+            <button
+              id="nav-admin-dashboard-btn"
+              onClick={() => handleNavClick('admin_dashboard')}
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                currentView === 'admin_dashboard'
+                  ? 'bg-amber-500 text-black shadow-xs font-bold'
+                  : 'text-amber-300 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+              <span>Área de Admin</span>
+              <span className="text-[9px] bg-amber-400/20 text-amber-200 px-1 py-0.2 rounded font-bold uppercase">ADMIN</span>
+            </button>
 
             <button
               id="nav-project-btn"

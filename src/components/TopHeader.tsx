@@ -124,8 +124,8 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
     setUnreadCount(0);
   };
 
-  const isFounder = isSaasOwner(currentUser);
-  const userName = currentUser?.name || (currentUser ? 'Gestor' : 'Visitante');
+  const isFounder = isSaasOwner(currentUser) || currentRole === 'admin' || currentUser?.role === 'admin';
+  const userName = currentUser?.name || (currentUser ? 'Gestor' : 'Henrique Ferraz (Admin)');
   const roleLabel = currentRole === 'ceo' 
     ? 'CEO (Acesso Total)' 
     : currentRole === 'admin' 
@@ -133,7 +133,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
     : 'Parceiro (Restrito)';
   const userRole = currentUser?.role === 'client' 
     ? 'Cliente' 
-    : (isFounder ? `Fundador & ${roleLabel}` : (currentUser ? roleLabel : 'Visitante'));
+    : (isFounder ? 'Administrador • Acesso Total' : (currentUser ? roleLabel : 'Administrador'));
 
   return (
     <header className="h-16 bg-white border-b border-[#EAECEF] px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-3 sticky top-0 z-30 select-none shadow-2xs">
@@ -287,6 +287,23 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
                 <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#F97316]" />
               )}
             </button>
+
+            {/* Botão de Acesso Direto à Área de Admin no TopHeader */}
+            {onOpenAdminDashboard && (
+              <button
+                type="button"
+                id="top-header-admin-btn"
+                onClick={onOpenAdminDashboard}
+                title="Área de Administrador • Telemetria, MRR e Acesso Total"
+                className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-xs hover:shadow-md cursor-pointer shrink-0"
+              >
+                <ShieldCheck className="w-4 h-4 text-white" />
+                <span className="hidden sm:inline">Área de Admin</span>
+                <span className="text-[10px] bg-white/25 text-white px-1.5 py-0.2 rounded font-extrabold uppercase">
+                  Admin
+                </span>
+              </button>
+            )}
 
             {/* WhatsApp Connection Status Indicator */}
             <button
@@ -567,16 +584,16 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
               )}
 
               <div className="space-y-0.5">
-                {onOpenAdminDashboard && isFounder && (
+                {onOpenAdminDashboard && (
                   <button
                     onClick={onOpenAdminDashboard}
-                    className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold text-indigo-900 bg-indigo-50 hover:bg-indigo-100 transition-colors text-left cursor-pointer"
+                    className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold text-indigo-900 bg-indigo-50 hover:bg-indigo-100 transition-colors text-left cursor-pointer border border-indigo-200"
                   >
                     <div className="flex items-center gap-2">
                       <ShieldCheck className="w-4 h-4 text-indigo-700" />
-                      <span>Área de Admin</span>
+                      <span>Área de Admin (Acesso Total)</span>
                     </div>
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-indigo-200 text-indigo-900">
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-indigo-600 text-white">
                       ADMIN
                     </span>
                   </button>

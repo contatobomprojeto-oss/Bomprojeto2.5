@@ -456,8 +456,10 @@ export const TEAM_ROLE_CONFIGS: Record<TeamRole, {
  * Verifica estritamente se o usuário logado é o proprietário e fundador do SaaS (Henrique Ferraz) ou Administrador.
  */
 export function isSaasOwner(user: UserProfile | null | undefined): boolean {
-  if (!user || !user.email) return false;
-  return user.email.trim().toLowerCase() === SAAS_OWNER_EMAIL.toLowerCase() || user.role === 'admin';
+  if (!user) return false;
+  if (user.role === 'admin' || user.teamRole === 'admin') return true;
+  if (!user.email) return false;
+  return user.email.trim().toLowerCase() === SAAS_OWNER_EMAIL.toLowerCase();
 }
 
 // Re-exportação dos tipos e schemas de persistência (Templates por Setor & Módulo Financeiro Flexível)

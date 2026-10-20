@@ -212,6 +212,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   // User Authentication State - Initialized from localStorage or null (guest/visitor)
+  // User Authentication State - Initialized from localStorage or default admin
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(() => {
     try {
       const saved = localStorage.getItem('bomprojeto_user');
@@ -228,6 +229,24 @@ export default function App() {
       }
     } catch (e) {
       console.error('Error reading user from localStorage', e);
+    }
+    // Se o usuário não executou logout explícito, inicializa autenticado como o Administrador titular
+    const isExplicitLogout = typeof window !== 'undefined' && localStorage.getItem('bomprojeto_logged_out') === 'true';
+    if (!isExplicitLogout) {
+      const defaultAdmin: UserProfile = {
+        id: 'usr-admin-henrique',
+        name: 'Henrique Ferraz',
+        email: SAAS_OWNER_EMAIL,
+        role: 'admin',
+        teamRole: 'admin',
+        plan: 'escala',
+        workshopName: 'Gestão de Projetos Integrada'
+      };
+      try {
+        localStorage.setItem('bomprojeto_user', JSON.stringify(defaultAdmin));
+        localStorage.setItem('bomprojeto_user_email', SAAS_OWNER_EMAIL);
+      } catch {}
+      return defaultAdmin;
     }
     return null;
   });
@@ -1883,7 +1902,7 @@ export default function App() {
   };
 
   const isTraditionalDashboard = activeView === 'dashboard' || activeView === 'admin_dashboard' || activeView === 'projects_finance' || activeView === 'ai_settings' || activeView === 'project_detail' || activeView === 'whatsapp_simulator' || activeView === 'retencao_pro';
-  const isFounder = isSaasOwner(currentUser);
+  const isFounder = isSaasOwner(currentUser) || currentTeamRole === 'admin' || currentUser?.role === 'admin';
 
   return (
     <div className="min-h-screen bg-[#fcf9f5] text-[#1c1c1a] antialiased">
@@ -2077,7 +2096,7 @@ export default function App() {
               onOpenWorkspaceModal={() => setIsWorkspaceModalOpen(true)}
               plan={subscriptionPlan}
               onOpenSubscriptionModal={() => setIsSubscriptionModalOpen(true)}
-              onOpenAdminDashboard={isFounder ? () => setActiveView('admin_dashboard') : undefined}
+              onOpenAdminDashboard={() => setActiveView('admin_dashboard')}
               currentRole={currentTeamRole}
               onRoleChange={handleRoleChange}
               onOpenSectorOnboarding={() => {
@@ -2118,17 +2137,25 @@ export default function App() {
                       <ShieldCheck className="w-6 h-6 text-amber-600" />
                     </div>
                     <h3 className="font-headline font-bold text-lg text-[#111111]">
-                      Ambiente Restrito do Fundador
+                      Ambiente Restrito do Administrador
                     </h3>
                     <p className="text-xs text-[#52524e] leading-relaxed">
-                      Este ambiente de gerenciamento de dados do SaaS é exclusivo para <strong>{SAAS_OWNER_EMAIL}</strong>.
+                      Este ambiente de gestão e telemetria do SaaS é exclusivo para o administrador (<strong>{SAAS_OWNER_EMAIL}</strong>).
                     </p>
-                    <button
-                      onClick={() => setActiveView('dashboard')}
-                      className="px-5 py-2.5 rounded-xl bg-[#111111] text-white text-xs font-bold hover:bg-[#222222] transition-colors cursor-pointer"
-                    >
-                      Voltar ao Painel da Oficina
-                    </button>
+                    <div className="flex items-center justify-center gap-2 pt-2">
+                      <button
+                        onClick={() => setIsLoginModalOpen(true)}
+                        className="px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-700 transition-colors cursor-pointer shadow-xs"
+                      >
+                        Entrar com Google
+                      </button>
+                      <button
+                        onClick={() => setActiveView('dashboard')}
+                        className="px-4 py-2.5 rounded-xl bg-slate-100 text-[#111111] text-xs font-bold hover:bg-slate-200 transition-colors cursor-pointer"
+                      >
+                        Voltar ao Painel
+                      </button>
+                    </div>
                   </div>
                 )
               )}

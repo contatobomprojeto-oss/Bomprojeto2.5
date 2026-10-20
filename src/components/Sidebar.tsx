@@ -97,7 +97,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     'projetos_finance'
   );
   const maxWorkspaces = plan === 'escala' ? 6 : plan === 'start' ? 3 : 1;
-  const isFounder = isSaasOwner(currentUser);
+  const isFounder = isSaasOwner(currentUser) || currentRole === 'admin' || currentUser?.role === 'admin';
 
   // Keyboard shortcut: Alt+M to toggle sidebar collapse
   useEffect(() => {
@@ -115,11 +115,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const handleItemClick = (item: string) => {
     if (onSelectSidebarItem) onSelectSidebarItem(item);
     if (item === 'admin') {
-      if (isFounder) {
-        onSelectView('admin_dashboard');
-      } else {
-        onSelectView('dashboard');
-      }
+      onSelectView('admin_dashboard');
     } else if (item === 'painel') {
       onSelectView('dashboard');
     } else if (item === 'projetos_finance') {
@@ -582,40 +578,38 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 </button>
               )}
 
-              {/* Área de Admin (Exclusivo henrique.ferrazms@gmail.com / Administrador) */}
-              {isFounder && (
-                effectiveCollapsed ? (
-                  <button
-                    id="sidebar-nav-admin"
-                    onClick={() => handleItemClick('admin')}
-                    className={navItemClassCollapsed(isNavActive('admin'))}
-                    aria-label="Área de Admin"
-                  >
-                    <ShieldCheck className={`w-[19px] h-[19px] ${isNavActive('admin') ? 'text-white' : 'text-[#64748B]'}`} />
-                    <div className="absolute left-[calc(100%+12px)] top-1/2 -translate-y-1/2 px-2.5 py-1.5 bg-[#0F172A] text-white text-xs font-medium rounded-lg shadow-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap flex items-center gap-1.5">
-                      <span>Área de Admin</span>
-                      <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-indigo-600 text-white">
-                        Admin
-                      </span>
-                    </div>
-                  </button>
-                ) : (
-                  <button
-                    id="sidebar-nav-admin"
-                    onClick={() => handleItemClick('admin')}
-                    className={navItemClassExpanded(isNavActive('admin'))}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <ShieldCheck className={`w-[18px] h-[18px] ${isNavActive('admin') ? 'text-white' : 'text-[#64748B]'}`} />
-                      <span>Área de Admin</span>
-                    </div>
-                    <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-md ${
-                      isNavActive('admin') ? 'bg-white/20 text-white' : 'bg-indigo-100 text-indigo-900'
-                    }`}>
+              {/* Área de Admin (Acesso Total) */}
+              {effectiveCollapsed ? (
+                <button
+                  id="sidebar-nav-admin"
+                  onClick={() => handleItemClick('admin')}
+                  className={navItemClassCollapsed(isNavActive('admin'))}
+                  aria-label="Área de Admin"
+                >
+                  <ShieldCheck className={`w-[19px] h-[19px] ${isNavActive('admin') ? 'text-white' : 'text-[#64748B]'}`} />
+                  <div className="absolute left-[calc(100%+12px)] top-1/2 -translate-y-1/2 px-2.5 py-1.5 bg-[#0F172A] text-white text-xs font-medium rounded-lg shadow-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap flex items-center gap-1.5">
+                    <span>Área de Admin</span>
+                    <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-indigo-600 text-white">
                       Admin
                     </span>
-                  </button>
-                )
+                  </div>
+                </button>
+              ) : (
+                <button
+                  id="sidebar-nav-admin"
+                  onClick={() => handleItemClick('admin')}
+                  className={navItemClassExpanded(isNavActive('admin'))}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <ShieldCheck className={`w-[18px] h-[18px] ${isNavActive('admin') ? 'text-white' : 'text-indigo-600'}`} />
+                    <span className="font-semibold">Área de Admin</span>
+                  </div>
+                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md ${
+                    isNavActive('admin') ? 'bg-white/20 text-white' : 'bg-indigo-100 text-indigo-900 border border-indigo-200'
+                  }`}>
+                    Acesso Total
+                  </span>
+                </button>
               )}
             </nav>
           </div>
