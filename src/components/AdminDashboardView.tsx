@@ -378,7 +378,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
       id: `sub_${Date.now().toString(36)}`,
       workshopName: newSubName.trim(),
       ownerName: newSubOwner.trim(),
-      email: `${newSubOwner.toLowerCase().replace(/[^a-z0-9]/g, '') || 'contato'}@marcenaria.com.br`,
+      email: `${newSubOwner.toLowerCase().replace(/[^a-z0-9]/g, '') || 'contato'}@agenciadigital.com.br`,
       phone: newSubPhone.trim() || '+55 11 99999-0000',
       city: 'São Paulo',
       state: 'SP',
@@ -726,7 +726,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   <span className="font-headline font-black text-2xl sm:text-3xl text-[#1c1c1a]">
                     {saasStats.totalSubscribers}
                   </span>
-                  <span className="text-xs text-[#73736c]">oficinas na base</span>
+                  <span className="text-xs text-[#73736c]">agências na base</span>
                 </div>
                 <div className="mt-2 flex items-center gap-2 text-xs">
                   <span className="text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.5 rounded-md">
@@ -752,10 +752,10 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   <span className="font-headline font-black text-2xl sm:text-3xl text-[#1c1c1a]">
                     {saasStats.arpu.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                   </span>
-                  <span className="text-xs text-[#73736c]">/oficina</span>
+                  <span className="text-xs text-[#73736c]">/agência</span>
                 </div>
                 <div className="mt-2 flex items-center gap-1.5 text-xs text-[#73736c]">
-                  <span className="font-semibold text-emerald-700">Alta proporção no Start Oficina</span>
+                  <span className="font-semibold text-emerald-700">Alta proporção no Start Agência</span>
                 </div>
               </div>
 
@@ -796,7 +796,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                       Evolução de MRR & Assinantes (2026)
                     </h3>
                     <p className="text-xs text-[#73736c]">
-                      Crescimento consistente de faturamento recorrente mensal e novas marcenarias
+                      Crescimento consistente de faturamento recorrente mensal e novas agências digitais
                     </p>
                   </div>
                   <div className="flex items-center gap-3 text-xs font-bold">
@@ -827,7 +827,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                       <Tooltip 
                         formatter={(value: any, name?: any) => {
                           if (name === 'mrr') return [Number(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }), 'MRR Recorrente'];
-                          if (name === 'assinantes') return [`${value} marcenarias`, 'Assinantes'];
+                          if (name === 'assinantes') return [`${value} agências`, 'Assinantes'];
                           return [value, name ?? ''];
                         }}
                         labelFormatter={(label) => `Mês: ${label}`}
@@ -890,7 +890,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                         </Pie>
                         <Tooltip 
                           formatter={(value: any, _name?: any, item?: any) => [
-                            `${value} oficinas (${item?.payload?.sharePercentage ?? 0}%)`, 
+                            `${value} agências (${item?.payload?.sharePercentage ?? 0}%)`, 
                             item?.payload?.name ?? ''
                           ]}
                           contentStyle={{ backgroundColor: '#1c1c1a', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '11px' }}
@@ -914,7 +914,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                             )}
                           </span>
                           <span className="font-extrabold text-[#1c1c1a]">
-                            {plan.subscribers} oficinas ({plan.sharePercentage}%)
+                            {plan.subscribers} agências ({plan.sharePercentage}%)
                           </span>
                         </div>
                         <div className="w-full bg-[#f0ebe1] h-2 rounded-full overflow-hidden">
@@ -951,10 +951,10 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 <div>
                   <h3 className="font-headline font-bold text-base text-[#1c1c1a] flex items-center gap-2">
                     <Activity className="w-4 h-4 text-[#9f3c16]" />
-                    Telemetria de Uso das Marcenarias (Em Tempo Real)
+                    Telemetria de Uso das Agências &amp; Consultorias (Em Tempo Real)
                   </h3>
                   <p className="text-xs text-[#73736c]">
-                    Volume de operações gerenciadas pelo BOMProjeto dentro das oficinas dos assinantes
+                    Volume de operações gerenciadas pelo BOMProjeto dentro das agências e consultorias dos assinantes
                   </p>
                 </div>
                 <button
@@ -980,7 +980,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   <span className="font-headline font-black text-xl sm:text-2xl text-[#9f3c16]">
                     {saasStats.totalWhatsappMessages.toLocaleString('pt-BR')}
                   </span>
-                  <span className="text-[11px] text-[#73736c] block mt-1">Cobranças & Fotos</span>
+                  <span className="text-[11px] text-[#73736c] block mt-1">Cobranças &amp; Relatórios</span>
                 </div>
 
                 <div className="p-4 rounded-xl bg-[#faf8f5] border border-[#f0ebe1]">
@@ -988,11 +988,11 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   <span className="font-headline font-black text-xl sm:text-2xl text-emerald-800">
                     R$ 14,8M
                   </span>
-                  <span className="text-[11px] text-[#73736c] block mt-1">Valor dos móveis</span>
+                  <span className="text-[11px] text-[#73736c] block mt-1">Contratos &amp; Retainers</span>
                 </div>
 
                 <div className="p-4 rounded-xl bg-[#faf8f5] border border-[#f0ebe1]">
-                  <span className="text-xs text-[#73736c] block">Fotos de Bancada</span>
+                  <span className="text-xs text-[#73736c] block">Prints &amp; Dashboards</span>
                   <span className="font-headline font-black text-xl sm:text-2xl text-[#1c1c1a]">
                     {saasStats.totalPhotosUploaded.toLocaleString('pt-BR')}
                   </span>
@@ -1047,8 +1047,8 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   <div className="space-y-3">
                     <div>
                       <span className="text-xs font-bold text-[#9f3c16] uppercase tracking-wider">Tier Intermediário</span>
-                      <h3 className="font-headline font-black text-xl text-[#1c1c1a]">Start Oficina</h3>
-                      <p className="text-xs text-[#73736c] mt-0.5">Para marcenarias de 2 a 5 pessoas</p>
+                      <h3 className="font-headline font-black text-xl text-[#1c1c1a]">Start Agência</h3>
+                      <p className="text-xs text-[#73736c] mt-0.5">Para gestores autônomos e agências digitais</p>
                     </div>
 
                     <div className="pt-2">
@@ -1064,7 +1064,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     <div className="space-y-2 pt-3 border-t border-[#f2ded5] text-xs">
                       <div className="flex justify-between">
                         <span className="text-[#73736c]">Assinantes Ativos:</span>
-                        <strong className="text-[#1c1c1a]">138 marcenarias</strong>
+                        <strong className="text-[#1c1c1a]">138 agências</strong>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-[#73736c]">Faturamento Gerado:</span>
@@ -1076,7 +1076,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                       </div>
                       <div className="flex justify-between">
                         <span className="text-[#73736c]">Workspaces inclusos:</span>
-                        <strong className="text-[#1c1c1a]">Até 3 filiais</strong>
+                        <strong className="text-[#1c1c1a]">Até 3 filiais/verticais</strong>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-[#73736c]">Projetos simultâneos:</span>
@@ -1087,7 +1087,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
                   <div className="mt-5 pt-3 border-t border-[#f2ded5]">
                     <span className="text-[11px] text-[#73736c] block">
-                      <strong>Por que assinam:</strong> Atendimento e cobrança por IA no WhatsApp com chave Pix e controle de produção.
+                      <strong>Por que assinam:</strong> Atendimento e cobrança por IA no WhatsApp com chave Pix e controle de sprints.
                     </span>
                   </div>
                 </div>
@@ -1098,7 +1098,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     <div>
                       <span className="text-xs font-bold text-[#1c1c1a] uppercase tracking-wider">Tier Enterprise</span>
                       <h3 className="font-headline font-black text-xl text-[#1c1c1a]">Scala</h3>
-                      <p className="text-xs text-[#73736c] mt-0.5">Grandes oficinas e redes de marcenaria</p>
+                      <p className="text-xs text-[#73736c] mt-0.5">Agências full-service, consultorias de IA e squads</p>
                     </div>
 
                     <div className="pt-2">
@@ -1114,7 +1114,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     <div className="space-y-2 pt-3 border-t border-[#f0ebe1] text-xs">
                       <div className="flex justify-between">
                         <span className="text-[#73736c]">Assinantes Ativos:</span>
-                        <strong className="text-[#1c1c1a]">58 marcenarias (26.6%)</strong>
+                        <strong className="text-[#1c1c1a]">58 agências (26.6%)</strong>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-[#73736c]">Faturamento Gerado:</span>
@@ -1164,7 +1164,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     <div className="space-y-2 pt-3 border-t border-[#f0ebe1] text-xs">
                       <div className="flex justify-between">
                         <span className="text-[#73736c]">Assinantes no Free:</span>
-                        <strong className="text-[#1c1c1a]">22 marcenarias (10.1%)</strong>
+                        <strong className="text-[#1c1c1a]">22 agências (10.1%)</strong>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-[#73736c]">Faturamento Gerado:</span>
@@ -1187,7 +1187,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
                   <div className="mt-5 pt-3 border-t border-[#f0ebe1]">
                     <span className="text-[11px] text-[#73736c] block">
-                      <strong>Estratégia:</strong> O marceneiro usa no primeiro cliente, encanta o contratante e faz upgrade para o Start.
+                      <strong>Estratégia:</strong> O gestor usa no primeiro cliente, encanta o contratante e faz upgrade para o Start.
                     </span>
                   </div>
                 </div>
@@ -1203,7 +1203,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   Ciclo de Cobrança Escolhido
                 </h3>
                 <p className="text-xs text-[#73736c]">
-                  A maioria das marcenarias prefere pagar no ciclo mensal, mas o anual gera antecipação de caixa.
+                  A maioria das agências prefere pagar no ciclo mensal, mas o anual gera antecipação de caixa.
                 </p>
 
                 <div className="space-y-3 pt-2">
@@ -1234,17 +1234,17 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   Gatilhos de Upgrade Mais Frequentes
                 </h3>
                 <p className="text-xs text-[#73736c]">
-                  Por que os marceneiros decidem migrar para planos superiores:
+                  Por que as agências e gestores decidem migrar para planos superiores:
                 </p>
 
                 <ul className="space-y-2.5 text-xs text-[#1c1c1a]">
                   <li className="flex items-start gap-2">
                     <span className="w-5 h-5 rounded-full bg-[#edd9cf] text-[#9f3c16] flex items-center justify-center font-bold text-[11px] shrink-0">1</span>
-                    <span><strong>Limite de 8 projetos atingido:</strong> A oficina pega mais pedidos no mês e precisa do plano Scala com até 20 projetos e Retenção Pró (48% dos upgrades).</span>
+                    <span><strong>Limite de 8 projetos atingido:</strong> A agência fecha mais clientes de tráfego/IA no mês e precisa do plano Scala com até 20 projetos e Retenção Pró (48% dos upgrades).</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-5 h-5 rounded-full bg-[#edd9cf] text-[#9f3c16] flex items-center justify-center font-bold text-[11px] shrink-0">2</span>
-                    <span><strong>Abertura de nova filial ou segmento:</strong> Necessidade de separar serralheria ou vidraçaria em múltiplos workspaces (32% dos upgrades).</span>
+                    <span><strong>Abertura de nova vertical ou segmento:</strong> Necessidade de separar squad de tráfego, criativos e automações em múltiplos workspaces (32% dos upgrades).</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-5 h-5 rounded-full bg-[#edd9cf] text-[#9f3c16] flex items-center justify-center font-bold text-[11px] shrink-0">3</span>
@@ -1271,7 +1271,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     Telemetria Operacional do BOMProjeto
                   </h2>
                   <p className="text-xs text-[#73736c]">
-                    Métricas de como as marcenarias utilizam os módulos da esteira de produção e WhatsApp IA
+                    Métricas de como as agências e operações digitais utilizam os módulos de entregas e WhatsApp IA
                   </p>
                 </div>
                 <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
@@ -1289,7 +1289,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   <div className="mt-2 font-headline font-black text-3xl text-[#1c1c1a]">
                     {saasStats.totalProjectsCreated}
                   </div>
-                  <p className="text-[11px] text-[#73736c] mt-1">Média de 13 projetos por marcenaria ativa</p>
+                  <p className="text-[11px] text-[#73736c] mt-1">Média de 13 projetos por agência ativa</p>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-[#faf8f5] border border-[#ded8cd]">
@@ -1421,7 +1421,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
               </div>
               <div className="flex items-center gap-2 self-end sm:self-center">
                 <span className="px-2.5 py-1 rounded-lg bg-emerald-200/80 font-bold text-emerald-900">
-                  {liveSubscribers.length} marcenarias ativas
+                  {liveSubscribers.length} agências ativas
                 </span>
               </div>
             </div>
@@ -1438,7 +1438,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     type="text"
                     value={searchSubscriber}
                     onChange={(e) => setSearchSubscriber(e.target.value)}
-                    placeholder="Buscar marcenaria, responsável, cidade, telefone ou email..."
+                    placeholder="Buscar agência, gestor, cidade, telefone ou email..."
                     className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#ded8cd] bg-[#faf8f5] text-xs text-[#1c1c1a] placeholder-[#8c8c85] focus:outline-none focus:ring-2 focus:ring-[#9f3c16]"
                   />
                   {searchSubscriber && (
@@ -1634,7 +1634,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                               <div className="flex items-center justify-end gap-2">
                                 {/* Botão WhatsApp Direto */}
                                 <a
-                                  href={`https://wa.me/${sub.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Olá ${sub.ownerName}! Aqui é o Henrique, fundador do BOMProjeto. Vi que você está na oficina ${sub.workshopName}. Como estão indo as montagens e atualizações com seus clientes?`)}`}
+                                  href={`https://wa.me/${sub.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Olá ${sub.ownerName}! Aqui é o Henrique, fundador do BOMProjeto. Vi que você gerencia a operação ${sub.workshopName}. Como estão indo as sprints e atualizações com seus clientes?`)}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="p-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 transition-colors"
@@ -1822,7 +1822,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   Disparo de Aviso Geral para Assinantes
                 </h3>
                 <p className="text-xs text-[#73736c] mt-0.5">
-                  Envie uma mensagem direta de fundador para todas as <strong>218 marcenarias</strong> ativas na plataforma
+                  Envie uma mensagem direta de fundador para todas as <strong>218 agências</strong> ativas na plataforma
                 </p>
               </div>
               <button
@@ -1851,12 +1851,12 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     rows={4}
                     value={broadcastMessage}
                     onChange={(e) => setBroadcastMessage(e.target.value)}
-                    placeholder="Olá marceneiro! Aqui é o Henrique do BOMProjeto. Acabamos de lançar uma atualização incrível no cálculo de corte e relatórios de montagem..."
+                    placeholder="Olá gestor! Aqui é o Henrique do BOMProjeto. Acabamos de lançar uma atualização incrível na aprovação de criativos e relatórios de ROAS..."
                     className="w-full p-3 rounded-xl border border-[#ded8cd] bg-[#faf8f5] text-xs text-[#1c1c1a] focus:outline-none focus:ring-2 focus:ring-[#9f3c16]"
                     required
                   />
                   <span className="text-[11px] text-[#73736c] block mt-1">
-                    Variáveis automáticas disponíveis: <code>[Nome]</code>, <code>[Marcenaria]</code>.
+                    Variáveis automáticas disponíveis: <code>[Nome]</code>, <code>[Agencia]</code>.
                   </span>
                 </div>
 
@@ -1873,7 +1873,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     className="px-5 py-2.5 rounded-xl bg-[#9f3c16] hover:bg-[#863111] text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
                   >
                     <Send className="w-4 h-4" />
-                    <span>Disparar para 218 Marcenarias</span>
+                    <span>Disparar para 218 Agências</span>
                   </button>
                 </div>
               </form>
@@ -1895,7 +1895,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   Cadastrar Assinante Manualmente
                 </h3>
                 <p className="text-xs text-[#73736c]">
-                  Adicione uma marcenaria que você negociou diretamente fora da plataforma
+                  Adicione uma agência ou operação que você negociou diretamente fora da plataforma
                 </p>
               </div>
               <button

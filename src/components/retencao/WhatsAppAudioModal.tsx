@@ -56,22 +56,22 @@ export const WhatsAppAudioModal: React.FC<WhatsAppAudioModalProps> = ({
     transcription: string;
   }> = [
     {
-      title: 'Mensagem de Voz 1: Hesitação sobre Cronograma e Montagem',
-      description: 'Cliente com voz insegura, pausas longas e cobrança de confirmação da data de entrega.',
+      title: 'Mensagem de Voz 1: Hesitação sobre Subida de Campanhas',
+      description: 'Cliente com voz insegura, pausas longas e cobrança de confirmação da data de veiculação.',
       tone: 'hesitacao',
       duration: '0:24',
-      filename: `audio_whatsapp_${project.code}_cobranca_prazo.ogg`,
+      filename: `audio_whatsapp_${project.code}_cobranca_campanha.ogg`,
       mimeType: 'audio/ogg',
-      transcription: '"Oi... então, queria só confirmar se vocês realmente vão conseguir entregar na sexta... porque como o pintor atrasou, tô com receio da montagem bater com a marcenaria."'
+      transcription: '"Oi... então, queria só confirmar se vocês realmente vão conseguir subir as campanhas na sexta... porque como o nosso lançamento é semana que vem, tô com receio dos criativos não estarem aprovados a tempo."'
     },
     {
-      title: 'Mensagem de Voz 2: Elogio Entusiasta ao Acabamento',
-      description: 'Cliente animada e satisfeita com as fotos técnicas de bancada enviadas no WhatsApp.',
+      title: 'Mensagem de Voz 2: Elogio Entusiasta aos Criativos e Métricas',
+      description: 'Cliente animada e satisfeita com a prévia das peças e o dashboard no portal.',
       tone: 'elogio',
       duration: '0:18',
-      filename: `audio_whatsapp_${project.code}_elogio_acabamento.mp3`,
+      filename: `audio_whatsapp_${project.code}_elogio_criativos.mp3`,
       mimeType: 'audio/mp3',
-      transcription: '"Nossa gente, acabei de ver as fotos da ilha na oficina! Ficou maravilhoso o tom do MDF! Muito obrigada pela agilidade e pelo carinho no acabamento."'
+      transcription: '"Nossa gente, acabei de ver os criativos e o dashboard no portal! Ficou maravilhoso o tom da copy e a estrutura dos anúncios! Muito obrigada pela agilidade e pelo carinho na entrega."'
     }
   ];
 

@@ -67,7 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   /* ========================================================
      MODO 1: PÁGINA DE VENDAS PÚBLICA (LANDING PAGE)
      Design minimalista, foco em conversão e sem controles
-     internos da oficina visíveis para os visitantes.
+     internos da agência visíveis para os visitantes.
   ======================================================== */
   if (currentView === 'landing') {
     return (

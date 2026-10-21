@@ -1,7 +1,7 @@
 import { ProjectStage } from '../types';
 
 export interface NicheTemplate {
-  id: string;
+  id: 'media_buyer' | 'ai_agency' | 'marketing_agency';
   name: string;
   badge: string;
   description: string;
@@ -9,7 +9,7 @@ export interface NicheTemplate {
     name: string;
     description: string;
     detail?: string;
-    action_type?: string;
+    action_type?: 'billing_payment' | 'approval_request' | 'notification_only' | 'input_request';
     whatsapp_template?: string;
     ai_context_instruction?: string;
   }>;
@@ -17,375 +17,186 @@ export interface NicheTemplate {
 
 export const NICHE_TEMPLATES: NicheTemplate[] = [
   {
-    id: 'marcenaria',
-    name: 'Marcenaria & Móveis Planejados',
-    badge: 'Móveis & Atelier',
-    description: 'Fluxo ideal para produção em oficina, corte CNC, fita de borda e montagem fina.',
+    id: 'media_buyer',
+    name: 'Gestor de Tráfego / Media Buyer',
+    badge: 'Tráfego Pago & Performance',
+    description: 'Fluxo para gestão de tráfego (Meta Ads, Google Ads), tracking GA4/GTM, criativos e escala de ROAS.',
     defaultStages: [
       {
-        name: 'Briefing 3D & Contrato',
-        description: 'Aprovação das especificações técnicas, padrões de MDF e ferragens.',
-        detail: 'Projeto executivo validado',
+        name: 'Onboarding e Acesso às Contas (BM, GA4, GTM, Tag Manager)',
+        description: 'Liberação de acessos ao Business Manager, contas de anúncios, Google Analytics 4 e Pixel.',
+        detail: 'Acessos e integrações validadas',
         action_type: 'billing_payment',
-        whatsapp_template: '👋 Olá, {{cliente}}! Seja bem-vindo(a) à {{empresa}}. Seu projeto *{{projeto}}* foi iniciado com sucesso! 🎉\n\n📄 Acesse o contrato e a entrada via Pix no link seguro:\n👉 {{link_pix}}'
+        whatsapp_template: '🎯 Olá, {{cliente}}! Seja muito bem-vindo(a) à {{empresa}}. O projeto de tráfego pago e escala *{{projeto}}* foi oficialmente iniciado! 🚀\n\nAcesse o link seguro para acompanhar o roadmap e confirmar a entrada via Pix:\n👉 {{link_pix}}'
       },
       {
-        name: 'Medição Técnica no Local',
-        description: 'Conferência a laser de prumos, desníveis e pontos de elétrica/hidráulica.',
-        detail: 'Validação milimétrica do vão',
+        name: 'Planejamento Estratégico & Briefing de Criativos',
+        description: 'Definição de públicos-alvo, personas, funil de vendas, metas de CPA/ROAS e roteiros de criativos.',
+        detail: 'Estratégia de funil aprovada',
         action_type: 'approval_request',
-        whatsapp_template: '📐 Olá, {{cliente}}! Agendamos a medição milimétrica no local do seu projeto *{{projeto}}*.\n\nConfirme a data e horário no link:\n👉 {{link_aprovacao}}'
+        whatsapp_template: '📋 Olá, {{cliente}}! O planejamento de público e o briefing dos criativos do projeto *{{projeto}}* estão prontos para validação.\n\nAcesse e aprove com 1 clique:\n👉 {{link_aprovacao}}'
       },
       {
-        name: 'Oficina & Usinagem CNC',
-        description: 'Corte de chapas, furação digital de dobradiças e aplicação de borda térmica.',
-        detail: 'Produção ativa em maquinário',
+        name: 'Criação e Validação dos Anúncios / Copys',
+        description: 'Produção das artes, carrosséis, vídeos em alta conversão e redação persuasiva (copywriting).',
+        detail: 'Criativos em validação',
+        action_type: 'approval_request',
+        whatsapp_template: '🎨 {{cliente}}, os anúncios e copys de alta conversão do *{{projeto}}* estão prontos no portal!\n\nConfira as peças e valide para subida:\n👉 {{link_aprovacao}}'
+      },
+      {
+        name: 'Subida de Campanhas & Teste de Tracking',
+        description: 'Configuração das campanhas na Meta/Google Ads, teste de eventos de conversão e CAPI ativa.',
+        detail: 'Campanhas em fase de aprendizado',
         action_type: 'notification_only',
-        whatsapp_template: '🪵 Direto da fábrica, {{cliente}}! Seu projeto *{{projeto}}* está em fase de usinagem e estruturação.\n\n📸 Fotos em tempo real no portal:\n👉 {{link_portal}}'
+        whatsapp_template: '⚡ Campanhas no ar, {{cliente}}! O projeto *{{projeto}}* está ativo nas plataformas e o tracking de métricas e conversões já está disparando perfeitamente.\n\nAcompanhe no portal:\n👉 {{link_portal}}'
       },
       {
-        name: 'Pré-montagem & Calibração',
-        description: 'Montagem prévia em bancada para ajuste milimétrico de gavetas e portas.',
-        detail: 'Controle de qualidade e embalagem',
-        action_type: 'notification_only',
-        whatsapp_template: '✨ {{cliente}}, os módulos do seu projeto *{{projeto}}* estão pré-montados e calibrados!\n\nConfira os bastidores:\n👉 {{link_portal}}'
-      },
-      {
-        name: 'Instalação & Entrega Final',
-        description: 'Fixação no local, limpeza técnica e termo de garantia de 5 anos.',
-        detail: 'Entrega das chaves e vistoria',
+        name: 'Otimização Contínua & Fechamento de Ciclo / Relatório Quinzenal',
+        description: 'Otimização de lances, corte de criativos saturados, escala horizontal e envio do dashboard de ROAS.',
+        detail: 'Dashboard de ROAS consolidado',
         action_type: 'billing_payment',
-        whatsapp_template: '🏆 Tudo pronto, {{cliente}}! O seu projeto *{{projeto}}* foi concluído com sucesso.\n\n📄 Seu Termo de Garantia e quitação estão no link:\n👉 {{link_pix}}'
+        whatsapp_template: '📊 Relatório quinzenal disponível, {{cliente}}! Seu ciclo de tráfego do *{{projeto}}* teve métricas consolidadas.\n\nAcesse seu relatório de ROAS e a fatura do novo ciclo no link seguro:\n👉 {{link_pix}}'
       }
     ]
   },
   {
-    id: 'serralheria',
-    name: 'Serralheria & Estruturas Metálicas',
-    badge: 'Aço & Esquadrias',
-    description: 'Fluxo para dimensionamento de perfis de aço, solda MIG, pintura eletrostática e chumbamento.',
+    id: 'ai_agency',
+    name: 'Agência / Consultoria de Automação & IA',
+    badge: 'Automação & Agentes IA',
+    description: 'Fluxo para agentes inteligentes, automações com Make/n8n, integração de webhooks e treinamento.',
     defaultStages: [
       {
-        name: 'Projeto Executivo & Gabaritos',
-        description: 'Dimensionamento de perfis de aço, cálculo de cargas e liberação do aço.',
-        detail: 'Especificação técnica aprovada',
+        name: 'Mapeamento de Processos e Levantamento de Requisitos',
+        description: 'Diagnóstico da arquitetura atual, mapeamento de gargalos manuais e definição de fluxos de automação.',
+        detail: 'Arquitetura de dados aprovada',
         action_type: 'billing_payment',
-        whatsapp_template: '⚙️ Olá, {{cliente}}! Ordem de serviço do projeto *{{projeto}}* aprovada na {{empresa}}.\n\nSeguimos para corte do aço. Acesse os detalhes e entrada:\n👉 {{link_pix}}'
+        whatsapp_template: '🤖 Olá, {{cliente}}! Seja bem-vindo(a) à {{empresa}}. A implementação da sua solução de IA e automação *{{projeto}}* foi oficialmente iniciada!\n\nAcompanhe os fluxos e realize a entrada Pix no link seguro:\n👉 {{link_pix}}'
       },
       {
-        name: 'Corte, Dobra & Soldagem MIG',
-        description: 'Fabricação estrutural e união das peças metálicas com conferência de esquadro.',
-        detail: 'Solda técnica e alinhamento',
+        name: 'Integração de APIs / Webhooks / Make / n8n',
+        description: 'Conexão dos endpoints, webhooks de CRM, WhatsApp API oficial, banco de dados e gateways.',
+        detail: 'Pipelines e webhooks conectados',
         action_type: 'notification_only',
-        whatsapp_template: '🔥 Fala, {{cliente}}! A estrutura do seu projeto *{{projeto}}* está na fase de solda MIG técnica e esquadro.\n\nVeja as fotos da produção:\n👉 {{link_portal}}'
+        whatsapp_template: '🔌 {{cliente}}, os webhooks e integrações de API do projeto *{{projeto}}* foram estruturados e conectados com sucesso.\n\nVeja o status dos nós no portal:\n👉 {{link_portal}}'
       },
       {
-        name: 'Pintura Eletrostática & Cura',
-        description: 'Aplicação de fundo fosfatizante anticorrosivo e cura em forno epóxi.',
-        detail: 'Tratamento térmico anticorrosivo',
-        action_type: 'notification_only',
-        whatsapp_template: '🎨 {{cliente}}, sua estrutura recebeu a pintura eletrostática a pó e está em processo de cura térmica.\n\nAcompanhe o status:\n👉 {{link_portal}}'
+        name: 'Configuração de Prompts / Base de Conhecimento / Agentes',
+        description: 'Engenharia de prompts, embeddings na base de conhecimento, regras de negócio e tom de voz do agente.',
+        detail: 'Base de conhecimento calibrada',
+        action_type: 'approval_request',
+        whatsapp_template: '🧠 {{cliente}}, os prompts e a base de conhecimento do agente IA do projeto *{{projeto}}* foram configurados!\n\nValide as respostas e o tom no link seguro:\n👉 {{link_aprovacao}}'
       },
       {
-        name: 'Chumbamento & Fixação na Obra',
-        description: 'Instalação no local com parabolts, nivelamento a laser e ancoragem.',
-        detail: 'Fixação estrutural pesada',
+        name: 'Ambiente de Homologação / Testes Internos',
+        description: 'Simulação de estresse, bateria de testes com cenários edge-case e validação de tempo de resposta.',
+        detail: 'Testes de stress concluídos',
+        action_type: 'approval_request',
+        whatsapp_template: '🧪 {{cliente}}, sua solução de IA *{{projeto}}* está no ambiente de homologação para testes reais com sua equipe!\n\nAcesse o ambiente de sandbox e aprove o go-live:\n👉 {{link_aprovacao}}'
+      },
+      {
+        name: 'Treinamento do Cliente & Go-Live (Produção)',
+        description: 'Deploy definitivo em produção, treinamento prático da equipe interna e entrega da documentação técnica.',
+        detail: 'Solução 100% operacional em produção',
         action_type: 'billing_payment',
-        whatsapp_template: '🔩 Olá, {{cliente}}! Equipe na obra iniciando a fixação técnica da estrutura *{{projeto}}*.\n\nSegue o link da parcela de instalação com Pix:\n👉 {{link_pix}}'
-      },
-      {
-        name: 'Entrega Técnica & Laudo de Garantia',
-        description: 'Revisão final, regulagem de trincos/fechaduras e certificado de conformidade.',
-        detail: 'Estrutura testada e garantida',
-        action_type: 'billing_payment',
-        whatsapp_template: '🏁 Serviço concluído com sucesso, {{cliente}}! Seu projeto *{{projeto}}* está pronto e garantido.\n\nTermo de entrega e quitação disponíveis em:\n👉 {{link_pix}}'
+        whatsapp_template: '🚀 Parabéns, {{cliente}}! O projeto de automação *{{projeto}}* está no ar em produção gerando eficiência real.\n\nTermo de entrega técnica, gravação do treinamento e quitação no link:\n👉 {{link_pix}}'
       }
     ]
   },
   {
-    id: 'vidracaria',
-    name: 'Vidraçaria, Box & Esquadrias',
-    badge: 'Vidros & Perfis',
-    description: 'Fluxo para corte técnico, têmpera, usinagem de perfis fineline e instalação.',
+    id: 'marketing_agency',
+    name: 'Agência de Marketing / Publicidade',
+    badge: 'Marketing Full-Service & Criativos',
+    description: 'Fluxo para branding, copywriting, produção de criativos estáticos/vídeos e campanhas integradas.',
     defaultStages: [
       {
-        name: 'Medição a Laser & Folgas de Dilatação',
-        description: 'Conferência de vãos e cálculo de folgas de vedação perimetral.',
-        detail: 'Gabarito executivo gerado',
+        name: 'Alinhamento de Branding & Tom de Voz',
+        description: 'Imersão de marca, definição de arquétipo, manual de identidade visual e proposta de valor.',
+        detail: 'Identidade e tom alinhados',
         action_type: 'billing_payment',
-        whatsapp_template: '🪟 Olá, {{cliente}}! Medição de vãos confirmada para o projeto *{{projeto}}*.\n\nLiberamos o pedido das chapas temperadas. Link de acompanhamento:\n👉 {{link_pix}}'
+        whatsapp_template: '✨ Olá, {{cliente}}! Seja bem-vindo(a) à {{empresa}}. O projeto estratégico de marketing *{{projeto}}* foi iniciado!\n\nAcesse seu roadmap e realize a entrada no link seguro:\n👉 {{link_pix}}'
       },
       {
-        name: 'Caderno Técnico & Projeto 3D',
-        description: 'Detalhamento de ancoragens químicas, pivôs e roldanas de alta carga.',
-        detail: 'Aprovação com cliente/arquiteto',
+        name: 'Roteirização e Produção de Conteúdo',
+        description: 'Pesquisa de tendências, roteiros de Reels/TikTok, copy persuasiva e calendário editorial.',
+        detail: 'Calendário de conteúdo pronto',
         action_type: 'approval_request',
-        whatsapp_template: '📐 {{cliente}}, confira o caderno técnico de vidros e perfis do seu projeto *{{projeto}}*.\n\nAprove com 1 clique:\n👉 {{link_aprovacao}}'
+        whatsapp_template: '✍️ {{cliente}}, o calendário editorial e roteiros do *{{projeto}}* estão prontos para sua validação!\n\nAprove com 1 clique no portal:\n👉 {{link_aprovacao}}'
       },
       {
-        name: 'Fabricação de Perfis & Forno de Têmpera',
-        description: 'Corte de perfis em esquadria e têmpera/laminação dos vidros.',
-        detail: 'Produção nos fornos e usinagem',
-        action_type: 'notification_only',
-        whatsapp_template: '🔥 {{cliente}}, os vidros do seu projeto *{{projeto}}* entraram no forno de têmpera e laminação.\n\nAcompanhe no portal:\n👉 {{link_portal}}'
-      },
-      {
-        name: 'Pré-montagem & Teste de Vedação',
-        description: 'Checagem de estanqueidade, amortecedores e calafetação.',
-        detail: 'Controle de tolerância',
-        action_type: 'notification_only',
-        whatsapp_template: '🧪 Testes de vedação e roldanas executados com sucesso no seu projeto *{{projeto}}*.\n\nVeja as fotos da bancada:\n👉 {{link_portal}}'
-      },
-      {
-        name: 'Içamento & Instalação no Local',
-        description: 'Fixação estrutural, alinhamento dos vidros e entrega técnica.',
-        detail: 'Vistoria e termo de garantia',
-        action_type: 'billing_payment',
-        whatsapp_template: '🏆 Instalação finalizada com alinhamento perfeito, {{cliente}}! Projeto *{{projeto}}* entregue.\n\nTermo de garantia e quitação:\n👉 {{link_pix}}'
-      }
-    ]
-  },
-  {
-    id: 'arquitetura',
-    name: 'Arquitetura & Interiores',
-    badge: 'Projetos 3D & RDO',
-    description: 'Fluxo focado em etapas de projeto, aprovações 3D, memoriais e acompanhamento de obra.',
-    defaultStages: [
-      {
-        name: 'Briefing & Levantamento Cadastral',
-        description: 'Reunião de alinhamento com cliente e levantamento fotográfico in loco.',
-        detail: 'Diagnóstico de necessidades',
-        action_type: 'billing_payment',
-        whatsapp_template: '📐 Olá, {{cliente}}! Sejam muito bem-vindos ao Studio. Seu projeto *{{projeto}}* foi oficialmente iniciado!\n\nAcompanhe todas as etapas e fotos no link:\n👉 {{link_pix}}'
-      },
-      {
-        name: 'Estudo Preliminar & Moodboard 3D',
-        description: 'Definição de fluxos, layout espacial e conceitos de iluminação.',
-        detail: 'Apresentação de volumetria 3D',
+        name: 'Aprovação de Peças e Design',
+        description: 'Diagramação de carrosséis, key visuals, banners promocionais e vídeos editados.',
+        detail: 'Design e criativos finalizados',
         action_type: 'approval_request',
-        whatsapp_template: '✨ {{cliente}}, o estudo preliminar 3D do seu projeto *{{projeto}}* ficou pronto!\n\nVeja o tour virtual e aprove aqui:\n👉 {{link_aprovacao}}'
+        whatsapp_template: '🎨 {{cliente}}, as artes e criativos finais do projeto *{{projeto}}* estão disponíveis para revisão.\n\nConfira as peças no portal:\n👉 {{link_aprovacao}}'
       },
       {
-        name: 'Anteprojeto & Aprovação de Materiais',
-        description: 'Refinamento do modelo tridimensional e escolha de revestimentos.',
-        detail: 'Validação pelo cliente',
-        action_type: 'approval_request',
-        whatsapp_template: '🎨 {{cliente}}, definimos a paleta de materiais do seu projeto *{{projeto}}*.\n\nConfirme suas preferências no portal:\n👉 {{link_aprovacao}}'
-      },
-      {
-        name: 'Projeto Executivo & Detalhamento',
-        description: 'Plantas baixas, cortes, pontos elétricos/hidráulicos e memorial descritivo.',
-        detail: 'Caderno técnico completo',
+        name: 'Programação e Disparos',
+        description: 'Agendamento em plataformas, automação de publicações e integração com canais de aquisição.',
+        detail: 'Conteúdos agendados',
         action_type: 'notification_only',
-        whatsapp_template: '📑 Caderno executivo e plantas técnicas prontas para a obra, {{cliente}}!\n\nAcesse o memorial completo:\n👉 {{link_portal}}'
+        whatsapp_template: '📢 Tudo programado, {{cliente}}! As publicações e campanhas do projeto *{{projeto}}* foram agendadas e já começaram a rodar.\n\nAcompanhe no link:\n👉 {{link_portal}}'
       },
       {
-        name: 'Acompanhamento & Entrega Técnica',
-        description: 'Compatibilização de fornecedores, visitas e checklist de conformidade.',
-        detail: 'Validação final do projeto',
+        name: 'Relatório de Performance & ROAS',
+        description: 'Consolidação de métricas de alcance, engajamento, leads capturados e faturamento gerado.',
+        detail: 'Relatório de impacto entregue',
         action_type: 'billing_payment',
-        whatsapp_template: '🎉 Projeto executivo *{{projeto}}* formalmente entregue com todo o caderno técnico!\n\nQuitação e termo no link:\n👉 {{link_pix}}'
-      }
-    ]
-  },
-  {
-    id: 'reformas',
-    name: 'Reformas & Construção Civil',
-    badge: 'Obras & Empreiteira',
-    description: 'Fluxo focado em etapas civis, demolição, instalações, revestimentos e acabamento.',
-    defaultStages: [
-      {
-        name: 'Planejamento, Proteção & Demolição',
-        description: 'Isolamento de áreas comuns, descarte responsável e remoção de revestimentos.',
-        detail: 'Área preparada com segurança',
-        action_type: 'billing_payment',
-        whatsapp_template: '🏗️ Olá, {{cliente}}! Obra do projeto *{{projeto}}* iniciada com proteção perimetral e demolição limpa.\n\nEntrada e acompanhamento no link:\n👉 {{link_pix}}'
-      },
-      {
-        name: 'Infraestrutura Hidráulica & Elétrica',
-        description: 'Novas tubulações tigre, conduítes e quadros de disjuntores balanceados.',
-        detail: 'Teste de pressão e estanqueidade',
-        action_type: 'notification_only',
-        whatsapp_template: '⚡ {{cliente}}, tubulações hidráulicas e fiação do projeto *{{projeto}}* concluídas e testadas a laser!\n\nVeja as fotos da obra:\n👉 {{link_portal}}'
-      },
-      {
-        name: 'Alvenaria, Gesso & Regularização',
-        description: 'Chapisco, reboco nivelado, forros de drywall e cortineiros iluminados.',
-        detail: 'Superfícies aprumadas',
-        action_type: 'notification_only',
-        whatsapp_template: '🧱 Paredes aprumadas e forro de gesso finalizados no seu projeto *{{projeto}}*.\n\nAcompanhe no link:\n👉 {{link_portal}}'
-      },
-      {
-        name: 'Assentamento de Pisos & Revestimentos',
-        description: 'Instalação de porcelanatos com niveladores e rejunte de precisão.',
-        detail: 'Alinhamento e esquadro conferidos',
-        action_type: 'billing_payment',
-        whatsapp_template: '📐 {{cliente}}, porcelanatos assentados e rejuntados no seu projeto *{{projeto}}*!\n\nLiberada a 2ª parcela via Pix:\n👉 {{link_pix}}'
-      },
-      {
-        name: 'Pintura, Louças, Metais & Vistoria Final',
-        description: 'Massa corrida, pintura acrílica fosca, instalação de metais e checklist.',
-        detail: 'Limpeza fina e entrega das chaves',
-        action_type: 'billing_payment',
-        whatsapp_template: '🔑 Obra concluída, {{cliente}}! Limpeza fina realizada e chaves prontas para entrega do *{{projeto}}*.\n\nTermo de entrega e quitação:\n👉 {{link_pix}}'
-      }
-    ]
-  },
-  {
-    id: 'agencia',
-    name: 'Agência, Marketing & Design',
-    badge: 'Criativo & Digital',
-    description: 'Fluxo para branding, campanhas publicitárias, identidade visual e websites.',
-    defaultStages: [
-      {
-        name: 'Briefing Criativo & Diagnóstico',
-        description: 'Alinhamento de objetivos comerciais, personas e cronograma de entregáveis.',
-        detail: 'Escopo estratégico alinhado',
-        action_type: 'billing_payment',
-        whatsapp_template: '🚀 Olá, {{cliente}}! Projeto criativo *{{projeto}}* iniciado na {{empresa}}!\n\nAcompanhe os conceitos e a entrada no link:\n👉 {{link_pix}}'
-      },
-      {
-        name: 'Direção de Arte & Conceito Visual',
-        description: 'Criação de propostas conceituais, tipografia, paleta e mockups.',
-        detail: 'Apresentação conceitual',
-        action_type: 'approval_request',
-        whatsapp_template: '🎨 {{cliente}}, a apresentação conceitual do projeto *{{projeto}}* está pronta para sua análise!\n\nAcesse e valide no portal:\n👉 {{link_aprovacao}}'
-      },
-      {
-        name: 'Produção & Desdobramentos',
-        description: 'Execução de todas as peças, redação publicitária e fechamento de arquivos.',
-        detail: 'Peças em produção ativa',
-        action_type: 'notification_only',
-        whatsapp_template: '✍️ {{cliente}}, estamos finalizando os desdobramentos e arquivos finais do projeto *{{projeto}}*.\n\nAcompanhe as prévias:\n👉 {{link_portal}}'
-      },
-      {
-        name: 'Entrega dos Arquivos Finais & Ativação',
-        description: 'Envio dos pacotes vetoriais, manual da marca e ativação de campanhas.',
-        detail: 'Arquivos em nuvem entregues',
-        action_type: 'billing_payment',
-        whatsapp_template: '🏆 Projeto *{{projeto}}* concluído com sucesso! Todos os arquivos finais estão disponíveis.\n\nQuitação final e certificado:\n👉 {{link_pix}}'
-      }
-    ]
-  },
-  {
-    id: 'software',
-    name: 'Software, Apps & Tecnologia',
-    badge: 'Tech & Implantação',
-    description: 'Fluxo para desenvolvimento ágil, prototipagem, sprints e implantação em produção.',
-    defaultStages: [
-      {
-        name: 'Requisitos Técnicos & Arquitetura',
-        description: 'Levantamento de regras de negócio, modelagem de banco e escopo da sprint.',
-        detail: 'Arquitetura técnica definida',
-        action_type: 'billing_payment',
-        whatsapp_template: '💻 Olá, {{cliente}}! O desenvolvimento do projeto tech *{{projeto}}* foi iniciado!\n\nCronograma das sprints e entrada no link:\n👉 {{link_pix}}'
-      },
-      {
-        name: 'Protótipo UI/UX & Fluxo do Usuário',
-        description: 'Telas navegáveis de alta fidelidade e validação de usabilidade.',
-        detail: 'Protótipo interativo validado',
-        action_type: 'approval_request',
-        whatsapp_template: '📱 {{cliente}}, o protótipo navegável do *{{projeto}}* está pronto para sua aprovação!\n\nTeste o fluxo e valide:\n👉 {{link_aprovacao}}'
-      },
-      {
-        name: 'Desenvolvimento das Sprints & Integrações',
-        description: 'Codificação de frontend, backend, APIs e regras de validação.',
-        detail: 'Ambiente de staging atualizado',
-        action_type: 'notification_only',
-        whatsapp_template: '⚙️ {{cliente}}, nova versão do *{{projeto}}* compilada com sucesso no ambiente de testes!\n\nAcompanhe o changelog:\n👉 {{link_portal}}'
-      },
-      {
-        name: 'Homologação, Testes QA & Deploy',
-        description: 'Bateria de testes, deploy em produção e entrega de credenciais.',
-        detail: 'Sistema publicado em produção',
-        action_type: 'billing_payment',
-        whatsapp_template: '🚀 Projeto *{{projeto}}* publicado em produção e 100% operacional!\n\nTermo de aceite técnico e quitação:\n👉 {{link_pix}}'
-      }
-    ]
-  },
-  {
-    id: 'contabilidade',
-    name: 'Contabilidade & BPO Especializado',
-    badge: 'Fiscal & Financeiro',
-    description: 'Fluxo para legalização, rotinas fiscais, conciliação e entrega de obrigações.',
-    defaultStages: [
-      {
-        name: 'Coleta de Documentos & Diagnóstico',
-        description: 'Conferência de certificados digitais, extratos e contratos sociais.',
-        detail: 'Documentação validada',
-        action_type: 'billing_payment',
-        whatsapp_template: '📊 Olá, {{cliente}}! Processo contábil do projeto *{{projeto}}* iniciado na {{empresa}}.\n\nAcompanhamento seguro sem senha no link:\n👉 {{link_pix}}'
-      },
-      {
-        name: 'Processamento & Conciliação',
-        description: 'Lançamentos contábeis, conferência bancária e classificação fiscal.',
-        detail: 'Processamento em andamento',
-        action_type: 'notification_only',
-        whatsapp_template: '📑 {{cliente}}, estamos finalizando a conciliação e apuração do projeto *{{projeto}}*.\n\nVeja o status em tempo real:\n👉 {{link_portal}}'
-      },
-      {
-        name: 'Apuração Tributária & Protocolos',
-        description: 'Cálculo de guias, declarações e transmissão de obrigações acessórias.',
-        detail: 'Guias geradas com protocolo',
-        action_type: 'approval_request',
-        whatsapp_template: '🏛️ Guias e relatórios do projeto *{{projeto}}* calculados e prontos para conferência!\n\nAcesse no link seguro:\n👉 {{link_aprovacao}}'
-      },
-      {
-        name: 'Fechamento & Entrega de Relatórios',
-        description: 'Disponibilização de balancetes, DRE e termo de conformidade fiscal.',
-        detail: 'Fechamento contábil concluído',
-        action_type: 'billing_payment',
-        whatsapp_template: '✅ Rotina do projeto *{{projeto}}* concluída com conformidade fiscal assegurada!\n\nRelatórios e quitação:\n👉 {{link_pix}}'
-      }
-    ]
-  },
-  {
-    id: 'geral',
-    name: 'Projeto Personalizado / Serviços Técnicos',
-    badge: 'Flexível & Universal',
-    description: 'Fluxo genérico e adaptável a qualquer nicho de serviços técnicos e industriais.',
-    defaultStages: [
-      {
-        name: 'Briefing & Levantamento Inicial',
-        description: 'Definição de escopo, requisitos e alinhamento de expectativas.',
-        detail: 'Escopo formalizado',
-        action_type: 'billing_payment',
-        whatsapp_template: '👋 Olá, {{cliente}}! Seja bem-vindo(a) à {{empresa}}. Seu projeto *{{projeto}}* foi iniciado com sucesso!\n\nAcompanhe no link sem senha e realize a entrada:\n👉 {{link_pix}}'
-      },
-      {
-        name: 'Desenvolvimento & Engenharia do Projeto',
-        description: 'Elaboração técnica, cálculos, especificações e aprovação com cliente.',
-        detail: 'Projeto técnico aprovado',
-        action_type: 'approval_request',
-        whatsapp_template: '📐 {{cliente}}, o detalhamento do projeto *{{projeto}}* está pronto para sua aprovação:\n👉 {{link_aprovacao}}'
-      },
-      {
-        name: 'Produção / Execução em Andamento',
-        description: 'Fabricação das peças ou execução prática do escopo contratado.',
-        detail: 'Produção em andamento',
-        action_type: 'notification_only',
-        whatsapp_template: '🛠️ Direto da produção, {{cliente}}! Seu projeto *{{projeto}}* está em execução.\n\nConfira as atualizações:\n👉 {{link_portal}}'
-      },
-      {
-        name: 'Controle de Qualidade & Revisão',
-        description: 'Vistoria minuciosa, calibração e checagem de conformidade técnica.',
-        detail: 'Ajustes finos finalizados',
-        action_type: 'notification_only',
-        whatsapp_template: '🔍 Calibração e controle de qualidade finalizados no projeto *{{projeto}}*.\n\nVeja as fotos no portal:\n👉 {{link_portal}}'
-      },
-      {
-        name: 'Instalação, Entrega & Conclusão',
-        description: 'Entrega no local, instrução de uso e termo formal de conclusão.',
-        detail: 'Projeto 100% entregue',
-        action_type: 'billing_payment',
-        whatsapp_template: '🏆 Conclusão formal, {{cliente}}! Projeto *{{projeto}}* finalizado com sucesso.\n\nTermo de garantia e quitação:\n👉 {{link_pix}}'
+        whatsapp_template: '🏆 Ciclo concluído com sucesso, {{cliente}}! O relatório de métricas e conversões do *{{projeto}}* está pronto.\n\nAcesse o dashboard de resultados e a quitação no link seguro:\n👉 {{link_pix}}'
       }
     ]
   }
 ];
 
 export function getTemplateById(id: string): NicheTemplate {
-  return NICHE_TEMPLATES.find(t => t.id === id) || NICHE_TEMPLATES[0];
+  if (!id) return NICHE_TEMPLATES[0];
+  const clean = id.toLowerCase().trim();
+
+  // Direct match
+  const direct = NICHE_TEMPLATES.find(t => t.id === clean);
+  if (direct) return direct;
+
+  // Gestor de Tráfego / Media Buyer
+  if (
+    clean.includes('trafeg') || 
+    clean.includes('traffic') || 
+    clean.includes('media_buyer') || 
+    clean.includes('media') || 
+    clean.includes('buyer') || 
+    clean.includes('ads') || 
+    clean.includes('performance')
+  ) {
+    return NICHE_TEMPLATES[0];
+  }
+
+  // Agência de IA / Automação
+  if (
+    clean.includes('ai') || 
+    clean.includes('ia') || 
+    clean.includes('auto') || 
+    clean.includes('n8n') || 
+    clean.includes('make') || 
+    clean.includes('agent') || 
+    clean.includes('bot') || 
+    clean.includes('soft') || 
+    clean.includes('tech')
+  ) {
+    return NICHE_TEMPLATES[1];
+  }
+
+  // Agência de Marketing Digital / Full-Service
+  if (
+    clean.includes('agenc') || 
+    clean.includes('market') || 
+    clean.includes('design') || 
+    clean.includes('brand') || 
+    clean.includes('criativ') || 
+    clean.includes('content')
+  ) {
+    return NICHE_TEMPLATES[2];
+  }
+
+  // Fallback padrão: Gestor de Tráfego / Media Buyer
+  return NICHE_TEMPLATES[0];
 }
 
 export function generateStagesFromTemplate(templateId: string, deliveryDate?: string): ProjectStage[] {
@@ -413,7 +224,10 @@ export function generateStagesFromTemplate(templateId: string, deliveryDate?: st
       description: stage.description,
       status,
       date,
-      detail: stage.detail
+      detail: stage.detail,
+      whatsapp_template: stage.whatsapp_template,
+      ai_context_instruction: stage.ai_context_instruction,
+      action_type: stage.action_type
     };
   });
 }

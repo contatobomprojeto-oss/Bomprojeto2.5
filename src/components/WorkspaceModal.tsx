@@ -45,12 +45,10 @@ interface WorkspaceModalProps {
 }
 
 const SEGMENT_OPTIONS: { id: WorkspaceSegment; label: string; icon: string; desc: string }[] = [
-  { id: 'marcenaria', label: 'Marcenaria Sob Medida', icon: '🪚', desc: 'Móveis planejados, freijó, MDF e ferragens' },
-  { id: 'serralheria', label: 'Serralheria & Metalurgia Fina', icon: '⚡', desc: 'Portões, ripados metálicos, ferro e inox' },
-  { id: 'vidracaria', label: 'Vidraçaria & Esquadrias', icon: '🪟', desc: 'Boxes, espelhos bisotados e esquadrias de alumínio' },
-  { id: 'marmoraria', label: 'Marmoraria & Rochas Nobres', icon: '🏛️', desc: 'Pias esculpidas, bancadas de quartzo e granito' },
-  { id: 'arquitetura', label: 'Arquitetura & Interiores', icon: '📐', desc: 'Projetos 3D, especificações e acompanhamento' },
-  { id: 'outro', label: 'Outro Segmento / Oficina', icon: '🏭', desc: 'Tapetes, estofados, marcenaria náutica ou artesanal' },
+  { id: 'marketing_agency', label: 'Agência de Marketing / Publicidade', icon: '🚀', desc: 'Campanhas, branding, conteúdo, criativos e performance' },
+  { id: 'ai_agency', label: 'Agência / Consultoria de Automação & IA', icon: '🤖', desc: 'Agentes inteligentes, fluxos n8n/Make, webhooks e APIs' },
+  { id: 'media_buyer', label: 'Gestor de Tráfego / Media Buyer', icon: '🎯', desc: 'Tráfego pago Meta/Google Ads, GA4, GTM e escala de ROAS' },
+  { id: 'projetos', label: 'Projetos Digitais & Sprints', icon: '⚡', desc: 'Roadmaps, squad ágil e entregáveis por milestone' }
 ];
 
 export const WorkspaceModal: React.FC<WorkspaceModalProps> = ({
@@ -70,7 +68,7 @@ export const WorkspaceModal: React.FC<WorkspaceModalProps> = ({
   
   // New Workspace form state
   const [name, setName] = useState('');
-  const [segment, setSegment] = useState<WorkspaceSegment>('serralheria');
+  const [segment, setSegment] = useState<WorkspaceSegment>('marketing_agency');
   const [type, setType] = useState<'matriz' | 'filial' | 'segmento'>('segmento');
   const [city, setCity] = useState('São Paulo');
   const [state, setState] = useState('SP');

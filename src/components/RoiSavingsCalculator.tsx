@@ -20,13 +20,13 @@ interface RoiSavingsCalculatorProps {
   onScrollToPlans?: () => void;
 }
 
-type SegmentType = 'agencia' | 'construcao' | 'marcenaria';
+type SegmentType = 'marketing_agency' | 'ai_agency' | 'media_buyer';
 
 export const RoiSavingsCalculator: React.FC<RoiSavingsCalculatorProps> = ({ onScrollToPlans }) => {
-  const [segment, setSegment] = useState<SegmentType>('agencia');
+  const [segment, setSegment] = useState<SegmentType>('marketing_agency');
   const [projectsCount, setProjectsCount] = useState<number>(15);
-  const [ticketAverage, setTicketAverage] = useState<number>(2500);
-  const [hoursLostWeekly, setHoursLostWeekly] = useState<number>(10);
+  const [ticketAverage, setTicketAverage] = useState<number>(3500);
+  const [hoursLostWeekly, setHoursLostWeekly] = useState<number>(12);
 
   const projectsSliderId = useId();
   const ticketSliderId = useId();
@@ -35,18 +35,18 @@ export const RoiSavingsCalculator: React.FC<RoiSavingsCalculatorProps> = ({ onSc
   // Presets rápidos ao alternar segmento
   const handleSegmentChange = (newSegment: SegmentType) => {
     setSegment(newSegment);
-    if (newSegment === 'agencia') {
+    if (newSegment === 'marketing_agency') {
       setProjectsCount(15);
-      setTicketAverage(2500);
-      setHoursLostWeekly(10);
-    } else if (newSegment === 'construcao') {
-      setProjectsCount(12);
-      setTicketAverage(4500);
-      setHoursLostWeekly(14);
-    } else if (newSegment === 'marcenaria') {
-      setProjectsCount(10);
       setTicketAverage(3500);
       setHoursLostWeekly(12);
+    } else if (newSegment === 'ai_agency') {
+      setProjectsCount(8);
+      setTicketAverage(6000);
+      setHoursLostWeekly(14);
+    } else if (newSegment === 'media_buyer') {
+      setProjectsCount(12);
+      setTicketAverage(2500);
+      setHoursLostWeekly(10);
     }
   };
 
@@ -133,41 +133,41 @@ export const RoiSavingsCalculator: React.FC<RoiSavingsCalculatorProps> = ({ onSc
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 <button
                   type="button"
-                  onClick={() => handleSegmentChange('agencia')}
+                  onClick={() => handleSegmentChange('marketing_agency')}
                   className={`px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer border ${
-                    segment === 'agencia'
+                    segment === 'marketing_agency'
                       ? 'bg-[#FF6515] text-white border-[#FF6515] shadow-lg shadow-[#FF6515]/20'
                       : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:border-slate-600 hover:bg-slate-800'
                   }`}
                 >
                   <Briefcase className="w-3.5 h-3.5 shrink-0" />
-                  <span className="truncate">Agência / Assessoria</span>
+                  <span className="truncate">Agência de Marketing</span>
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => handleSegmentChange('construcao')}
+                  onClick={() => handleSegmentChange('ai_agency')}
                   className={`px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer border ${
-                    segment === 'construcao'
+                    segment === 'ai_agency'
                       ? 'bg-[#FF6515] text-white border-[#FF6515] shadow-lg shadow-[#FF6515]/20'
                       : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:border-slate-600 hover:bg-slate-800'
                   }`}
                 >
-                  <Building2 className="w-3.5 h-3.5 shrink-0" />
-                  <span className="truncate">Construção / Engenharia</span>
+                  <Zap className="w-3.5 h-3.5 shrink-0" />
+                  <span className="truncate">Agência de Automação & IA</span>
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => handleSegmentChange('marcenaria')}
+                  onClick={() => handleSegmentChange('media_buyer')}
                   className={`px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer border ${
-                    segment === 'marcenaria'
+                    segment === 'media_buyer'
                       ? 'bg-[#FF6515] text-white border-[#FF6515] shadow-lg shadow-[#FF6515]/20'
                       : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:border-slate-600 hover:bg-slate-800'
                   }`}
                 >
-                  <Hammer className="w-3.5 h-3.5 shrink-0" />
-                  <span className="truncate">Marcenaria / Planejados</span>
+                  <TrendingUp className="w-3.5 h-3.5 shrink-0" />
+                  <span className="truncate">Gestor de Tráfego / Performance</span>
                 </button>
               </div>
             </div>

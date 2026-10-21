@@ -468,7 +468,7 @@ export const TeamManagementSection: React.FC<TeamManagementSectionProps> = ({
                 <input
                   type="email"
                   required
-                  placeholder="carlos@oficina.com.br"
+                  placeholder="carlos@agencia.com.br"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-[#EAECEF] bg-[#F8F9FA] focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-400/20 text-[#0F172A]"

@@ -1244,7 +1244,7 @@ export default function App() {
         setCurrentUser(prev => {
           // Se a conta for diferente do usuário anterior, descarta qualquer estado ou role anterior
           const isSameUser = prev?.email?.toLowerCase().trim() === userEmail;
-          const assignedRole = isOwner ? 'admin' : (isSameUser && prev?.role && prev.role !== 'admin' ? prev.role : (sbUser.role || 'marcenaria'));
+          const assignedRole = isOwner ? 'admin' : (isSameUser && prev?.role && prev.role !== 'admin' ? prev.role : (sbUser.role || 'media_buyer'));
 
           const updated: UserProfile = {
             id: sbUser.id,
@@ -1252,7 +1252,7 @@ export default function App() {
             email: userEmail,
             role: assignedRole,
             teamRole: isOwner ? 'admin' : (sbUser.teamRole || 'ceo'),
-            workshopName: (isSameUser && prev?.workshopName ? prev.workshopName : (sbUser.workshopName || (isOwner ? 'Gestão de Projetos Integrada' : ''))),
+            workshopName: (isSameUser && prev?.workshopName ? prev.workshopName : (sbUser.workshopName || (isOwner ? 'Nexus Performance & Automações' : ''))),
             projectCode: isSameUser ? prev?.projectCode : undefined,
             avatarUrl: sbUser.avatarUrl || (isSameUser ? prev?.avatarUrl : undefined),
             plan: isOwner ? 'escala' : (sbUser.plan || prev?.plan || 'free'),
@@ -1490,7 +1490,7 @@ export default function App() {
   const handleAdvanceStage = async (projectId: string) => {
     try {
       const authorName = currentUser?.name || currentUser?.email?.split('@')[0] || 'Equipe Técnica';
-      const authorRole = currentUser?.teamRole || (currentUser?.role === 'admin' ? 'Administrador' : currentUser?.role === 'marcenaria' ? 'Marceneiro / Oficina' : 'Gestor de Projetos');
+      const authorRole = currentUser?.teamRole || (currentUser?.role === 'admin' ? 'Administrador' : currentUser?.role === 'media_buyer' ? 'Media Buyer' : 'Gestor de Projetos');
 
       const res = await fetch(`/api/projects/${projectId}/advance-stage`, {
         method: 'POST',
@@ -1813,7 +1813,7 @@ export default function App() {
   ) => {
     try {
       const authorName = data.author || currentUser?.name || currentUser?.email?.split('@')[0] || 'Equipe Técnica';
-      const authorRole = data.role || currentUser?.teamRole || (currentUser?.role === 'admin' ? 'Administrador' : currentUser?.role === 'marcenaria' ? 'Marceneiro / Oficina' : 'Gestor de Projetos');
+      const authorRole = data.role || currentUser?.teamRole || (currentUser?.role === 'admin' ? 'Administrador' : currentUser?.role === 'media_buyer' ? 'Media Buyer' : 'Gestor de Projetos');
 
       const res = await fetch(`/api/projects/${projectId}/updates`, {
         method: 'POST',
@@ -1839,7 +1839,7 @@ export default function App() {
     }
   };
 
-  // Handler: Delete Workshop Update
+  // Handler: Delete Project Update
   const handleDeleteUpdate = async (projectId: string, updateId: string) => {
     try {
       const res = await fetch(`/api/projects/${projectId}/updates/${updateId}`, {
@@ -1865,7 +1865,7 @@ export default function App() {
         body: JSON.stringify({ emoji, text })
       });
       fetchProjects();
-      showToast(`Reação "${emoji}" enviada para a oficina!`, 'success');
+      showToast(`Reação "${emoji}" enviada para a equipe do projeto!`, 'success');
     } catch (err) {
       console.error('Error sending reaction:', err);
     }

@@ -209,7 +209,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
         title: 'E-mail Conflitante com a Conta Recebedora',
         message: 'O e-mail informado pertence à conta administradora do Mercado Pago (henrique.ferrazms@gmail.com).',
         reasonCode: 'same_user',
-        actionPrompt: 'Informe o e-mail real da sua oficina ou negócio para que o Mercado Pago processe o pagamento.',
+        actionPrompt: 'Informe o e-mail real da sua agência ou operação para que o Mercado Pago processe o pagamento.',
         suggestPix: false
       });
       setCheckoutError('O e-mail do pagador não pode ser o mesmo da conta recebedora do Mercado Pago.');

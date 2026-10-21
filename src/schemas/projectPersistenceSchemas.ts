@@ -5,18 +5,13 @@ import { z } from 'zod';
 // ==============================================================================
 
 export const INDUSTRY_SECTORS = [
-  'marcenaria',
-  'serralheria',
-  'vidracaria',
-  'arquitetura_interiores',
-  'reformas_construcao',
-  'marmoraria',
-  'energia_solar',
-  'comunicacao_visual',
-  'geral'
+  'marketing_agency',
+  'ai_agency',
+  'media_buyer'
 ] as const;
 
 export type IndustrySector = (typeof INDUSTRY_SECTORS)[number];
+export type BusinessType = IndustrySector;
 
 export const STAGE_ACTION_TYPES = [
   'notification_only',

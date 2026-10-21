@@ -267,7 +267,7 @@ export const LegalPageView: React.FC<LegalPageViewProps> = ({
                   <div className="p-3.5 rounded-xl bg-[#F8F9FA] border border-[#E8EAED]">
                     <h3 className="font-bold text-[#202124] text-xs sm:text-sm">d) Comunicação Automatizada via WhatsApp</h3>
                     <p className="text-xs text-[#5F6368] mt-1">
-                      Histórico de notificações de status e registros de atendimento por inteligência artificial para esclarecer dúvidas sobre prazos e etapas dos móveis contratados.
+                      Histórico de notificações de status e registros de atendimento por inteligência artificial para esclarecer dúvidas sobre prazos e etapas das sprints, campanhas ou automações contratadas.
                     </p>
                   </div>
                 </div>
@@ -309,7 +309,7 @@ export const LegalPageView: React.FC<LegalPageViewProps> = ({
                   Segurança da Informação e Criptografia
                 </h2>
                 <p>
-                  Todos os dados trafegados entre o navegador do usuário e o sistema são protegidos por criptografia de ponta a ponta (TLS 1.3 / HTTPS com certificado SSL 256-bit). Os bancos de dados contam com isolamento lógico estrito por workspace (multi-tenant), backups regulares e políticas de acesso restrito apenas aos gestores autorizados da respectiva marcenaria.
+                  Todos os dados trafegados entre o navegador do usuário e o sistema são protegidos por criptografia de ponta a ponta (TLS 1.3 / HTTPS com certificado SSL 256-bit). Os bancos de dados contam com isolamento lógico estrito por workspace (multi-tenant), backups regulares e políticas de acesso restrito apenas aos gestores autorizados da respectiva agência ou operação digital.
                 </p>
               </section>
 
@@ -405,11 +405,11 @@ export const LegalPageView: React.FC<LegalPageViewProps> = ({
                   Descrição da Solução SaaS
                 </h2>
                 <p>
-                  O <strong>BOMProjeto</strong> é uma plataforma SaaS (Software as a Service) desenvolvida especialmente para marcenarias e gestores de projetos sob medida. Entre as principais funcionalidades fornecidas estão:
+                  O <strong>BOMProjeto</strong> é uma plataforma SaaS (Software as a Service) desenvolvida especialmente para agências de marketing, consultorias de automação/IA e gestores de tráfego pago. Entre as principais funcionalidades fornecidas estão:
                 </p>
                 <ul className="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
-                  <li>Painel Kanban e acompanhamento das etapas de produção (Corte, Usinagem, Pré-Montagem, Acabamento, Montagem Final);</li>
-                  <li>Portal do cliente interativo com upload de fotos de execução em tempo real e linha do tempo de produção;</li>
+                  <li>Painel Kanban e acompanhamento das etapas de entrega (Briefing, Criativos & Copy, Subida de Campanhas/Fluxos, Otimização Contínua);</li>
+                  <li>Portal do cliente interativo com histórico de entregas, aprovações de peças e relatórios em tempo real;</li>
                   <li>Módulo financeiro com geração de Pix Copia e Cola e controle de parcelas pagas e a vencer;</li>
                   <li>Assistente autônomo com Inteligência Artificial para notificações de status e atendimento oficial no WhatsApp;</li>
                   <li>Gestão multi-unidade e filiais corporativas (Workspaces independentes).</li>

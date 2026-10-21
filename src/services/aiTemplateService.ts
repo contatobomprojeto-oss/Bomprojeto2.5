@@ -41,167 +41,188 @@ const templateStore = new Map<string, ProjectTemplate>();
  */
 export function normalizeSectorKey(sector: string): IndustrySector {
   const clean = (sector || '').toLowerCase().trim();
-  if (clean.includes('marcen')) return 'marcenaria';
-  if (clean.includes('serralh') || clean.includes('metal')) return 'serralheria';
-  if (clean.includes('vidr') || clean.includes('esquadr')) return 'vidracaria';
-  if (clean.includes('arquit') || clean.includes('inter')) return 'arquitetura_interiores';
-  if (clean.includes('reform') || clean.includes('constr') || clean.includes('obra')) return 'reformas_construcao';
-  if (clean.includes('marmor')) return 'marmoraria';
-  if (clean.includes('solar') || clean.includes('energ')) return 'energia_solar';
-  if (clean.includes('comunic') || clean.includes('visual') || clean.includes('lumin')) return 'comunicacao_visual';
-  return 'geral';
+  if (
+    clean.includes('trafeg') || 
+    clean.includes('traffic') || 
+    clean.includes('media_buyer') || 
+    clean.includes('media') || 
+    clean.includes('buyer') || 
+    clean.includes('ads') || 
+    clean.includes('performance')
+  ) {
+    return 'media_buyer';
+  }
+
+  if (
+    clean.includes('ai') || 
+    clean.includes('ia') || 
+    clean.includes('auto') || 
+    clean.includes('n8n') || 
+    clean.includes('make') || 
+    clean.includes('agent') || 
+    clean.includes('bot')
+  ) {
+    return 'ai_agency';
+  }
+
+  return 'marketing_agency';
 }
 
 /**
  * Fallbacks de alta fidelidade para quando não houver API key ou ocorrer rate limit
  */
-export function getSectorFallbackTemplate(companyName: string, sectorKey: IndustrySector): GeneratedTemplateOutput {
-  const company = companyName?.trim() || 'Nossa Empresa';
+export function getSectorFallbackTemplate(
+  companyName: string,
+  sectorKey: IndustrySector,
+  customSectorLabel?: string
+): GeneratedTemplateOutput {
+  const company = companyName?.trim() || 'Nossa Agência';
 
   switch (sectorKey) {
-    case 'marcenaria':
+    case 'media_buyer':
       return {
-        sector_key: 'marcenaria',
-        sector_label: 'Marcenaria & Móveis Planejados',
-        tone_of_voice: 'Profissional, acolhedor e técnico. Transmite zelo artesanal, precisão milimétrica e transparência no cumprimento de prazos.',
+        sector_key: 'media_buyer',
+        sector_label: 'Gestor de Tráfego / Media Buyer',
+        tone_of_voice: 'Analítico, focado em métricas, CPA, ROAS e transparência de escala.',
         stages: [
           {
             stage_number: 1,
-            stage_name: '1. Briefing & Contrato',
-            objective: 'Alinhar especificações técnicas, acabamentos e formalizar o início do projeto com a entrada.',
+            stage_name: 'Onboarding e Acesso às Contas (BM, GA4, GTM, Tag Manager)',
+            objective: 'Concessão de acessos aos ativos, contas de anúncios, Google Analytics 4, Tag Manager e pixel.',
             action_type: 'billing_payment',
-            whatsapp_template: `👋 Olá, {{cliente}}! Seja muito bem-vindo(a) à ${company}. Seu projeto *{{projeto}}* foi iniciado com sucesso! 🎉\n\n📄 Acesse seu contrato e realize o pagamento da entrada via Pix Copia e Cola no link seguro:\n👉 {{link_pix}}\n\nQualquer dúvida, nossa equipe está à disposição!`,
-            ai_context_instruction: 'Confirme com cortesia o início dos trabalhos e reforce que as fotos da bancada serão disponibilizadas no link.'
+            whatsapp_template: `🎯 Olá, {{cliente}}! Seja muito bem-vindo(a) à ${company}. O projeto de tráfego pago e escala *{{projeto}}* foi oficialmente iniciado! 🚀\n\nAcesse o link seguro para acompanhar o roadmap e confirmar a entrada via Pix:\n👉 {{link_pix}}`,
+            ai_context_instruction: 'Orientar o cliente com clareza sobre permissões de administrador no Meta BM e GA4.'
           },
           {
             stage_number: 2,
-            stage_name: '2. Medição Técnica no Local',
-            objective: 'Validação milimétrica de vãos, prumos, desníveis e pontos de hidráulica e eletricidade.',
+            stage_name: 'Planejamento Estratégico & Briefing de Criativos',
+            objective: 'Definição de públicos-alvo, personas, funil de vendas, metas de CPA/ROAS e roteiros de criativos.',
             action_type: 'approval_request',
-            whatsapp_template: `📐 Olá, {{cliente}}! Nosso projetista técnico agendou a medição fina no local para seu projeto *{{projeto}}*.\n\nPor favor, confirme se o dia e horário estão adequados no link:\n👉 {{link_aprovacao}}`,
-            ai_context_instruction: 'Explique a importância da conferência in loco antes do envio das peças para o corte computadorizado.'
+            whatsapp_template: `📋 Olá, {{cliente}}! O planejamento estratégico e o briefing dos criativos do projeto *{{projeto}}* estão prontos para validação.\n\nAcesse e valide com 1 clique:\n👉 {{link_aprovacao}}`,
+            ai_context_instruction: 'Explicar a tese de validação de públicos frios e remarketing.'
           },
           {
             stage_number: 3,
-            stage_name: '3. Desenhos 3D & Engenharia',
-            objective: 'Apresentar a modelagem 3D, puxadores, divisórias e memorial descritivo para aprovação formal.',
+            stage_name: 'Criação e Validação dos Anúncios / Copys',
+            objective: 'Produção das artes, carrosséis, vídeos de alta conversão e redação persuasiva.',
             action_type: 'approval_request',
-            whatsapp_template: `✨ {{cliente}}, temos ótimas notícias! O projeto 3D e renderizações do *{{projeto}}* ficaram prontos!\n\nVeja cada detalhe em alta definição e aprove com 1 clique:\n👉 {{link_portal}}`,
-            ai_context_instruction: 'Oriente o cliente a revisar posições de tomadas, puxadores e divisórias internas com calma.'
+            whatsapp_template: `🎨 {{cliente}}, os anúncios e copys de alta conversão do *{{projeto}}* estão prontos no portal!\n\nConfira as peças e aprove para subida:\n👉 {{link_aprovacao}}`,
+            ai_context_instruction: 'Apresentar variações de ganchos e headlines para teste A/B.'
           },
           {
             stage_number: 4,
-            stage_name: '4. Corte & Produção na Fábrica',
-            objective: 'Usinagem das chapas de MDF, colagem de bordas PUR e pré-montagem dos módulos estruturais.',
+            stage_name: 'Subida de Campanhas & Teste de Tracking',
+            objective: 'Configuração técnica das campanhas, teste de eventos de conversão e tracking de métricas.',
             action_type: 'notification_only',
-            whatsapp_template: `🪵 Direto da fábrica, {{cliente}}! Seu projeto *{{projeto}}* está em fase de usinagem e estruturação na bancada.\n\n📸 Confira as fotos da produção em tempo real no seu portal:\n👉 {{link_portal}}`,
-            ai_context_instruction: 'Envie as fotos anexadas gerando entusiasmo e demonstrando a solidez e o capricho do acabamento.'
+            whatsapp_template: `⚡ Campanhas no ar, {{cliente}}! O projeto *{{projeto}}* está ativo nas plataformas e o tracking de métricas e conversões já está disparando perfeitamente.\n\nAcompanhe no portal:\n👉 {{link_portal}}`,
+            ai_context_instruction: 'Informar que as campanhas estão na fase de aprendizado do algoritmo.'
           },
           {
             stage_number: 5,
-            stage_name: '5. Transporte & Montagem no Imóvel',
-            objective: 'Instalação dos móveis no imóvel do cliente com equipe própria e proteção das áreas.',
+            stage_name: 'Otimização Contínua & Fechamento de Ciclo / Relatório Quinzenal',
+            objective: 'Otimização de lances, corte de criativos saturados, escala horizontal e envio do dashboard de ROAS.',
             action_type: 'billing_payment',
-            whatsapp_template: `🚛 Olá, {{cliente}}! Nossos montadores chegaram ao local para a montagem do *{{projeto}}*.\n\n💳 Para sua comodidade, a 2ª parcela contratual já está disponível com Pix instantâneo:\n👉 {{link_pix}}\n\nSeguiremos cuidando de cada detalhe!`,
-            ai_context_instruction: 'Cobrança elegante e transparente vinculada ao início da montagem no endereço do cliente.'
-          },
-          {
-            stage_number: 6,
-            stage_name: '6. Entrega Técnica & Termo de Aceite',
-            objective: 'Regulagem fina das portas e gavetas, limpeza detalhada, entrega do certificado de garantia.',
-            action_type: 'billing_payment',
-            whatsapp_template: `🏆 Tudo pronto, {{cliente}}! O seu projeto *{{projeto}}* foi concluído com chave de ouro pela equipe ${company}.\n\n📄 Seu Termo de Garantia e a parcela final estão disponíveis no link:\n👉 {{link_pix}}\n\nMuito obrigado pela confiança! ❤️`,
-            ai_context_instruction: 'Agradeça a parceria, entregue o documento de garantia e peça uma breve avaliação do atendimento.'
+            whatsapp_template: `📊 Relatório quinzenal disponível, {{cliente}}! Seu ciclo de tráfego do *{{projeto}}* teve métricas consolidadas.\n\nAcesse seu relatório de ROAS e a fatura do novo ciclo no link seguro:\n👉 {{link_pix}}`,
+            ai_context_instruction: 'Apresentar os dados consolidados de ROAS, custo por lead e retorno financeiro.'
           }
         ]
       };
 
-    case 'serralheria':
+    case 'ai_agency':
       return {
-        sector_key: 'serralheria',
-        sector_label: 'Serralheria & Estruturas Metálicas',
-        tone_of_voice: 'Objetivo, robusto e pontual. Enfatiza segurança estrutural, qualidade das soldas e durabilidade do tratamento anticorrosivo.',
+        sector_key: 'ai_agency',
+        sector_label: 'Agência / Consultoria de Automação & IA',
+        tone_of_voice: 'Tecnológico, ágil, metodológico e orientado à eliminação de processos manuais.',
         stages: [
           {
             stage_number: 1,
-            stage_name: '1. Projeto Técnico & Gabaritos',
-            objective: 'Dimensionamento de perfis de aço, cálculo de cargas e formalização da ordem de serviço.',
+            stage_name: 'Mapeamento de Processos e Levantamento de Requisitos',
+            objective: 'Diagnóstico da arquitetura atual, mapeamento de gargalos e definição do fluxo de automação.',
             action_type: 'billing_payment',
-            whatsapp_template: `⚙️ Olá, {{cliente}}! Ordem de serviço do projeto *{{projeto}}* aprovada na ${company}.\n\nPara liberar a compra do aço estrutural, segue a chave Pix da entrada:\n👉 {{link_pix}}`,
-            ai_context_instruction: 'Informe que o material está sendo reservado conforme as especificações de espessura e resistência.'
+            whatsapp_template: `🤖 Olá, {{cliente}}! Seja bem-vindo(a) à ${company}. A implementação da sua solução de IA e automação *{{projeto}}* foi oficialmente iniciada!\n\nAcompanhe os fluxos e realize a entrada Pix no link seguro:\n👉 {{link_pix}}`,
+            ai_context_instruction: 'Confirmar os requisitos técnicos e ferramentas integradas (Make, n8n, CRM).'
           },
           {
             stage_number: 2,
-            stage_name: '2. Corte, Dobra & Soldagem MIG',
-            objective: 'Fabricação estrutural e união das peças metálicas com conferência rigorosa de esquadro.',
+            stage_name: 'Integração de APIs / Webhooks / Make / n8n',
+            objective: 'Conexão dos endpoints, webhooks de CRM, WhatsApp API oficial, banco de dados e gateways.',
             action_type: 'notification_only',
-            whatsapp_template: `🔥 Fala, {{cliente}}! A estrutura do seu projeto *{{projeto}}* está na fase de solda MIG técnica e esquadro.\n\nVeja as fotos da produção:\n👉 {{link_portal}}`,
-            ai_context_instruction: 'Compartilhe fotos do alinhamento e reforços de solda.'
+            whatsapp_template: `🔌 {{cliente}}, os webhooks e integrações de API do projeto *{{projeto}}* foram estruturados e conectados com sucesso.\n\nVeja o status dos nós no portal:\n👉 {{link_portal}}`,
+            ai_context_instruction: 'Explicar a segurança dos webhooks e criptografia dos dados transmitidos.'
           },
           {
             stage_number: 3,
-            stage_name: '3. Pintura Eletrostática & Cura',
-            objective: 'Aplicação de fundo fosfatizante anticorrosivo e acabamento em forno epóxi.',
-            action_type: 'notification_only',
-            whatsapp_template: `🎨 {{cliente}}, sua estrutura recebeu a pintura eletrostática a pó e está em processo de cura térmica.\n\nAcompanhe o status:\n👉 {{link_portal}}`,
-            ai_context_instruction: 'Ressalte a resistência a intempéries e riscos garantida pela pintura a pó.'
+            stage_name: 'Configuração de Prompts / Base de Conhecimento / Agentes',
+            objective: 'Engenharia de prompts, embeddings na base de conhecimento, regras de negócio e tom de voz.',
+            action_type: 'approval_request',
+            whatsapp_template: `🧠 {{cliente}}, os prompts e a base de conhecimento do agente IA do projeto *{{projeto}}* foram configurados!\n\nValide as respostas e o tom no link seguro:\n👉 {{link_aprovacao}}`,
+            ai_context_instruction: 'Pedir que o cliente teste perguntas comuns do seu atendimento comercial.'
           },
           {
             stage_number: 4,
-            stage_name: '4. Chumbamento & Fixação na Obra',
-            objective: 'Instalação no local com parabolts, nivelamento a laser e ancoragem de segurança.',
-            action_type: 'billing_payment',
-            whatsapp_template: `🔩 Olá, {{cliente}}! Equipe na obra iniciando a fixação técnica da estrutura *{{projeto}}*.\n\nSegue o link da parcela de instalação com Pix:\n👉 {{link_pix}}`,
-            ai_context_instruction: 'Oriente sobre o tempo de cura dos chumbadores antes da utilização com carga total.'
+            stage_name: 'Ambiente de Homologação / Testes Internos',
+            objective: 'Simulação de estresse, bateria de testes com cenários edge-case e validação de tempo de resposta.',
+            action_type: 'approval_request',
+            whatsapp_template: `🧪 {{cliente}}, sua solução de IA *{{projeto}}* está no ambiente de homologação para testes reais com sua equipe!\n\nAcesse o ambiente de sandbox e aprove o go-live:\n👉 {{link_aprovacao}}`,
+            ai_context_instruction: 'Orientar o cliente a simular conversas reais no ambiente de sandbox.'
           },
           {
             stage_number: 5,
-            stage_name: '5. Entrega Técnica & Laudo de Garantia',
-            objective: 'Revisão final, regulagem de trincos/fechaduras e entrega do certificado de conformidade.',
+            stage_name: 'Treinamento do Cliente & Go-Live (Produção)',
+            objective: 'Deploy definitivo em produção, treinamento da equipe interna e documentação técnica.',
             action_type: 'billing_payment',
-            whatsapp_template: `🏁 Serviço concluído com sucesso, {{cliente}}! Seu projeto *{{projeto}}* está pronto e garantido.\n\nTermo de entrega e quitação disponíveis em:\n👉 {{link_pix}}`,
-            ai_context_instruction: 'Finalize formalmente e convide para futuros projetos industriais ou residenciais.'
+            whatsapp_template: `🚀 Parabéns, {{cliente}}! O projeto de automação *{{projeto}}* está no ar em produção gerando eficiência real.\n\nTermo de entrega técnica, gravação do treinamento e quitação no link:\n👉 {{link_pix}}`,
+            ai_context_instruction: 'Entregar o manual de operação e reforçar o suporte técnico do go-live.'
           }
         ]
       };
 
+    case 'marketing_agency':
     default:
       return {
-        sector_key: sectorKey,
-        sector_label: 'Serviços Técnicos Especializados',
-        tone_of_voice: 'Claro, ágil e resolutivo. Focado em prazos, transparência operacional e comunicação humanizada.',
+        sector_key: 'marketing_agency',
+        sector_label: customSectorLabel || 'Agência de Marketing / Publicidade',
+        tone_of_voice: 'Estratégico, criativo e colaborativo. Focado em autoridade de marca, conversão e retenção.',
         stages: [
           {
             stage_number: 1,
-            stage_name: '1. Início & Alinhamento de Escopo',
-            objective: 'Confirmação das especificações técnicas e validação do cronograma inicial.',
+            stage_name: 'Alinhamento de Branding & Tom de Voz',
+            objective: 'Imersão de marca, definição de arquétipo, manual de identidade visual e proposta de valor.',
             action_type: 'billing_payment',
-            whatsapp_template: `👋 Olá, {{cliente}}! Seja bem-vindo(a) à ${company}. Seu projeto *{{projeto}}* foi iniciado com sucesso!\n\nAcesse o link de acompanhamento e realize o pagamento da entrada:\n👉 {{link_pix}}`,
-            ai_context_instruction: 'Dê as boas-vindas e forneça o link onde o cliente acompanhará todo o processo sem precisar de login.'
+            whatsapp_template: `✨ Olá, {{cliente}}! Seja bem-vindo(a) à ${company}. O projeto estratégico de marketing *{{projeto}}* foi iniciado!\n\nAcesse seu roadmap e realize a entrada no link seguro:\n👉 {{link_pix}}`,
+            ai_context_instruction: 'Alinhar as diretrizes de marca e cronograma das primeiras entregas criativas.'
           },
           {
             stage_number: 2,
-            stage_name: '2. Desenvolvimento & Fabricação',
-            objective: 'Execução técnica dos serviços e produção com controle de qualidade.',
-            action_type: 'notification_only',
-            whatsapp_template: `🛠️ Novidade, {{cliente}}! A produção do seu projeto *{{projeto}}* está a todo vapor na ${company}.\n\nConfira as atualizações em tempo real:\n👉 {{link_portal}}`,
-            ai_context_instruction: 'Atualize o cliente sobre o progresso e envie fotos dos bastidores.'
+            stage_name: 'Roteirização e Produção de Conteúdo',
+            objective: 'Pesquisa de tendências, roteiros de Reels/TikTok, copy persuasiva e calendário editorial.',
+            action_type: 'approval_request',
+            whatsapp_template: `✍️ {{cliente}}, o calendário editorial e roteiros do *{{projeto}}* estão prontos para sua validação!\n\nAprove com 1 clique no portal:\n👉 {{link_aprovacao}}`,
+            ai_context_instruction: 'Explicar a estratégia por trás dos formatos sugeridos para engajamento.'
           },
           {
             stage_number: 3,
-            stage_name: '3. Instalação & Revisão Final',
-            objective: 'Implementação no endereço do cliente e checklist de conformidade.',
-            action_type: 'billing_payment',
-            whatsapp_template: `📍 Olá, {{cliente}}! Chegamos à etapa de instalação e acabamentos finais do *{{projeto}}*.\n\nSegue o link seguro para a parcela intermediária via Pix:\n👉 {{link_pix}}`,
-            ai_context_instruction: 'Cobrança alinhada ao marco de instalação.'
+            stage_name: 'Aprovação de Peças e Design',
+            objective: 'Diagramação de carrosséis, key visuals, banners promocionais e vídeos editados.',
+            action_type: 'approval_request',
+            whatsapp_template: `🎨 {{cliente}}, as artes e criativos finais do projeto *{{projeto}}* estão disponíveis para revisão.\n\nConfira as peças no portal:\n👉 {{link_aprovacao}}`,
+            ai_context_instruction: 'Apresentar os mockups aplicados nos canais digitais do cliente.'
           },
           {
             stage_number: 4,
-            stage_name: '4. Conclusão & Entrega com Garantia',
-            objective: 'Vistoria de aceite final, entrega técnica e termo de garantia formal.',
+            stage_name: 'Programação e Disparos',
+            objective: 'Agendamento em plataformas, automação de publicações e integração com canais de aquisição.',
+            action_type: 'notification_only',
+            whatsapp_template: `📢 Tudo programado, {{cliente}}! As publicações e campanhas do projeto *{{projeto}}* foram agendadas e já começaram a rodar.\n\nAcompanhe no link:\n👉 {{link_portal}}`,
+            ai_context_instruction: 'Informar que o cronograma está rodando conforme planejado.'
+          },
+          {
+            stage_number: 5,
+            stage_name: 'Relatório de Performance & ROAS',
+            objective: 'Consolidação de métricas de alcance, engajamento, leads capturados e faturamento gerado.',
             action_type: 'billing_payment',
-            whatsapp_template: `🎉 Projeto *{{projeto}}* finalizado com sucesso! A ${company} agradece sua preferência.\n\nAcesse seu Termo de Garantia e a quitação final no link:\n👉 {{link_pix}}`,
-            ai_context_instruction: 'Encerramento caloroso e solicitação de feedback sobre a experiência.'
+            whatsapp_template: `🏆 Ciclo concluído com sucesso, {{cliente}}! O relatório de métricas e conversões do *{{projeto}}* está pronto.\n\nAcesse o dashboard de resultados e a quitação no link seguro:\n👉 {{link_pix}}`,
+            ai_context_instruction: 'Apresentar os resultados e propor o plano para o próximo ciclo mensal.'
           }
         ]
       };
@@ -241,25 +262,25 @@ export async function generateSectorTemplate(
   try {
     const ai = new GoogleGenAI({ apiKey });
 
-    const systemPrompt = `Você é um Arquiteto de Processos e Especialista em Comunicação via WhatsApp para prestadores de serviços de alto padrão no Brasil (marcenarias, serralherias, vidraçarias, escritórios de arquitetura, empreiteiras de reforma, etc.).
-Sua missão é criar o Cronograma e Régua de WhatsApp Comercial PERFEITA para a empresa "${company}", do setor "${sector}".
+    const systemPrompt = `Você é um Arquiteto de Processos e Especialista em Comunicação via WhatsApp para o ecossistema digital de alta performance (Agências de Marketing Digital, Agências/Consultorias de Automação & IA, e Gestores de Tráfego Pago / Media Buyers).
+Sua missão é criar o Cronograma e Régua de WhatsApp Comercial PERFEITA para a agência/empresa "${company}", do segmento digital "${sector}".
 
 DIRETRIZES FUNDAMENTAIS:
-1. Etapas (stages): Crie entre 4 a 6 etapas lógicas de execução, numeradas consecutivamente (1, 2, 3...).
+1. Etapas (stages): Crie entre 4 a 5 etapas lógicas de execução/sprint, numeradas consecutivamente (1, 2, 3...).
 2. Tipos de Ação (action_type): Use estritamente um dos seguintes:
-   - 'notification_only': Apenas informa o avanço e envia fotos no WhatsApp.
-   - 'input_request': Solicita dados ou fotos ao cliente.
-   - 'approval_request': Pede aprovação formal de projeto 3D, gabarito ou memorial.
-   - 'billing_payment': Etapa vinculada a pagamento (entrada, montagem ou quitação).
+   - 'notification_only': Apenas informa o avanço das sprints, subida de campanhas ou deploy de nós.
+   - 'input_request': Solicita acessos (BM, GA4, GTM), tokens de API ou briefings ao cliente.
+   - 'approval_request': Pede aprovação formal de criativos, copys, fluxos de automação ou relatórios.
+   - 'billing_payment': Etapa vinculada a pagamento (setup, entrada, mensalidade ou fechamento de ciclo).
 3. Mensagens de WhatsApp (whatsapp_template):
-   - Devem soar naturais, calorosas, elegantes e profissionais.
+   - Devem soar naturais, ágeis, estratégicas e profissionais (linguagem moderna do mercado digital).
    - Usar emojis relevantes sem poluição visual.
    - Usar placeholders dinâmicos padrão: {{cliente}}, {{projeto}}, {{empresa}}, {{link_portal}}, {{link_pix}}, {{link_aprovacao}}.
 4. Instrução da IA (ai_context_instruction):
-   - Orientação interna para o agente de IA saber como responder a dúvidas do cliente quando o projeto estiver nesta etapa específica.`;
+   - Orientação interna para o agente de IA saber como responder a dúvidas do cliente sobre métricas, prazos de entrega de criativos ou status de integrações nesta etapa específica.`;
 
-    const userPrompt = `Gere o template de projeto completo para a empresa "${company}" atuando no nicho "${sector}".
-${customRequirements ? `Requisitos e particularidades da empresa: ${customRequirements}` : ''}`;
+    const userPrompt = `Gere o template de projeto completo para a agência/empresa digital "${company}" atuando no nicho "${sector}".
+${customRequirements ? `Requisitos e particularidades da operação: ${customRequirements}` : ''}`;
 
     const generatePromise = ai.models.generateContent({
       model: 'gemini-2.5-flash',
@@ -273,7 +294,7 @@ ${customRequirements ? `Requisitos e particularidades da empresa: ${customRequir
           properties: {
             sector_key: {
               type: Type.STRING,
-              description: 'Chave normalizada do setor (ex: marcenaria, serralheria, vidracaria, arquitetura_interiores, reformas_construcao, geral)'
+              description: 'Chave normalizada do setor (marketing_agency, ai_agency, media_buyer)'
             },
             sector_label: {
               type: Type.STRING,
@@ -316,7 +337,7 @@ ${customRequirements ? `Requisitos e particularidades da empresa: ${customRequir
     });
 
     const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error('AI generation timed out')), 2500)
+      setTimeout(() => reject(new Error('AI generation timed out')), 15000)
     );
 
     const response: any = await Promise.race([generatePromise, timeoutPromise]);
@@ -328,15 +349,20 @@ ${customRequirements ? `Requisitos e particularidades da empresa: ${customRequir
       throw new Error('Retorno da IA incompleto ou sem etapas');
     }
 
-    // Normaliza sector_key de volta para os padrões seguros
+    // Normaliza sector_key de volta para os padrões seguros e limpa numeração repetida
     parsedJson.sector_key = normalizeSectorKey(parsedJson.sector_key || sectorKey);
+    parsedJson.stages = parsedJson.stages.map((stg, idx) => ({
+      ...stg,
+      stage_number: idx + 1,
+      stage_name: (stg.stage_name || '').replace(/^\d+[\.\-\)]\s*/, '').trim() || `Etapa ${idx + 1}`
+    }));
 
     const result = persistTemplate(parsedJson, organizationId);
     sectorTemplateCache.set(cacheKey, result);
     return result;
   } catch (error) {
     console.warn('[aiTemplateService] Falha ou indisponibilidade na API Gemini, acionando fallback estruturado:', error);
-    const fallback = getSectorFallbackTemplate(company, sectorKey);
+    const fallback = getSectorFallbackTemplate(company, sectorKey, sector);
     const result = persistTemplate(fallback, organizationId);
     sectorTemplateCache.set(cacheKey, result);
     return result;
@@ -354,7 +380,7 @@ function persistTemplate(output: GeneratedTemplateOutput, organizationId?: strin
     id: crypto.randomUUID(),
     template_id: templateId,
     stage_number: stg.stage_number || idx + 1,
-    stage_name: stg.stage_name,
+    stage_name: (stg.stage_name || '').replace(/^\d+[\.\-\)]\s*/, '').trim() || `Etapa ${idx + 1}`,
     objective: stg.objective,
     action_type: stg.action_type,
     whatsapp_template: stg.whatsapp_template,

@@ -115,7 +115,7 @@ export async function handleIncomingClientMessage(
   // 2. Busca Template do Setor para obter o Tom de Voz
   let toneOfVoice = 'Profissional, acolhedor e técnico. Transmite clareza nos prazos e transparência.';
   const templateId = (project as any).templateId;
-  const projectSector = (project as any).industrySector || project.category || 'marcenaria';
+  const projectSector = (project as any).industrySector || project.category || 'media_buyer';
   const sectorKey = normalizeSectorKey(projectSector);
 
   if ((currentStageObj as any)?.ai_context_instruction) {

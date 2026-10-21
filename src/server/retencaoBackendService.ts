@@ -361,10 +361,10 @@ export function buildContingencyRetentionAnalysis(
     prescriptiveActions.push({
       priority: isDelayed ? 'CRITICA' : 'ALTA',
       diagnosis: isDelayed
-        ? `Prazo contratual expirou em ${project.deliveryDate}. Cliente necessita de evidência de bancada imediata.`
-        : `Cliente há ${daysWithoutUpdate} dias sem fotos da produção.`,
-      action: 'Enviar fotos de bancada da etapa atual e confirmar cronograma de montagem.',
-      whatsappTemplate: `Oi ${clientFirstName}! Como você está? Passando para compartilhar uma atualização em primeira mão do projeto ${project.code}. Estamos avançando com carinho na etapa de "${project.currentStage}" (${progress}% concluído). Seguem fotos do andamento na oficina!`
+        ? `Prazo acordado expirou em ${project.deliveryDate}. Cliente necessita de evidência da sprint imediata.`
+        : `Cliente há ${daysWithoutUpdate} dias sem atualização das entregas e métricas.`,
+      action: 'Enviar prints de campanhas/automações da etapa atual e confirmar cronograma da sprint.',
+      whatsappTemplate: `Oi ${clientFirstName}! Como você está? Passando para compartilhar uma atualização em primeira mão do projeto ${project.code}. Estamos avançando com foco na etapa de "${project.currentStage}" (${progress}% concluído). Seguem atualizações do andamento das entregas!`
     });
   }
 

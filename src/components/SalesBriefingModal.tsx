@@ -301,10 +301,10 @@ export const SalesBriefingModal: React.FC<SalesBriefingModalProps> = ({
                   O Que É o BomProjeto (Visão Geral & Posicionamento)
                 </h3>
                 <p className="text-sm text-slate-300 leading-relaxed">
-                  O BomProjeto é um software desenvolvido especialmente para empresas que vendem produtos e serviços sob encomenda. 
-                  Diferente de ERPs tradicionais (como ContaAzul, Bling ou Promob) que focam em corte de chapa ou contabilidade fiscal complexa, 
-                  o BomProjeto ataca o <strong>elo mais frágil e estressante de todo o negócio</strong>: 
-                  a relação diária com o cliente durante a fabricação e a cobrança sem vergonha das parcelas.
+                  O BomProjeto é um software desenvolvido especialmente para Agências de Marketing Digital, Consultorias de Automação/IA e Gestores de Tráfego autônomos. 
+                  Diferente de gerenciadores genéricos de tarefas ou ERPs contábeis complexos que criam burocracia, 
+                  o BomProjeto ataca o <strong>elo mais frágil e estressante de toda a operação digital</strong>: 
+                  a retenção do cliente (combate direto ao churn), o alinhamento de expectativas em tempo real e a cobrança sem atrito das mensalidades e setups.
                 </p>
               </div>
 
@@ -316,15 +316,15 @@ export const SalesBriefingModal: React.FC<SalesBriefingModalProps> = ({
                     <span className="px-2 py-0.5 text-[10px] font-bold bg-orange-500/20 text-orange-400 rounded-md uppercase">Pilar 1</span>
                     <h4 className="text-sm font-bold text-white mt-2 mb-1">Portal do Cliente sem Senha</h4>
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      Link exclusivo e criptografado estilo Apple/Fleetly. O cliente não precisa baixar aplicativo nem criar senha. Abre direto no WhatsApp com status, fotos da bancada e chave Pix.
+                      Link exclusivo e criptografado estilo Apple/Fleetly. O cliente não precisa baixar aplicativo nem criar senha. Abre direto no WhatsApp com status das sprints, aprovação de peças e chave Pix.
                     </p>
                   </div>
 
                   <div className="p-4 bg-slate-950 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors">
                     <span className="px-2 py-0.5 text-[10px] font-bold bg-orange-500/20 text-orange-400 rounded-md uppercase">Pilar 2</span>
-                    <h4 className="text-sm font-bold text-white mt-2 mb-1">Linha do Tempo Visual & Fotos</h4>
+                    <h4 className="text-sm font-bold text-white mt-2 mb-1">Linha do Tempo Visual & Entregáveis</h4>
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      O profissional tira fotos das peças sendo cortadas ou montadas. O cliente acompanha em tempo real, gerando encantamento imediato e eliminando o medo de golpe.
+                      A agência sobe criativos, copys, fluxogramas de IA e links de dashboards. O cliente acompanha em tempo real, gerando encantamento imediato e percepção de entrega constante.
                     </p>
                   </div>
 
@@ -332,7 +332,7 @@ export const SalesBriefingModal: React.FC<SalesBriefingModalProps> = ({
                     <span className="px-2 py-0.5 text-[10px] font-bold bg-orange-500/20 text-orange-400 rounded-md uppercase">Pilar 3</span>
                     <h4 className="text-sm font-bold text-white mt-2 mb-1">Cobrança Automática Pix Copia e Cola</h4>
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      Lembretes amigáveis programados (D-3, vencimento e D+3) com QR Code oficial e botão que copia a chave Pix. O cliente clica, cola no banco e paga sem desculpas.
+                      Lembretes amigáveis programados (D-3, vencimento e D+3) com QR Code oficial e botão que copia a chave Pix. O cliente clica, cola no banco e paga o fee mensal ou setup sem atritos.
                     </p>
                   </div>
 
@@ -340,7 +340,7 @@ export const SalesBriefingModal: React.FC<SalesBriefingModalProps> = ({
                     <span className="px-2 py-0.5 text-[10px] font-bold bg-orange-500/20 text-orange-400 rounded-md uppercase">Pilar 4</span>
                     <h4 className="text-sm font-bold text-white mt-2 mb-1">IA de Retenção Pro & Tom de Voz</h4>
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      Inteligência preditiva via Gemini AI que analisa prazos e áudios do WhatsApp para detectar clientes descontentes antes de explodirem, sugerindo respostas prontas.
+                      Inteligência preditiva via Gemini AI que analisa prazos e áudios do WhatsApp para detectar clientes descontentes antes de cancelarem, sugerindo respostas prontas.
                     </p>
                   </div>
                 </div>
@@ -354,10 +354,10 @@ export const SalesBriefingModal: React.FC<SalesBriefingModalProps> = ({
               <div className="p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl">
                 <h3 className="text-sm font-bold text-rose-400 flex items-center gap-2 mb-1">
                   <AlertCircle className="w-4 h-4" />
-                  Instrução para o Vendedor: Toque na Ferida Real
+                  Instrução para o Vendedor: Toque na Ferida Real da Agência / Gestor
                 </h3>
                 <p className="text-xs text-slate-300">
-                  O dono de oficina não compra "recursos de tecnologia". Ele compra o fim do cansaço mental, o fim das mensagens cobrando prazos no domingo e o recebimento das parcelas em dia.
+                  O dono de agência ou gestor de tráfego não compra "recursos de tecnologia". Ele compra o fim do churn acelerado, o fim das mensagens cobrando relatórios no domingo e o recebimento pontual do fee mensal.
                 </p>
               </div>
 
@@ -366,32 +366,32 @@ export const SalesBriefingModal: React.FC<SalesBriefingModalProps> = ({
                   {
                     num: '1',
                     titulo: 'Paralisia por Interrupção no WhatsApp',
-                    descricao: 'O dono está com a serra ligada ou alinhando uma porta milimétrica. O celular vibra a cada 10 minutos com clientes perguntando "Como está meu projeto?", "Quando instala?". Cada interrupção rouba 20 minutos de foco. No fim do dia, o trabalho não rendeu e ele está exausto.',
-                    solucao: 'O BomProjeto dá o link do portal. O cliente abre e vê tudo sozinho.'
+                    descricao: 'O gestor está focado no Ads Manager otimizando campanhas ou integrando webhooks no Make/n8n. O celular vibra a cada 10 minutos com clientes perguntando "Como estão meus anúncios?", "Já subiu as campanhas?". Cada interrupção quebra o raciocínio analítico. No fim do dia, as contas não escalaram e ele está exausto.',
+                    solucao: 'O BomProjeto dá o link do portal sem senha. O cliente abre no WhatsApp e vê o andamento da sprint e entregáveis sozinho.'
                   },
                   {
                     num: '2',
-                    titulo: 'O Cliente Desconfiado que Acha que Tomou Golpe',
-                    descricao: 'O setor sob medida sofre com profissionais que pegam sinal e somem. Qualquer 3 dias de silêncio fazem o cliente achar que foi enganado. Sem fotos, a ansiedade vira desconfiança e agressividade.',
-                    solucao: 'Fotos reais da produção na bancada demonstram trabalho diário e elevam o status da marcenaria.'
+                    titulo: 'O Cliente Ansioso que Acha que a Agência Não Trabalha',
+                    descricao: 'No mercado digital, o cliente não enxerga o trabalho invisível de tracking, testes A/B e parametrização. Três dias sem novidades fazem o cliente achar que a agência sumiu, gerando risco imediato de cancelamento (churn).',
+                    solucao: 'Entregáveis visuais, histórico de marcos e prévias de criativos no portal provam a entrega contínua e blindam o contrato.'
                   },
                   {
                     num: '3',
-                    titulo: 'A "Vergonha de Cobrar" e a Inadimplência na Entrega',
-                    descricao: 'O marceneiro combina 50% de sinal e 50% na montagem. Ele monta o móvel, fica com vergonha de cobrar no ato, o cliente fala "semana que vem eu passo o Pix" e demora 30 dias. A oficina fica sem capital para pagar fornecedores.',
-                    solucao: 'O sistema cobra formalmente no WhatsApp com Pix Copia e Cola. O dono não precisa ter vergonha porque é a empresa/sistema cobrando.'
+                    titulo: 'A "Vergonha de Cobrar" o Fee Mensal ou Setup',
+                    descricao: 'O gestor entrega a sprint de automação ou fecha o mês de tráfego, fica sem jeito de cobrar, o cliente fala "semana que vem o financeiro roda" e demora semanas. A agência sofre para pagar sua equipe e ferramentas.',
+                    solucao: 'O sistema cobra formalmente no WhatsApp com Pix Copia e Cola. O gestor não se desgasta porque é a plataforma executando o faturamento.'
                   },
                   {
                     num: '4',
-                    titulo: 'O "Disse-Me-Disse" de Alterações de Projeto',
-                    descricao: 'Alterações combinadas por áudio solto no WhatsApp geram discussões se a gaveta tem amortecedor ou puxador perfil. Sem termo de aceite ou histórico claro, o cliente exige reparos sem pagar a mais.',
-                    solucao: 'Histórico de etapas carimbadas e geração de Termo de Entrega e Garantia em PDF oficial.'
+                    titulo: 'O "Disse-Me-Disse" de Alterações de Criativos e Escopo',
+                    descricao: 'Aprovações combinadas por áudios soltos ou prints no WhatsApp viram discussão infinita sobre refações de artes e textos. Sem validação formal, o cliente exige alterações além do contratado sem pagar a mais.',
+                    solucao: 'Histórico de criativos validados, marcos carimbados e aceite digital registrado em PDF oficial.'
                   },
                   {
                     num: '5',
-                    titulo: 'Falta de Controle ao Crescer (Equipes na Rua)',
-                    descricao: 'Quando a empresa contrata a segunda ou terceira equipe, o dono perde a visibilidade de onde os montadores estão e se o cliente ficou satisfeito.',
-                    solucao: 'Painel multi-filial e multi-equipe (Modo Time) com permissões blindadas por filial.'
+                    titulo: 'Falta de Governança ao Escalar Contas e Equipe',
+                    descricao: 'Quando a agência contrata o segundo ou terceiro gestor de tráfego/designer, o dono perde a visibilidade de quais clientes estão com entregas atrasadas ou insatisfeitos.',
+                    solucao: 'Painel multi-workspace e multi-equipe (Modo Time) com permissões blindadas por conta e filial.'
                   }
                 ].map(dor => (
                   <div key={dor.num} className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-2">
@@ -422,31 +422,31 @@ export const SalesBriefingModal: React.FC<SalesBriefingModalProps> = ({
                   modulo: 'Módulo A: Portal do Cliente sem Senha',
                   destaque: 'Design Premium Fleetly (#0F172A e #F97316)',
                   tecnica: 'Link PWA responsivo com hash criptografado. Não exige login nem aplicativo da Play Store/App Store.',
-                  comercial: 'O cliente sente que contratou uma empresa de engenharia de ponta. Aumenta a percepção de valor dos móveis em até 40%.'
+                  comercial: 'O cliente sente que contratou uma agência de ponta nível unicórnio. Aumenta a percepção de valor dos serviços e o LTV em mais de 40%.'
                 },
                 {
                   modulo: 'Módulo B: Cobrança Programada com Pix Copia e Cola',
                   destaque: 'Padrão Oficial Banco Central do Brasil (EMVCo + CRC16)',
-                  tecnica: 'Gera QR Code oficial e código alfanumérico para colar no app bancário. Disparos nos marcos combinados.',
-                  comercial: 'Fim do atraso de pagamento de parcelas. O cliente clica, copia e paga na hora no Nubank, Itaú ou Bradesco.'
+                  tecnica: 'Gera QR Code oficial e código alfanumérico para colar no app bancário. Disparos nos marcos de sprint e fee mensal.',
+                  comercial: 'Fim do atraso de pagamento de mensalidades e setups. O cliente clica, copia e paga na hora no Nubank, Itaú ou Bradesco.'
                 },
                 {
                   modulo: 'Módulo C: Conexão WhatsApp Direta (Linha Própria)',
                   destaque: 'Pareamento em 60 segundos via QR Code',
-                  tecnica: 'Conecta o número oficial da marcenaria/oficina sem custos adicionais de intermediários caros.',
-                  comercial: 'As mensagens saem com a foto e o nome oficial da empresa do cliente, transmitindo 100% de segurança.'
+                  tecnica: 'Conecta o número oficial da agência ou consultoria sem custos adicionais de intermediários caros.',
+                  comercial: 'As mensagens saem com a foto e o nome oficial da agência, transmitindo 100% de autoridade e segurança.'
                 },
                 {
                   modulo: 'Módulo D: Retenção Pro & Análise de Tom de Voz',
                   destaque: 'Alimentado por Gemini AI Preditivo',
-                  tecnica: 'Avalia cruzamento de atraso de cronograma, pagamentos e teor das mensagens para atribuir score de risco (Verde, Amarelo, Vermelho).',
-                  comercial: 'Alerta o dono antes do cliente cancelar ou reclamar publicamente, entregando respostas inteligentes com 1 clique.'
+                  tecnica: 'Avalia cruzamento de atraso de cronograma, pagamentos e teor das mensagens para atribuir score de risco de churn (Verde, Amarelo, Vermelho).',
+                  comercial: 'Alerta o gestor antes do cliente cancelar a conta, entregando respostas inteligentes com 1 clique.'
                 },
                 {
-                  modulo: 'Módulo E: Termo de Entrega & Garantia em PDF',
-                  destaque: 'Documento Jurídico com Assinatura e Fotos',
-                  tecnica: 'Gera laudo final de montagem com fotos do produto instalado e aceite do cliente.',
-                  comercial: 'Blinda a empresa contra reclamações indevidas após a equipe deixar o local de montagem.'
+                  modulo: 'Módulo E: Termo de Entrega & Aceite de Sprints em PDF',
+                  destaque: 'Documento de Validação com Aprovação Formal',
+                  tecnica: 'Gera laudo final de entregáveis (Pixel, tracking, criativos, automações) com histórico e aceite do cliente.',
+                  comercial: 'Blinda a agência contra discussões de escopo e pedidos infinitos de refação sem cobrança adicional.'
                 }
               ].map((m, idx) => (
                 <div key={idx} className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
@@ -494,12 +494,12 @@ export const SalesBriefingModal: React.FC<SalesBriefingModalProps> = ({
                     </thead>
                     <tbody className="divide-y divide-slate-850">
                       {[
-                        ['Comunicação', 'Cliente manda 15 áudios cobrando prazo toda semana.', 'Cliente clica no link e vê fotos da bancada atualizadas.'],
-                        ['Cobrança', 'Dono com vergonha de cobrar; cliente atrasa semanas.', 'Cobrança profissional automática com Pix Copia e Cola.'],
-                        ['Prazos', 'Projetos atrasando sem o cliente saber o motivo.', 'Linha do tempo transparente; respeito total ao cronograma.'],
-                        ['Imagem da Marca', 'Sensação de profissional amador de fundo de quintal.', 'Sensação de marca de alto padrão com tecnologia de ponta.'],
-                        ['Tempo do Dono', '3 a 4 horas por dia respondendo mensagens repetitivas.', 'Dono focado em vender novos contratos e fabricar.'],
-                        ['Segurança Jurídica', 'Combinações em conversas soltas no chat.', 'Histórico com fotos carimbadas e Termo de Entrega em PDF.']
+                        ['Comunicação', 'Cliente manda 15 mensagens cobrando relatórios e criativos toda semana.', 'Cliente clica no link e vê sprints, criativos e métricas atualizadas.'],
+                        ['Cobrança', 'Gestor com vergonha de cobrar; cliente atrasa semanas para pagar o fee.', 'Cobrança profissional automática de mensalidades com Pix Copia e Cola.'],
+                        ['Prazos', 'Campanhas atrasando sem o cliente saber o motivo ou o trabalho de bastidor.', 'Linha do tempo transparente; respeito total ao cronograma e entregas.'],
+                        ['Imagem da Marca', 'Sensação de freelancer desorganizado e amador.', 'Sensação de agência de alto padrão com tecnologia de ponta.'],
+                        ['Tempo do Gestor', '3 a 4 horas por dia respondendo mensagens repetitivas.', 'Gestor focado em otimizar campanhas e fechar novos clientes.'],
+                        ['Segurança de Escopo', 'Refações infinitas combinadas em áudios soltos.', 'Aprovações registradas com aceite digital e histórico formal.']
                       ].map(([sit, antes, depois], i) => (
                         <tr key={i} className="hover:bg-slate-900/40">
                           <td className="p-3 font-semibold text-slate-200">{sit}</td>
@@ -519,12 +519,12 @@ export const SalesBriefingModal: React.FC<SalesBriefingModalProps> = ({
                   O Retorno Sobre o Investimento (O Argumento Matador de ROI):
                 </span>
                 <p className="text-sm text-slate-200 leading-relaxed">
-                  Um projeto médio de móveis sob medida ou esquadria varia entre <strong>R$ 8.000 e R$ 45.000</strong>. 
-                  Um atraso de apenas 1 parcela de R$ 5.000 desregula todo o caixa da empresa.
+                  Um contrato médio de gestão de tráfego pago ou projeto de automação varia entre <strong>R$ 2.000 e R$ 15.000 por mês</strong>. 
+                  O churn precoce de um único cliente de R$ 2.500 desregula todo o faturamento da agência.
                 </p>
                 <div className="p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20 text-xs text-emerald-300 font-semibold">
                   O BomProjeto custa R$ 197,93 por mês (Plano Start) — isso dá menos de <strong>R$ 6,60 por dia</strong>. 
-                  Uma única parcela que o dono recebe no dia certo já paga mais de 1 ano inteiro do sistema!
+                  Reter um único cliente que cancelaria por falta de comunicação já paga mais de 1 ano inteiro do sistema!
                 </div>
               </div>
             </div>
@@ -541,7 +541,7 @@ export const SalesBriefingModal: React.FC<SalesBriefingModalProps> = ({
                       <span className="px-2 py-0.5 text-[10px] font-bold bg-orange-500 text-white rounded uppercase tracking-wider">
                         Mais Vendido
                       </span>
-                      <span className="text-xs text-slate-400">Para Oficinas em Expansão</span>
+                      <span className="text-xs text-slate-400">Para Agências e Gestores em Expansão</span>
                     </div>
                     <h3 className="text-xl font-bold text-white">Plano Start</h3>
                     <div className="mt-2 flex items-baseline gap-2">
@@ -574,7 +574,7 @@ export const SalesBriefingModal: React.FC<SalesBriefingModalProps> = ({
                   </div>
 
                   <div className="pt-4 border-t border-slate-800 text-[11px] text-slate-400">
-                    Perfeito para quem tem até 8 obras simultâneas por mês.
+                    Perfeito para agências e media buyers com até 8 contas/projetos simultâneos por mês.
                   </div>
                 </div>
 
@@ -662,17 +662,17 @@ export const SalesBriefingModal: React.FC<SalesBriefingModalProps> = ({
                 {
                   id: 'obj3',
                   obj: '3. "Não tenho tempo para alimentar outro sistema."',
-                  resp: '— "O BomProjeto foi feito para quem trabalha de botina e uniforme de fábrica. Cadastrar um projeto leva 40 segundos: nome, telefone, prazo e parcelas. Tirar uma foto da bancada leva 5 segundos. O sistema não te toma tempo: ele te devolve 15 horas semanais de interrupções inúteis."'
+                  resp: '— "O BomProjeto foi feito para quem vive no ritmo acelerado de agência e gestão de mídia. Cadastrar uma conta leva 40 segundos: cliente, WhatsApp, nicho e marcos de sprint. Anexar um criativo leva 5 segundos. O sistema não te toma tempo: ele te devolve mais de 10 horas semanais de mensagens repetitivas."'
                 },
                 {
                   id: 'obj4',
                   obj: '4. "Acho R$ 197 por mês caro para a minha realidade."',
-                  resp: '— "Seu José, quanto custa uma parcela de um armário ou de um box que o cliente atrasa 20 dias para te pagar? Geralmente R$ 2.000 ou R$ 5.000. O BomProjeto custa R$ 6,50 por dia — menos que um cafezinho com pão de queijo na padaria. Uma única parcela que você recebe no dia certo já paga mais de 1 ano inteiro do sistema."'
+                  resp: '— "Quanto custa um cliente de tráfego que dá churn de R$ 2.500/mês porque achou que você não estava trabalhando? O BomProjeto custa R$ 6,50 por dia — menos que um cafezinho. Reter um único cliente que ficaria inseguro já paga mais de 1 ano inteiro da ferramenta."'
                 },
                 {
                   id: 'obj5',
-                  obj: '5. "Já uso Promob / Corte Cloud / Bling."',
-                  resp: '— "Perfeito! O Promob faz o projeto 3D e o Corte Cloud faz o plano de corte. Nenhum deles conversa com seu cliente final nem envia fotos da montagem com Pix no WhatsApp. O BomProjeto não substitui seu software de desenho: ele é o seu braço direito comercial e de atendimento."'
+                  obj: '5. "Já uso Trello / Notion / Asana."',
+                  resp: '— "Perfeito! O Trello ou Notion organizam seus cards internos de equipe. Mas nenhum cliente quer entrar no Trello nem recebe portal elegante sem senha com botão de Pix e aprovação de criativos no WhatsApp. O BomProjeto não substitui sua gestão interna: ele é a sua vitrine de alta percepção para o cliente final."'
                 }
               ].map(item => (
                 <div key={item.id} className="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-2">
@@ -713,14 +713,14 @@ export const SalesBriefingModal: React.FC<SalesBriefingModalProps> = ({
                   <div className="flex items-center gap-2">
                     <MessageSquare className="w-4 h-4 text-emerald-400" />
                     <h4 className="text-sm font-bold text-white">
-                      Script 1: Abordagem WhatsApp (Outbound de Alta Conversão)
+                      Script 1: Abordagem WhatsApp (Outbound para Agências & Media Buyers)
                     </h4>
                   </div>
                   <button
                     type="button"
                     onClick={() =>
                       handleCopyText(
-                        `Olá [Nome do Dono], tudo bem? Vi os projetos impecáveis da [Nome da Oficina]. Parabéns pelo trabalho!\n\nUma pergunta rápida: quantos clientes seus hoje te mandam mensagem toda semana perguntando "como está o meu projeto?" ou "tem foto da bancada?"?\n\nNós criamos uma ferramenta chamada BomProjeto que envia um link elegante no WhatsApp para o seu cliente acompanhar as etapas e fotos da produção em tempo real — e ainda envia o Pix Copia e Cola automático quando a parcela vence.\n\nVocê não precisa ficar parando de serrar ou cortar para responder clientes.\n\nGravei um vídeo de 1 minuto mostrando como funciona em marcenarias como a sua. Posso te mandar o link aqui?`,
+                        `Olá [Nome do Gestor/Dono], tudo bem? Vi o trabalho impecável da [Nome da Agência]. Parabéns pelos cases!\n\nUma pergunta rápida: quantos clientes seus hoje te mandam mensagem toda semana perguntando "já subiu as campanhas?", "cadê os criativos?" ou "tem atualização de métricas?"?\n\nNós criamos o BomProjeto: um portal sem senha no WhatsApp onde seu cliente acompanha as sprints, valida criativos e recebe o Pix Copia e Cola automático do fee mensal.\n\nVocê e seu time param de perder horas no WhatsApp e travam o churn na raiz.\n\nGravei um vídeo de 1 minuto mostrando como funciona para agências de tráfego e IA. Posso te mandar o link aqui?`,
                         'script-whatsapp'
                       )
                     }
@@ -741,15 +741,15 @@ export const SalesBriefingModal: React.FC<SalesBriefingModalProps> = ({
                 </div>
 
                 <div className="bg-slate-900 p-4 rounded-lg border border-slate-800 text-xs text-slate-200 font-mono whitespace-pre-wrap leading-relaxed">
-{`Olá [Nome do Dono], tudo bem? Vi os projetos impecáveis da [Nome da Oficina]. Parabéns pelo trabalho!
+{`Olá [Nome do Gestor/Dono], tudo bem? Vi o trabalho impecável da [Nome da Agência]. Parabéns pelos cases!
 
-Uma pergunta rápida: quantos clientes seus hoje te mandam mensagem toda semana perguntando "como está o meu projeto?" ou "tem foto da bancada?"?
+Uma pergunta rápida: quantos clientes seus hoje te mandam mensagem toda semana perguntando "já subiu as campanhas?", "cadê os criativos?" ou "tem atualização de métricas?"?
 
-Nós criamos uma ferramenta chamada BomProjeto que envia um link elegante no WhatsApp para o seu cliente acompanhar as etapas e fotos da produção em tempo real — e ainda envia o Pix Copia e Cola automático quando a parcela vence.
+Nós criamos o BomProjeto: um portal sem senha no WhatsApp onde seu cliente acompanha as sprints, valida criativos e recebe o Pix Copia e Cola automático do fee mensal.
 
-Você não precisa ficar parando de serrar ou cortar para responder clientes. 
+Você e seu time param de perder horas no WhatsApp e travam o churn na raiz.
 
-Gravei um vídeo de 1 minuto mostrando como funciona em marcenarias como a sua. Posso te mandar o link aqui?`}
+Gravei um vídeo de 1 minuto mostrando como funciona para agências de tráfego e IA. Posso te mandar o link aqui?`}
                 </div>
               </div>
 
@@ -766,7 +766,7 @@ Gravei um vídeo de 1 minuto mostrando como funciona em marcenarias como a sua. 
                     type="button"
                     onClick={() =>
                       handleCopyText(
-                        `— "Alô, [Nome do Dono]? Aqui é o [Seu Nome] do BomProjeto. Sei que você deve estar no meio da produção, então serei direto: você gasta muito tempo hoje no WhatsApp tendo que mandar fotos e justificando prazos para clientes ansiosos?\n\n— [Dono responde que sim]\n\n— Pois é, a maioria dos donos de oficina perde mais de 2 horas por dia nisso. O BomProjeto coloca um portal sem senha no celular do seu cliente, com fotos da bancada e lembretes de Pix automáticos. Quero te liberar um projeto de teste grátis agora para você colocar no seu próximo cliente e ver como ele fica encantado. Qual seu melhor e-mail para eu liberar o acesso?"`,
+                        `— "Alô, [Nome do Gestor]? Aqui é o [Seu Nome] do BomProjeto. Sei que você deve estar no meio da otimização de contas ou automações, então serei direto: você gasta muito tempo hoje no WhatsApp tendo que mandar prints e justificando entregas para clientes ansiosos?\n\n— [Gestor responde que sim]\n\n— Pois é, a maioria dos gestores perde mais de 2 horas por dia nisso e sofre com churn precoce. O BomProjeto coloca um portal sem senha no celular do seu cliente, com aprovação de criativos e lembretes de Pix automáticos. Quero te liberar um projeto de teste grátis agora para você rodar na sua próxima conta e ver o encantamento do cliente. Qual seu melhor e-mail para eu liberar o acesso?"`,
                         'script-call'
                       )
                     }
@@ -787,9 +787,9 @@ Gravei um vídeo de 1 minuto mostrando como funciona em marcenarias como a sua. 
                 </div>
 
                 <div className="bg-slate-900 p-4 rounded-lg border border-slate-800 text-xs text-slate-200 whitespace-pre-wrap leading-relaxed">
-{`— "Alô, [Nome do Dono]? Aqui é o [Seu Nome] do BomProjeto. Sei que você deve estar no meio da produção, então serei direto: você gasta muito tempo hoje no WhatsApp tendo que mandar fotos e justificando prazos para clientes ansiosos?
-— [Dono responde que sim]
-— Pois é, a maioria dos donos de oficina perde mais de 2 horas por dia nisso. O BomProjeto coloca um portal sem senha no celular do seu cliente, com fotos da bancada e lembretes de Pix automáticos. Quero te liberar um projeto de teste grátis agora para você colocar no seu próximo cliente e ver como ele fica encantado. Qual seu melhor e-mail para eu liberar o acesso?"`}
+{`— "Alô, [Nome do Gestor]? Aqui é o [Seu Nome] do BomProjeto. Sei que você deve estar no meio da otimização de contas ou automações, então serei direto: você gasta muito tempo hoje no WhatsApp tendo que mandar prints e justificando entregas para clientes ansiosos?
+— [Gestor responde que sim]
+— Pois é, a maioria dos gestores perde mais de 2 horas por dia nisso e sofre com churn precoce. O BomProjeto coloca um portal sem senha no celular do seu cliente, com aprovação de criativos e lembretes de Pix automáticos. Quero te liberar um projeto de teste grátis agora para você rodar na sua próxima conta e ver o encantamento do cliente. Qual seu melhor e-mail para eu liberar o acesso?"`}
                 </div>
               </div>
 
@@ -801,15 +801,15 @@ Gravei um vídeo de 1 minuto mostrando como funciona em marcenarias como a sua. 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
                   <div className="p-3 bg-slate-900 rounded-lg border border-slate-850">
                     <strong className="text-orange-400 block mb-1">Passo 1: Portal no Celular</strong>
-                    <p className="text-slate-300">Abra o link do cliente modelo. Mostre que é rápido, lindo, sem senha e com as fotos da bancada.</p>
+                    <p className="text-slate-300">Abra o link da conta modelo. Mostre que é rápido, lindo, sem senha e com status das campanhas e aprovação de criativos.</p>
                   </div>
                   <div className="p-3 bg-slate-900 rounded-lg border border-slate-850">
                     <strong className="text-emerald-400 block mb-1">Passo 2: O Botão Pix</strong>
-                    <p className="text-slate-300">Clique em "Copiar Chave Pix" e mostre como o cliente paga a parcela sem atrito.</p>
+                    <p className="text-slate-300">Clique em "Copiar Chave Pix" e mostre como o cliente paga o fee mensal ou setup sem atrito.</p>
                   </div>
                   <div className="p-3 bg-slate-900 rounded-lg border border-slate-850">
                     <strong className="text-purple-400 block mb-1">Passo 3: Fechamento Start</strong>
-                    <p className="text-slate-300">"Faz sentido colocar nos seus próximos projetos para parar de ser interrompido por menos de R$ 7/dia?"</p>
+                    <p className="text-slate-300">"Faz sentido colocar nas suas próximas contas para blindar seus clientes do churn por menos de R$ 7/dia?"</p>
                   </div>
                 </div>
               </div>
@@ -827,12 +827,12 @@ Gravei um vídeo de 1 minuto mostrando como funciona em marcenarias como a sua. 
 
                 <div className="space-y-3">
                   {[
-                    ['1. Domínio da Proposta', 'Nunca venda como "software de computador". Venda como "o fim do cliente chato no seu WhatsApp e recebimento garantido no Pix".'],
-                    ['2. Foco no Dono', 'Fale sempre com o proprietário ou sócio gestor. Funcionários não sentem a dor de receber o dinheiro ou pagar as contas.'],
-                    ['3. Fale a Linguagem Dele', 'Use termos do dia a dia: bancada, MDF, instalação, serralheria, medição, sinal de entrada, parcela de entrega.'],
-                    ['4. Apresente no Celular', '95% dos donos de oficina usam o smartphone para tudo. Mande o link de demonstração diretamente no WhatsApp dele.'],
-                    ['5. Ancore o Preço no Valor da Parcela', 'R$ 197/mês não é nada comparado a uma parcela de R$ 6.000 que ele deixa de tomar calote.'],
-                    ['6. Fechamento Rápido', 'Ofereça o teste imediato: "Vamos cadastrar seu cliente de amanhã juntos agora? Leva 2 minutos."']
+                    ['1. Domínio da Proposta', 'Nunca venda como "mais uma ferramenta de tarefas". Venda como "o portal que trava o churn no WhatsApp e garante o pagamento do seu fee".'],
+                    ['2. Foco no Dono / Gestor', 'Fale sempre com o proprietário da agência ou media buyer autônomo. Eles sentem na pele a perda de clientes e atrasos de pagamento.'],
+                    ['3. Fale a Linguagem Dele', 'Use termos do dia a dia: ROAS, BM, Business Manager, criativos, copy, tracking, automação n8n/Make, retainer mensal, sprint.'],
+                    ['4. Apresente no Celular', '95% dos gestores e donos de agência resolvem tudo no WhatsApp. Mande o link de demonstração diretamente no WhatsApp dele.'],
+                    ['5. Ancore o Preço no Valor da Retenção', 'R$ 197/mês não é nada comparado a uma mensalidade de R$ 2.500 que ele deixa de perder em churn.'],
+                    ['6. Fechamento Rápido', 'Ofereça o teste imediato: "Vamos cadastrar sua próxima conta juntos agora? Leva menos de 2 minutos."']
                   ].map(([titulo, desc], idx) => (
                     <div key={idx} className="p-3.5 bg-slate-900 rounded-xl border border-slate-850 flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">

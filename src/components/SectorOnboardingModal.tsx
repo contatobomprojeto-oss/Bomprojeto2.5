@@ -17,6 +17,8 @@ import {
 } from 'lucide-react';
 import { ProjectTemplate } from '../schemas/projectPersistenceSchemas';
 
+import { getTemplateById } from '../utils/nicheTemplates';
+
 interface SectorOption {
   key: string;
   label: string;
@@ -25,15 +27,9 @@ interface SectorOption {
 }
 
 const SECTOR_OPTIONS: SectorOption[] = [
-  { key: 'marcenaria', label: 'Marcenaria & Planejados', icon: '🪵', description: 'Móveis sob medida, corte e montagem' },
-  { key: 'arquitetura_interiores', label: 'Arquitetura & Interiores', icon: '📐', description: 'Projetos 3D, especificações e acompanhamento' },
-  { key: 'serralheria', label: 'Serralheria & Metal', icon: '🔩', description: 'Estruturas de aço, solda e esquadrias' },
-  { key: 'vidracaria', label: 'Vidraçaria & Box', icon: '🪟', description: 'Vidros temperados, esquadrias e envidraçamento' },
-  { key: 'reformas_construcao', label: 'Reformas & Construção', icon: '🏗️', description: 'Empreiteiras, pintura e acabamentos' },
-  { key: 'agencia', label: 'Agência & Design', icon: '🎨', description: 'Branding, marketing, web design e campanhas' },
-  { key: 'software', label: 'Software & Tecnologia', icon: '💻', description: 'Desenvolvimento, apps e implantações' },
-  { key: 'contabilidade', label: 'Contabilidade & BPO', icon: '📊', description: 'Abertura, rotinas fiscais e folha' },
-  { key: 'outro', label: 'Outro Setor Especializado', icon: '✨', description: 'Prestação de serviços técnicos em geral' }
+  { key: 'marketing_agency', label: 'Agência de Marketing / Publicidade', icon: '🚀', description: 'Performance, branding, conteúdo, criativos e campanhas full-service' },
+  { key: 'ai_agency', label: 'Agência / Consultoria de Automação & IA', icon: '🤖', description: 'Agentes inteligentes, fluxos n8n/Make, webhooks e integrações de API' },
+  { key: 'media_buyer', label: 'Gestor de Tráfego / Media Buyer', icon: '🎯', description: 'Tráfego pago (Meta Ads, Google Ads), tracking GA4/GTM e escala de ROAS' }
 ];
 
 interface SectorOnboardingModalProps {
@@ -51,12 +47,49 @@ export const SectorOnboardingModal: React.FC<SectorOnboardingModalProps> = ({
   onApplyAndCreateProject,
   initialCompanyName = ''
 }) => {
-  const [companyName, setCompanyName] = useState(initialCompanyName || 'Minha Empresa');
-  const [selectedSector, setSelectedSector] = useState('marcenaria');
+  const [companyName, setCompanyName] = useState(initialCompanyName || 'Minha Agência');
+  const [selectedSector, setSelectedSector] = useState('media_buyer');
   const [customSectorText, setCustomSectorText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [generatedTemplate, setGeneratedTemplate] = useState<ProjectTemplate | null>(null);
+
+  const buildInitialTemplate = (secKey: string, comp: string): ProjectTemplate => {
+    const tmpl = getTemplateById(secKey);
+    return {
+      id: `tmpl-${secKey}-${Date.now()}`,
+      organization_id: null,
+      sector_key: secKey as any,
+      sector_label: tmpl.name,
+      tone_of_voice: tmpl.description,
+      is_system_default: true,
+      stages: tmpl.defaultStages.map((stg, idx) => ({
+        id: `stg-${idx + 1}`,
+        template_id: `tmpl-${secKey}`,
+        stage_number: idx + 1,
+        stage_name: stg.name.replace(/^\d+[\.\-\)]\s*/, '').trim(),
+        objective: stg.description,
+        action_type: (stg.action_type as any) || (idx === 0 ? 'billing_payment' : 'notification_only'),
+        whatsapp_template: (stg.whatsapp_template || '').replace(/\{\{empresa\}\}/g, comp || 'Nossa Empresa'),
+        ai_context_instruction: stg.ai_context_instruction || `Orientação ao cliente na etapa ${stg.name}.`,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      })),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+  };
+
+  const [generatedTemplate, setGeneratedTemplate] = useState<ProjectTemplate | null>(() =>
+    buildInitialTemplate('media_buyer', initialCompanyName || 'Minha Agência')
+  );
   const [activeStagePreviewIndex, setActiveStagePreviewIndex] = useState(0);
+
+  // Ao trocar de setor, carrega imediatamente o fluxo próprio do nicho
+  const handleSelectSector = (secKey: string) => {
+    setSelectedSector(secKey);
+    setActiveStagePreviewIndex(0);
+    const instantTemplate = buildInitialTemplate(secKey, companyName);
+    setGeneratedTemplate(instantTemplate);
+  };
 
   if (!isOpen) return null;
 
@@ -87,6 +120,8 @@ export const SectorOnboardingModal: React.FC<SectorOnboardingModalProps> = ({
       }
     } catch (err) {
       console.error('Erro ao gerar template com IA:', err);
+      // Mantém o template rico do nicho em caso de falha de rede
+      setGeneratedTemplate(buildInitialTemplate(selectedSector, companyName));
     } finally {
       setIsLoading(false);
     }
@@ -176,7 +211,7 @@ export const SectorOnboardingModal: React.FC<SectorOnboardingModalProps> = ({
                     <button
                       key={sec.key}
                       type="button"
-                      onClick={() => setSelectedSector(sec.key)}
+                      onClick={() => handleSelectSector(sec.key)}
                       className={`text-left p-3 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
                         isSelected
                           ? 'border-[#FF6515] bg-[#FFF8F4] ring-2 ring-[#FF6515]/20 shadow-xs'

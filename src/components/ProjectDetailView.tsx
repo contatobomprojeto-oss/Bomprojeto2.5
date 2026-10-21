@@ -300,7 +300,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
     setIsUploadingDoc(true);
     try {
       const authorName = currentUser?.name || currentUser?.email?.split('@')[0] || 'Equipe Técnica';
-      const authorRole = currentUser?.teamRole || (currentUser?.role === 'admin' ? 'Administrador' : currentUser?.role === 'marcenaria' ? 'Marceneiro' : 'Gestor');
+      const authorRole = currentUser?.teamRole || (currentUser?.role === 'admin' ? 'Administrador' : currentUser?.role === 'media_buyer' ? 'Media Buyer' : 'Gestor');
 
       const res = await fetch(`/api/projects/${project.id}/documents`, {
         method: 'POST',
@@ -562,7 +562,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
         project.stages[0];
 
       const authorName = currentUser?.name || currentUser?.email?.split('@')[0] || 'Equipe Técnica';
-      const authorRole = currentUser?.teamRole || (currentUser?.role === 'admin' ? 'Administrador' : currentUser?.role === 'marcenaria' ? 'Marceneiro' : 'Gestor de Projetos');
+      const authorRole = currentUser?.teamRole || (currentUser?.role === 'admin' ? 'Administrador' : currentUser?.role === 'media_buyer' ? 'Media Buyer' : 'Gestor de Projetos');
 
       await onAddUpdate(project.id, {
         message: updateMessage.trim(),
@@ -951,7 +951,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
                   {project.currentStage}
                 </div>
                 <p className="text-xs text-[#94A3B8] mt-1">
-                  Execução em bancada / obra
+                  Execução Técnica / Produção Digital
                 </p>
               </div>
 
@@ -1156,7 +1156,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
                       <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-orange-50 border border-orange-200 text-xs text-orange-900">
                         <User className="w-3.5 h-3.5 text-orange-600 shrink-0" />
                         <span>
-                          Responsável pelo avanço: <strong className="font-bold text-orange-950">{currentUser?.name || currentUser?.email?.split('@')[0] || 'Equipe Técnica'}</strong> ({currentUser?.teamRole || (currentUser?.role === 'admin' ? 'Administrador' : currentUser?.role === 'marcenaria' ? 'Marceneiro' : 'Gestor')})
+                          Responsável pelo avanço: <strong className="font-bold text-orange-950">{currentUser?.name || currentUser?.email?.split('@')[0] || 'Equipe Técnica'}</strong> ({currentUser?.teamRole || (currentUser?.role === 'admin' ? 'Administrador' : currentUser?.role === 'media_buyer' ? 'Media Buyer' : 'Gestor')})
                         </span>
                       </div>
                     </div>
@@ -1214,7 +1214,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
               Acesso Financeiro Confidencial
             </h3>
             <p className="text-xs text-[#73736C] max-w-md mx-auto leading-relaxed">
-              O cargo <strong>Parceiro</strong> tem permissão operacional de acompanhamento das etapas, diário de obra e fotos. Os valores em R$, orçamentos e parcelas Pix são restritos ao <strong>CEO</strong> e <strong>Administrador</strong>.
+              O cargo <strong>Parceiro</strong> tem permissão operacional de acompanhamento das etapas, andamento das sprints, relatórios e criativos. Os valores em R$, orçamentos e parcelas Pix são restritos ao <strong>CEO</strong> e <strong>Administrador</strong>.
             </p>
           </div>
         ) : (
@@ -1810,7 +1810,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
                 <User className="w-3.5 h-3.5" />
               </div>
               <div className="text-[11px] leading-tight">
-                <div>Tratando demanda como: <strong className="font-bold text-[#202124]">{currentUser?.name || currentUser?.email?.split('@')[0] || 'Equipe Técnica'}</strong> ({currentUser?.teamRole || (currentUser?.role === 'admin' ? 'Administrador' : currentUser?.role === 'marcenaria' ? 'Marceneiro' : 'Gestor')})</div>
+                <div>Tratando demanda como: <strong className="font-bold text-[#202124]">{currentUser?.name || currentUser?.email?.split('@')[0] || 'Equipe Técnica'}</strong> ({currentUser?.teamRole || (currentUser?.role === 'admin' ? 'Administrador' : currentUser?.role === 'media_buyer' ? 'Media Buyer' : 'Gestor')})</div>
                 <div className="text-[10px] text-[#80868B] mt-0.5">Data, hora e responsável ficarão gravados para auditoria da equipe.</div>
               </div>
             </div>
@@ -2145,7 +2145,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
                       Nenhum anexo nesta categoria
                     </h4>
                     <p className="text-[11px] text-[#5F6368] max-w-sm mx-auto mt-0.5">
-                      Adicione contratos assinados, termos de garantia, aditivos, memoriais descritivos ou fotos da obra.
+                      Adicione contratos assinados, termos de garantia, aditivos, relatórios de métricas, prints de criativos ou fluxogramas.
                     </p>
                   </div>
                   <button
@@ -2609,7 +2609,7 @@ export const ProjectDetailView: React.FC<ProjectDetailViewProps> = ({
                 <User className="w-4 h-4" />
               </div>
               <div className="text-[11px] leading-tight">
-                <div>Enviando anexo como: <strong className="font-bold text-[#202124]">{currentUser?.name || currentUser?.email?.split('@')[0] || 'Equipe Técnica'}</strong> ({currentUser?.teamRole || (currentUser?.role === 'admin' ? 'Administrador' : currentUser?.role === 'marcenaria' ? 'Marceneiro' : 'Gestor')})</div>
+                <div>Enviando anexo como: <strong className="font-bold text-[#202124]">{currentUser?.name || currentUser?.email?.split('@')[0] || 'Equipe Técnica'}</strong> ({currentUser?.teamRole || (currentUser?.role === 'admin' ? 'Administrador' : currentUser?.role === 'media_buyer' ? 'Media Buyer' : 'Gestor')})</div>
                 <div className="text-[10px] text-[#80868B] mt-0.5">Seu nome, cargo, data e hora ficarão registrados no documento para controle do time.</div>
               </div>
             </div>

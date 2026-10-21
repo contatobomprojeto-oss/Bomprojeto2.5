@@ -26,7 +26,7 @@ export function mapSupabaseUserToProfile(
 
   const assignedRole = isOwner
     ? 'admin'
-    : (extraProfileData?.role || pendingRole || userMeta.role || 'marcenaria');
+    : (extraProfileData?.role || pendingRole || userMeta.role || 'media_buyer');
 
   return {
     id: sbUser.id,
@@ -42,7 +42,7 @@ export function mapSupabaseUserToProfile(
     workshopName:
       extraProfileData?.workshopName ||
       userMeta.workshop_name ||
-      (isOwner ? 'Gestão de Projetos Integrada' : 'Minha Marcenaria'),
+      (isOwner ? 'Nexus Performance & Automações' : 'Minha Agência'),
     avatarUrl:
       extraProfileData?.avatarUrl ||
       userMeta.avatar_url ||
@@ -68,7 +68,7 @@ export async function signUpWithEmail(
       data: {
         name: metadata?.name,
         workshop_name: metadata?.workshopName,
-        role: metadata?.role || 'marcenaria',
+        role: metadata?.role || 'media_buyer',
       },
     },
   });

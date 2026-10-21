@@ -327,13 +327,13 @@ export function getRetencaoDataForProject(
   if (daysWithoutUpdate >= 4 || isDelayed || unreadAlerts.length > 0) {
     playbook.push({
       id: `pb-${project.id}-photos`,
-      title: `Prevenção de Ansiedade: Envio de Fotos da Etapa "${project.currentStage}"`,
+      title: `Prevenção de Ansiedade: Atualização da Etapa "${project.currentStage}"`,
       diagnosis: isDelayed
-        ? `Projeto com entrega em atraso. Envio de evidência de bancada é mandatório para conter cancelamentos.`
-        : `Cliente há ${daysWithoutUpdate} dias sem fotos da produção. Oportunidade de tranquilizar o cliente.`,
+        ? `Projeto com entrega em atraso. Envio de evidências da sprint é mandatório para conter cancelamentos.`
+        : `Cliente há ${daysWithoutUpdate} dias sem atualização das entregas. Oportunidade de tranquilizar o cliente.`,
       urgency: isDelayed ? 'critica' : 'preventiva',
-      recommendedAction: `Gravar vídeo curto ou tirar 2 fotos na bancada e enviar com mensagem de status detalhado.`,
-      whatsappMessage: `Oi ${clientFirstName}! Como você está? Passando para compartilhar uma atualização em primeira mão da sua ordem de serviço ${project.code}. Nossa equipe está trabalhando com todo o cuidado na etapa de "${project.currentStage}" (${progress}% concluído). Seguem fotos do andamento na oficina!`,
+      recommendedAction: `Gravar vídeo rápido de tela ou enviar prints dos relatórios/criativos com status detalhado.`,
+      whatsappMessage: `Oi ${clientFirstName}! Como você está? Passando para compartilhar uma atualização em primeira mão do projeto ${project.code}. Nossa equipe está trabalhando com foco total na etapa de "${project.currentStage}" (${progress}% concluído). Seguem atualizações do andamento das entregas!`,
       applied: false
     });
   }
@@ -345,8 +345,8 @@ export function getRetencaoDataForProject(
       title: `Encantamento & Indicação: Cliente Promotora da Marca`,
       diagnosis: `Score de ${finalHappiness}/100 com cronograma em dia e parcelas quitadas. Momento perfeito para colher depoimento ou pedir indicações.`,
       urgency: 'encantamento',
-      recommendedAction: `Enviar agradecimento informal pelo WhatsApp e convite para visitar a oficina ou indicar amigos.`,
-      whatsappMessage: `Olá ${clientFirstName}! Passando para agradecer pela confiança na nossa equipe! As etapas do seu projeto ${project.code} estão avançando com excelência e qualidade garantida. Se você tiver algum amigo ou familiar que também esteja planejando um projeto, será um prazer atendê-los com o mesmo carinho!`,
+      recommendedAction: `Enviar agradecimento informal pelo WhatsApp e convite para call de alinhamento ou indicação de novos clientes.`,
+      whatsappMessage: `Olá ${clientFirstName}! Passando para agradecer pela confiança na nossa equipe! As etapas do seu projeto ${project.code} estão avançando com excelência e qualidade garantida. Se você tiver algum parceiro de negócios que também precise de escala em tráfego ou automações, será um prazer atendê-los com a mesma dedicação!`,
       applied: false
     });
   }

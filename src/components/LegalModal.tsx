@@ -90,7 +90,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                   Compromisso com a Privacidade e LGPD
                 </h3>
                 <p>
-                  A plataforma <strong>BOMProjeto</strong> (disponível em <code>bomprojeto.com</code>), mantida e operada pela Marcenaria Ferraz e equipe gestora, tem o firme compromisso de proteger os dados pessoais de seus usuários, gestores, marceneiros e clientes finais, em total conformidade com a <strong>Lei Geral de Proteção de Dados (Lei nº 13.709/2018 - LGPD)</strong> e as diretrizes de segurança da informação do Google.
+                  A plataforma <strong>BOMProjeto</strong> (disponível em <code>bomprojeto.com</code>), mantida e operada pela equipe gestora, tem o firme compromisso de proteger os dados pessoais de seus usuários, gestores, media buyers, analistas e clientes finais, em total conformidade com a <strong>Lei Geral de Proteção de Dados (Lei nº 13.709/2018 - LGPD)</strong> e as diretrizes de segurança da informação do Google.
                 </p>
               </section>
 
@@ -102,7 +102,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                 <p>Coletamos e processamos exclusivamente os dados necessários para a correta prestação do serviço de gestão de projetos:</p>
                 <ul className="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
                   <li><strong>Dados de Autenticação (Google OAuth):</strong> Nome completo, endereço de e-mail e foto de perfil, unicamente para identificação do gestor, login seguro e controle de acesso a projetos e filiais.</li>
-                  <li><strong>Dados de Projetos e Clientes:</strong> Nome do cliente, telefone/WhatsApp para notificações de status, endereço de entrega e montagem, e cronograma de produção.</li>
+                  <li><strong>Dados de Projetos e Clientes:</strong> Nome do cliente, telefone/WhatsApp para notificações de status, links de entregáveis, criativos e campanhas, e cronograma de produção/sprints.</li>
                   <li><strong>Dados Financeiros e Cobrança:</strong> Valores de orçamentos, datas de vencimento de parcelas e identificador de transação Pix. <em>Não armazenamos números de cartões de crédito ou senhas bancárias em nossos servidores.</em></li>
                   <li><strong>Dados de Comunicação via WhatsApp:</strong> Mensagens de atualização de produção, registro de envios e respostas automatizadas pelo assistente com inteligência artificial para esclarecimento de dúvidas sobre prazos e etapas.</li>
                 </ul>
@@ -187,11 +187,11 @@ export const LegalModal: React.FC<LegalModalProps> = ({
                   Descrição do Serviço
                 </h3>
                 <p>
-                  O BOMProjeto é um software como serviço (SaaS) voltado para marcenarias e gestores de projetos sob medida, oferecendo ferramentas para:
+                  O BOMProjeto é um software como serviço (SaaS) voltado para agências de marketing, consultorias de automação/IA e gestores de tráfego pago, oferecendo ferramentas para:
                 </p>
                 <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm">
-                  <li>Acompanhamento de etapas de produção (Corte, Usinagem, Pré-Montagem, Acabamento, Montagem);</li>
-                  <li>Portal do cliente interativo com histórico fotográfico e reações;</li>
+                  <li>Acompanhamento de etapas de entrega (Onboarding, Planejamento & Briefing, Criativos & Copy, Subida de Campanhas/Fluxos, Otimização Contínua);</li>
+                  <li>Portal do cliente interativo com aprovação de peças, dashboards e relatórios;</li>
                   <li>Lembretes de cobrança e geração de Pix para quitação de parcelas programadas;</li>
                   <li>Assistente autônomo com IA para notificações e atendimento no WhatsApp;</li>
                   <li>Gestão multi-unidade e filiais corporativas (Workspaces).</li>

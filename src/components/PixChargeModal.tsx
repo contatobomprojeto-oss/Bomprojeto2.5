@@ -116,7 +116,7 @@ export const PixChargeModal: React.FC<PixChargeModalProps> = ({
             `📅 *Vencimento:* ${installment.dueDate}\n` +
             (details.cleanKey ? `🔑 *Chave Pix (${details.keyTypeLabel}):* ${details.cleanKey}\n\n` : '') +
             pixSnippet +
-            `📱 Você também pode escanear o QR Code oficial ou acompanhar as etapas da obra no link exclusivo:\n🔗 ${portalUrl}\n\n` +
+            `📱 Você também pode escanear o QR Code oficial ou acompanhar as entregas e sprints no link exclusivo:\n🔗 ${portalUrl}\n\n` +
             `Qualquer dúvida estamos à disposição!`
           );
         } else if (oldDetails?.copiaECola && details.copiaECola && oldDetails.copiaECola !== details.copiaECola) {
@@ -210,7 +210,7 @@ export const PixChargeModal: React.FC<PixChargeModalProps> = ({
     try {
       const toneDesc = 
         selectedTone === 'acolhedor'
-          ? 'muito acolhedor, valorizando a parceria e o progresso da obra'
+          ? 'muito acolhedor, valorizando a parceria e o progresso das entregas e sprints'
           : selectedTone === 'padrao'
           ? 'profissional, claro, direto e organizado'
           : 'formal, assertivo sobre a data de vencimento da parcela';

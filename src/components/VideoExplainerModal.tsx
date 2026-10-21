@@ -221,7 +221,7 @@ export const VideoExplainerModal: React.FC<VideoExplainerModalProps> = ({
           {/* Bottom Action Footer */}
           <div className="pt-2 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="text-xs text-white/60 text-center sm:text-left">
-              Ficou com alguma dúvida ou deseja personalizar para sua marcenaria/empresa?
+              Ficou com alguma dúvida ou deseja personalizar para sua agência/operação?
             </div>
 
             <div className="flex items-center gap-2.5 w-full sm:w-auto">

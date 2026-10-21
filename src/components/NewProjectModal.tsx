@@ -24,7 +24,12 @@ import {
   MessageSquare,
   HelpCircle,
   Check,
-  Key
+  Key,
+  Trash2,
+  ArrowUp,
+  ArrowDown,
+  RotateCcw,
+  Edit3
 } from 'lucide-react';
 import { Project, Workspace, SubscriptionPlan, TeamRole } from '../types';
 import { NICHE_TEMPLATES, getTemplateById } from '../utils/nicheTemplates';
@@ -105,7 +110,7 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
     if (activeSectorTemplate?.sector_key) {
       return activeSectorTemplate.sector_key as Project['category'];
     }
-    return 'marcenaria';
+    return 'media_buyer';
   });
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string>(currentWorkspaceId || (workspaces[0]?.id || 'ws-matriz'));
   const [totalValue, setTotalValue] = useState(() => {
@@ -214,27 +219,60 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
   const selectedTemplate = getTemplateById(category);
   const numericTotal = Number(totalValue) || 10000;
 
-  // Determina a lista ativa de etapas: se estiver usando o template da IA ou template do nicho
-  const isUsingActiveAi = Boolean(useAiTemplate && activeSectorTemplate?.stages?.length);
-  const currentStages = isUsingActiveAi
-    ? activeSectorTemplate.stages.map((stg: any, idx: number) => ({
+  // Resolve as etapas específicas do nicho selecionado (com suporte a customização salva pelo assinante)
+  const resolveStagesForCategory = (cat: string) => {
+    // 1. Verifica se o assinante tem customização salva deste nicho específico no navegador
+    try {
+      const saved = localStorage.getItem(`bomprojeto_niche_custom_${cat}`);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed?.stages?.length) {
+          return parsed.stages.map((stg: any, idx: number) => ({
+            id: `stg-${idx + 1}-${Date.now().toString().slice(-4)}`,
+            name: (stg.stage_name || stg.name || `Etapa ${idx + 1}`).replace(/^\d+[\.\-\)]\s*/, '').trim(),
+            description: stg.objective || stg.description || '',
+            action_type: stg.action_type || (idx === 0 ? 'billing_payment' : 'notification_only'),
+            whatsapp_template: stg.whatsapp_template || '',
+            ai_context_instruction: stg.ai_context_instruction || '',
+            detail: idx === 0 ? 'Projeto aprovado' : idx === 1 ? 'Em andamento' : undefined
+          }));
+        }
+      }
+    } catch {}
+
+    // 2. Se houver template ativo global no workspace para este nicho
+    if (activeSectorTemplate && (activeSectorTemplate.sector_key === cat || activeSectorTemplate.category === cat) && activeSectorTemplate.stages?.length) {
+      return activeSectorTemplate.stages.map((stg: any, idx: number) => ({
         id: stg.id || `stg-ai-${idx + 1}`,
-        name: stg.stage_name || stg.name,
+        name: (stg.stage_name || stg.name || `Etapa ${idx + 1}`).replace(/^\d+[\.\-\)]\s*/, '').trim(),
         description: stg.objective || stg.description || '',
         action_type: stg.action_type || (idx === 0 ? 'billing_payment' : 'notification_only'),
-        whatsapp_template: stg.whatsapp_template,
-        ai_context_instruction: stg.ai_context_instruction,
+        whatsapp_template: stg.whatsapp_template || '',
+        ai_context_instruction: stg.ai_context_instruction || '',
         detail: idx === 0 ? 'Projeto aprovado' : idx === 1 ? 'Em andamento' : undefined
-      }))
-    : selectedTemplate.defaultStages.map((stg: any, idx: number) => ({
-        id: `stg-niche-${idx + 1}`,
-        name: stg.name,
-        description: stg.description,
-        action_type: stg.action_type || (idx === 0 ? 'billing_payment' : idx === selectedTemplate.defaultStages.length - 1 ? 'billing_payment' : 'notification_only'),
-        whatsapp_template: stg.whatsapp_template,
-        ai_context_instruction: stg.ai_context_instruction,
-        detail: stg.detail
       }));
+    }
+
+    // 3. Fallback para template nativo enriquecido do nicho selecionado
+    const tmpl = getTemplateById(cat);
+    return tmpl.defaultStages.map((stg: any, idx: number) => ({
+      id: `stg-niche-${idx + 1}`,
+      name: stg.name.replace(/^\d+[\.\-\)]\s*/, '').trim(),
+      description: stg.description,
+      action_type: stg.action_type || (idx === 0 ? 'billing_payment' : idx === tmpl.defaultStages.length - 1 ? 'billing_payment' : 'notification_only'),
+      whatsapp_template: stg.whatsapp_template || '',
+      ai_context_instruction: stg.ai_context_instruction || '',
+      detail: stg.detail
+    }));
+  };
+
+  const [projectStages, setProjectStages] = useState<any[]>(() => resolveStagesForCategory(category));
+  const [isCustomizingStages, setIsCustomizingStages] = useState(false);
+
+  // Sincroniza etapas sempre que o nicho mudar
+  useEffect(() => {
+    setProjectStages(resolveStagesForCategory(category));
+  }, [category, activeSectorTemplate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -270,7 +308,6 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
     const effectiveDeliveryDate = dateCheck.cleanValue!;
 
     const chosenWs = workspaces.find(w => w.id === selectedWorkspaceId);
-    const chosenSector = isUsingActiveAi ? (activeSectorTemplate?.sector_key || category) : category;
 
     setIsSubmitting(true);
     try {
@@ -278,20 +315,20 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
         clientName: clientName.trim(),
         clientPhone: clientPhone.trim(),
         title: title.trim(),
-        category: chosenSector as Project['category'],
+        category: category,
         totalValue: effectiveTotal,
         deliveryDate: effectiveDeliveryDate,
         workspaceId: selectedWorkspaceId,
         workspaceName: chosenWs?.name,
-        templateId: isUsingActiveAi ? activeSectorTemplate?.id : undefined,
-        industrySector: chosenSector,
+        templateId: selectedTemplate.id,
+        industrySector: category,
         pixKey: pixKey.trim() || undefined,
-        stages: currentStages.map((stg: any, idx: number) => ({
+        stages: projectStages.map((stg: any, idx: number) => ({
           id: `s-${idx + 1}-${Date.now().toString().slice(-4)}`,
           name: stg.name,
           description: stg.description,
           status: idx === 0 ? 'completed' : idx === 1 ? 'current' : 'upcoming',
-          date: idx === 0 ? new Date().toLocaleDateString('pt-BR') : idx === currentStages.length - 1 ? effectiveDeliveryDate : undefined,
+          date: idx === 0 ? new Date().toLocaleDateString('pt-BR') : idx === projectStages.length - 1 ? effectiveDeliveryDate : undefined,
           detail: idx === 1 ? 'Em andamento' : undefined,
           whatsapp_template: stg.whatsapp_template,
           ai_context_instruction: stg.ai_context_instruction,
@@ -302,10 +339,10 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
           payment_method: paymentMethod,
           total_amount: effectiveTotal,
           installments_count: billingModel === 'single_payment' ? 1 : installmentsCount,
-          milestones: billingModel === 'milestone_based' ? currentStages.map((stg: any, i: number) => ({
+          milestones: billingModel === 'milestone_based' ? projectStages.map((stg: any, i: number) => ({
             stage_id: `stage-${i + 1}`,
             stage_name: stg.name,
-            percentage: Math.round(100 / currentStages.length)
+            percentage: Math.round(100 / projectStages.length)
           })) : undefined
         }
       });
@@ -440,7 +477,7 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
               <textarea
                 rows={2}
                 required
-                placeholder="Ex: Execução Completa e Entrega Técnica do Projeto Corporativo c/ Instalação Integrada"
+                placeholder="Ex: Gestão de Tráfego Pago Meta/Google - Escala Q3 ou Sprint Automação n8n/Make"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 className="w-full pl-10 pr-3 py-2.5 text-xs rounded-xl border border-[#EAECEF] bg-[#F8F9FA] focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-[#0F172A] text-[#0F172A] placeholder:text-[#94A3B8] transition-all"
@@ -476,18 +513,15 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
               <label className="block text-xs font-semibold text-[#0F172A]">
                 Nicho &amp; Cronograma do Projeto *
               </label>
-              {isUsingActiveAi && (
-                <span className="text-[10px] font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded-full border border-sky-200">
-                  Template Inteligente: {activeSectorTemplate.sector_label}
-                </span>
-              )}
+              <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                Fluxo Próprio do Nicho
+              </span>
             </div>
             <select
               value={category}
               onChange={(e) => {
                 const newCat = e.target.value as Project['category'];
                 setCategory(newCat);
-                setUseAiTemplate(Boolean(activeSectorTemplate && activeSectorTemplate.sector_key === newCat));
               }}
               className="w-full h-11 px-3 text-xs font-medium rounded-xl border border-[#EAECEF] bg-[#F8F9FA] focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-900/10 text-[#0F172A] transition-all"
             >
@@ -498,79 +532,206 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
               ))}
             </select>
             <p className="text-[11px] text-[#64748B] mt-1.5">
-              {isUsingActiveAi && activeSectorTemplate?.tone_of_voice
-                ? `Tom de voz configurado: ${activeSectorTemplate.tone_of_voice}`
-                : selectedTemplate.description}
+              {selectedTemplate.description}
             </p>
           </div>
 
-          {/* Workflow Stages Preview com Réguas de WhatsApp */}
+          {/* Workflow Stages: Customizável pelo Assinante */}
           <div className="bg-[#F8F9FA] border border-[#EAECEF] rounded-2xl p-4 space-y-3">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between flex-wrap gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-[#0F172A] flex items-center gap-1.5">
                 <Layers className="w-4 h-4 text-[#0F172A]" />
                 <span>
-                  Etapas do Cronograma ({currentStages.length} etapas)
+                  Etapas do Cronograma ({projectStages.length} etapas)
                 </span>
               </span>
-              <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-white border border-[#EAECEF] text-[#475569]">
-                {isUsingActiveAi ? '✨ Template IA Ativo' : selectedTemplate.badge}
-              </span>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsCustomizingStages(!isCustomizingStages)}
+                  className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold flex items-center gap-1 transition-colors cursor-pointer border ${
+                    isCustomizingStages
+                      ? 'bg-[#111827] text-white border-[#111827]'
+                      : 'bg-white text-[#475569] border-[#EAECEF] hover:bg-[#F1F5F9]'
+                  }`}
+                >
+                  <Edit3 className="w-3 h-3" />
+                  <span>{isCustomizingStages ? 'Concluir Edição' : 'Personalizar Etapas'}</span>
+                </button>
+              </div>
             </div>
 
-            <div className="space-y-2 text-xs">
-              {currentStages.map((stg: any, sIdx: number) => {
-                const isExpanded = previewExpandedStageIdx === sIdx;
-                const hasMessage = Boolean(stg.whatsapp_template);
-                return (
-                  <div key={sIdx} className="bg-white p-3 rounded-xl border border-[#EAECEF] shadow-[0_1px_2px_rgba(0,0,0,0.02)] space-y-1.5 transition-all">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex items-start gap-2.5">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
-                        <div>
-                          <strong className="text-[#0F172A] text-xs block">{sIdx + 1}. {stg.name}</strong>
-                          <span className="text-[11px] text-[#64748B] block mt-0.5">{stg.description}</span>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center gap-1.5 shrink-0">
-                        {stg.action_type === 'billing_payment' && (
-                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                            Cobrança Pix
-                          </span>
-                        )}
-                        {stg.action_type === 'approval_request' && (
-                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200">
-                            Aprovação 3D
-                          </span>
-                        )}
-                        {hasMessage && (
+            {/* Modo de Edição Ativo */}
+            {isCustomizingStages ? (
+              <div className="space-y-2.5">
+                {projectStages.map((stg: any, sIdx: number) => (
+                  <div key={sIdx} className="bg-white p-3 rounded-xl border border-[#EAECEF] shadow-xs space-y-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-xs font-bold text-[#0F172A]">Etapa {sIdx + 1}</span>
+                      <div className="flex items-center gap-1">
+                        {projectStages.length > 2 && (
                           <button
                             type="button"
-                            onClick={() => setPreviewExpandedStageIdx(isExpanded ? null : sIdx)}
-                            className="p-1.5 rounded-lg hover:bg-[#F8F9FA] text-[#64748B] hover:text-[#0F172A] transition-colors cursor-pointer"
-                            title="Ver mensagem WhatsApp"
+                            onClick={() => {
+                              setProjectStages(prev => prev.filter((_, idx) => idx !== sIdx));
+                            }}
+                            className="p-1 rounded text-rose-500 hover:bg-rose-50"
+                            title="Remover etapa"
                           >
-                            <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
+                            <Trash2 className="w-3.5 h-3.5" />
                           </button>
                         )}
                       </div>
                     </div>
 
-                    {/* Expansão da mensagem WhatsApp */}
-                    {isExpanded && hasMessage && (
-                      <div className="mt-2.5 p-3 rounded-xl bg-emerald-50/70 border border-emerald-200/80 text-[11px] text-emerald-950 font-mono whitespace-pre-line leading-relaxed">
-                        <div className="flex items-center justify-between pb-1 mb-1 border-b border-emerald-200/60 font-sans font-bold text-[10px] text-emerald-800 uppercase tracking-wider">
-                          <span>Notificação WhatsApp Automática</span>
-                          <span className="text-[9px] font-normal lowercase">disparo ao avançar etapa</span>
-                        </div>
-                        {stg.whatsapp_template}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                      <div className="sm:col-span-2">
+                        <label className="block text-[10px] font-semibold text-[#64748B] mb-0.5">Nome da Etapa</label>
+                        <input
+                          type="text"
+                          value={stg.name}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setProjectStages(prev => {
+                              const updated = [...prev];
+                              updated[sIdx] = { ...updated[sIdx], name: val };
+                              return updated;
+                            });
+                          }}
+                          className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-[#EAECEF] bg-[#F8F9FA] focus:bg-white text-[#0F172A] font-semibold"
+                        />
                       </div>
-                    )}
+
+                      <div>
+                        <label className="block text-[10px] font-semibold text-[#64748B] mb-0.5">Ação Vinculada</label>
+                        <select
+                          value={stg.action_type || 'notification_only'}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setProjectStages(prev => {
+                              const updated = [...prev];
+                              updated[sIdx] = { ...updated[sIdx], action_type: val };
+                              return updated;
+                            });
+                          }}
+                          className="w-full px-2 py-1.5 text-xs rounded-lg border border-[#EAECEF] bg-[#F8F9FA] focus:bg-white text-[#0F172A]"
+                        >
+                          <option value="billing_payment">💳 Cobrança Pix</option>
+                          <option value="approval_request">✍️ Aprovação 3D</option>
+                          <option value="notification_only">🔔 Notificação</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-semibold text-[#64748B] mb-0.5">Objetivo / Descrição</label>
+                      <input
+                        type="text"
+                        value={stg.description}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setProjectStages(prev => {
+                            const updated = [...prev];
+                            updated[sIdx] = { ...updated[sIdx], description: val };
+                            return updated;
+                          });
+                        }}
+                        className="w-full px-2.5 py-1.5 text-xs rounded-lg border border-[#EAECEF] bg-[#F8F9FA] focus:bg-white text-[#0F172A]"
+                      />
+                    </div>
                   </div>
-                );
-              })}
-            </div>
+                ))}
+
+                <div className="flex items-center justify-between pt-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setProjectStages(prev => [
+                        ...prev,
+                        {
+                          id: `stg-custom-${Date.now()}`,
+                          name: `Nova Etapa`,
+                          description: 'Descrição da etapa',
+                          action_type: 'notification_only',
+                          whatsapp_template: '👋 Olá, {{cliente}}! Seu projeto *{{projeto}}* avançou de etapa.\n👉 {{link_portal}}'
+                        }
+                      ]);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-semibold flex items-center gap-1 cursor-pointer"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Adicionar Etapa</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setProjectStages(resolveStagesForCategory(category));
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-[#F1F5F9] text-[#475569] text-xs font-semibold flex items-center gap-1 cursor-pointer"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>Restaurar Padrão do Nicho</span>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              /* Modo de Visualização do Fluxo */
+              <div className="space-y-2 text-xs">
+                {projectStages.map((stg: any, sIdx: number) => {
+                  const isExpanded = previewExpandedStageIdx === sIdx;
+                  const hasMessage = Boolean(stg.whatsapp_template);
+                  return (
+                    <div key={sIdx} className="bg-white p-3 rounded-xl border border-[#EAECEF] shadow-[0_1px_2px_rgba(0,0,0,0.02)] space-y-1.5 transition-all">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-start gap-2.5">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-600 mt-0.5 shrink-0" />
+                          <div>
+                            <strong className="text-[#0F172A] text-xs block">{sIdx + 1}. {stg.name}</strong>
+                            <span className="text-[11px] text-[#64748B] block mt-0.5">{stg.description}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          {stg.action_type === 'billing_payment' && (
+                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                              Cobrança Pix
+                            </span>
+                          )}
+                          {stg.action_type === 'approval_request' && (
+                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200">
+                              Aprovação 3D
+                            </span>
+                          )}
+                          {hasMessage && (
+                            <button
+                              type="button"
+                              onClick={() => setPreviewExpandedStageIdx(isExpanded ? null : sIdx)}
+                              className="p-1.5 rounded-lg hover:bg-[#F8F9FA] text-[#64748B] hover:text-[#0F172A] transition-colors cursor-pointer"
+                              title="Ver mensagem WhatsApp"
+                            >
+                              <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Expansão da mensagem WhatsApp */}
+                      {isExpanded && hasMessage && (
+                        <div className="mt-2.5 p-3 rounded-xl bg-emerald-50/70 border border-emerald-200/80 text-[11px] text-emerald-950 font-mono whitespace-pre-line leading-relaxed">
+                          <div className="flex items-center justify-between pb-1 mb-1 border-b border-emerald-200/60 font-sans font-bold text-[10px] text-emerald-800 uppercase tracking-wider">
+                            <span>Notificação WhatsApp Automática</span>
+                            <span className="text-[9px] font-normal lowercase">disparo ao avançar etapa</span>
+                          </div>
+                          {stg.whatsapp_template}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -692,7 +853,7 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
                       }`}
                     >
                       <span className="block text-xs">Por Etapas</span>
-                      <span className="text-[10px] opacity-75">Marcos da obra</span>
+                      <span className="text-[10px] opacity-75">Marcos do Projeto / Sprints</span>
                     </button>
                   </div>
                 </div>

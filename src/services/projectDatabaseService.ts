@@ -123,7 +123,7 @@ export async function createProject(
         client_name: payload.clientName,
         client_phone: payload.clientPhone,
         title: payload.title,
-        category: payload.category || 'marcenaria',
+        category: payload.category || 'media_buyer',
         status: payload.status || 'em_andamento',
         current_stage: payload.currentStage || 'Briefing',
         progress_percent: payload.progressPercent || 0,

@@ -1,520 +1,237 @@
 [
   {
-    "id": "p-9374",
-    "code": "#PROJ-165",
-    "clientName": "Ana Paula Silva",
-    "clientPhone": "+55 11 98888-7777",
-    "title": "Closet Casal Master",
-    "category": "marcenaria",
-    "unit": "Unidade Principal",
-    "status": "em_andamento",
-    "workspaceId": "ws-matriz",
-    "workspaceName": "Matriz de Projetos",
-    "ownerEmail": "usuario.novo@gmail.com",
-    "userId": "",
-    "currentStage": "2. Medição Técnica no Local",
-    "progressPercent": 17,
-    "deliveryDate": "20/12/2026",
-    "contractDate": "02/10/2026",
-    "totalValue": 18000,
-    "daysWithoutUpdate": 0,
-    "needsAttention": false,
-    "lastInteractionText": "Hoje (Projeto cadastrado)",
-    "lastInteractionDate": "Hoje",
-    "lastInteractionType": "whatsapp",
-    "installments": [
-      {
-        "number": 1,
-        "label": "1ª Parcela (50%)",
-        "percentage": 50,
-        "amount": 9000,
-        "status": "pending",
-        "dueDate": "2026-10-02",
-        "paymentMethod": "Pix Dinâmico",
-        "pixQrCode": "00020101021126440014br.gov.bcb.pix0122usuario.novo@gmail.com52040000530398654079000.005802BR5918MATRIZ DE PROJETOS6009SAO PAULO62070503***6304C822"
-      },
-      {
-        "number": 2,
-        "label": "2ª Parcela (50%)",
-        "percentage": 50,
-        "amount": 9000,
-        "status": "pending",
-        "dueDate": "2026-11-02",
-        "paymentMethod": "Pix Dinâmico",
-        "pixQrCode": "00020101021126440014br.gov.bcb.pix0122usuario.novo@gmail.com52040000530398654079000.005802BR5918MATRIZ DE PROJETOS6009SAO PAULO62070503***6304C822"
-      }
-    ],
-    "stages": [
-      {
-        "id": "s-1-9375",
-        "name": "1. Briefing & Contrato",
-        "description": "Alinhar especificações técnicas, acabamentos e formalizar o início do projeto com a entrada.",
-        "status": "completed",
-        "date": "02/10/2026",
-        "whatsapp_template": "👋 Olá, {{cliente}}! Seja muito bem-vindo(a) à BOM Projeto. Seu projeto *{{projeto}}* foi iniciado com sucesso! 🎉\n\n📄 Acesse seu contrato e realize o pagamento da entrada via Pix Copia e Cola no link seguro:\n👉 {{link_pix}}\n\nQualquer dúvida, nossa equipe está à disposição!",
-        "ai_context_instruction": "Confirme com cortesia o início dos trabalhos e reforce que as fotos da bancada serão disponibilizadas no link.",
-        "action_type": "billing_payment"
-      },
-      {
-        "id": "s-2-9376",
-        "name": "2. Medição Técnica no Local",
-        "description": "Validação milimétrica de vãos, prumos, desníveis e pontos de hidráulica e eletricidade.",
-        "status": "current",
-        "detail": "Em andamento",
-        "whatsapp_template": "📐 Olá, {{cliente}}! Nosso projetista técnico agendou a medição fina no local para seu projeto *{{projeto}}*.\n\nPor favor, confirme se o dia e horário estão adequados no link:\n👉 {{link_aprovacao}}",
-        "ai_context_instruction": "Explique a importância da conferência in loco antes do envio das peças para o corte computadorizado.",
-        "action_type": "approval_request"
-      },
-      {
-        "id": "s-3-9376",
-        "name": "3. Desenhos 3D & Engenharia",
-        "description": "Apresentar a modelagem 3D, puxadores, divisórias e memorial descritivo para aprovação formal.",
-        "status": "upcoming",
-        "whatsapp_template": "✨ {{cliente}}, temos ótimas notícias! O projeto 3D e renderizações do *{{projeto}}* ficaram prontos!\n\nVeja cada detalhe em alta definição e aprove com 1 clique:\n👉 {{link_portal}}",
-        "ai_context_instruction": "Oriente o cliente a revisar posições de tomadas, puxadores e divisórias internas com calma.",
-        "action_type": "approval_request"
-      },
-      {
-        "id": "s-4-9376",
-        "name": "4. Corte & Produção na Fábrica",
-        "description": "Usinagem das chapas de MDF, colagem de bordas PUR e pré-montagem dos módulos estruturais.",
-        "status": "upcoming",
-        "whatsapp_template": "🪵 Direto da fábrica, {{cliente}}! Seu projeto *{{projeto}}* está em fase de usinagem e estruturação na bancada.\n\n📸 Confira as fotos da produção em tempo real no seu portal:\n👉 {{link_portal}}",
-        "ai_context_instruction": "Envie as fotos anexadas gerando entusiasmo e demonstrando a solidez e o capricho do acabamento.",
-        "action_type": "notification_only"
-      },
-      {
-        "id": "s-5-9376",
-        "name": "5. Transporte & Montagem no Imóvel",
-        "description": "Instalação dos móveis no imóvel do cliente com equipe própria e proteção das áreas.",
-        "status": "upcoming",
-        "whatsapp_template": "🚛 Olá, {{cliente}}! Nossos montadores chegaram ao local para a montagem do *{{projeto}}*.\n\n💳 Para sua comodidade, a 2ª parcela contratual já está disponível com Pix instantâneo:\n👉 {{link_pix}}\n\nSeguiremos cuidando de cada detalhe!",
-        "ai_context_instruction": "Cobrança elegante e transparente vinculada ao início da montagem no endereço do cliente.",
-        "action_type": "billing_payment"
-      },
-      {
-        "id": "s-6-9376",
-        "name": "6. Entrega Técnica & Termo de Aceite",
-        "description": "Regulagem fina das portas e gavetas, limpeza detalhada, entrega do certificado de garantia.",
-        "status": "upcoming",
-        "date": "20/12/2026",
-        "whatsapp_template": "🏆 Tudo pronto, {{cliente}}! O seu projeto *{{projeto}}* foi concluído com chave de ouro pela equipe BOM Projeto.\n\n📄 Seu Termo de Garantia e a parcela final estão disponíveis no link:\n👉 {{link_pix}}\n\nMuito obrigado pela confiança! ❤️",
-        "ai_context_instruction": "Agradeça a parceria, entregue o documento de garantia e peça uma breve avaliação do atendimento.",
-        "action_type": "billing_payment"
-      }
-    ],
-    "updates": [
-      {
-        "id": "upd-1790937029377",
-        "timestamp": "Hoje, recém-criado",
-        "author": "Responsável Técnico",
-        "role": "Gestor do Projeto",
-        "stageId": "s-1-9375",
-        "stageName": "1. Briefing & Contrato",
-        "message": "Projeto iniciado com sucesso! Seja muito bem-vindo(a), Ana Paula Silva. Você acompanhará cada detalhe da execução por este portal sem senha.",
-        "whatsappSent": true,
-        "photos": []
-      }
-    ],
-    "billing": {
-      "id": "e1c8e030-b3cf-45bb-a0ba-971886296fca",
-      "project_id": "p-9374",
-      "billing_model": "installments",
-      "payment_method": "pix",
-      "total_amount": 18000,
-      "installments_count": 2,
-      "status": "active",
-      "invoices": [
-        {
-          "id": "922be8fb-3690-4793-b02f-9cb345b48958",
-          "project_billing_id": "e1c8e030-b3cf-45bb-a0ba-971886296fca",
-          "project_stage_id": null,
-          "installment_number": 1,
-          "amount": 9000,
-          "due_date": "2026-10-02",
-          "payment_link": "https://bomprojeto.com/pay/922be8fb-3690-4793-b02f-9cb345b48958",
-          "pix_code": "00020101021126440014br.gov.bcb.pix0122usuario.novo@gmail.com52040000530398654079000.005802BR5918MATRIZ DE PROJETOS6009SAO PAULO62070503***6304C822",
-          "status": "pending",
-          "paid_at": null,
-          "created_at": "2026-10-02T10:30:29.376Z",
-          "updated_at": "2026-10-02T10:30:29.376Z"
-        },
-        {
-          "id": "94ad60ec-57da-4fb2-b224-ec981339f472",
-          "project_billing_id": "e1c8e030-b3cf-45bb-a0ba-971886296fca",
-          "project_stage_id": null,
-          "installment_number": 2,
-          "amount": 9000,
-          "due_date": "2026-11-02",
-          "payment_link": "https://bomprojeto.com/pay/94ad60ec-57da-4fb2-b224-ec981339f472",
-          "pix_code": "00020101021126440014br.gov.bcb.pix0122usuario.novo@gmail.com52040000530398654079000.005802BR5918MATRIZ DE PROJETOS6009SAO PAULO62070503***6304C822",
-          "status": "pending",
-          "paid_at": null,
-          "created_at": "2026-10-02T10:30:29.376Z",
-          "updated_at": "2026-10-02T10:30:29.376Z"
-        }
-      ],
-      "created_at": "2026-10-02T10:30:29.376Z",
-      "updated_at": "2026-10-02T10:30:29.376Z"
-    },
-    "invoices": [
-      {
-        "id": "922be8fb-3690-4793-b02f-9cb345b48958",
-        "project_billing_id": "e1c8e030-b3cf-45bb-a0ba-971886296fca",
-        "project_stage_id": null,
-        "installment_number": 1,
-        "amount": 9000,
-        "due_date": "2026-10-02",
-        "payment_link": "https://bomprojeto.com/pay/922be8fb-3690-4793-b02f-9cb345b48958",
-        "pix_code": "00020101021126440014br.gov.bcb.pix0122usuario.novo@gmail.com52040000530398654079000.005802BR5918MATRIZ DE PROJETOS6009SAO PAULO62070503***6304C822",
-        "status": "pending",
-        "paid_at": null,
-        "created_at": "2026-10-02T10:30:29.376Z",
-        "updated_at": "2026-10-02T10:30:29.376Z"
-      },
-      {
-        "id": "94ad60ec-57da-4fb2-b224-ec981339f472",
-        "project_billing_id": "e1c8e030-b3cf-45bb-a0ba-971886296fca",
-        "project_stage_id": null,
-        "installment_number": 2,
-        "amount": 9000,
-        "due_date": "2026-11-02",
-        "payment_link": "https://bomprojeto.com/pay/94ad60ec-57da-4fb2-b224-ec981339f472",
-        "pix_code": "00020101021126440014br.gov.bcb.pix0122usuario.novo@gmail.com52040000530398654079000.005802BR5918MATRIZ DE PROJETOS6009SAO PAULO62070503***6304C822",
-        "status": "pending",
-        "paid_at": null,
-        "created_at": "2026-10-02T10:30:29.376Z",
-        "updated_at": "2026-10-02T10:30:29.376Z"
-      }
-    ],
-    "pixKey": "usuario.novo@gmail.com"
-  },
-  {
-    "id": "p-6777",
-    "code": "#PROJ-234",
-    "clientName": "Cliente Teste Completo",
-    "clientPhone": "+55 11 99999-8888",
-    "title": "Reforma Completa Escritório",
-    "category": "marcenaria",
-    "unit": "Unidade Principal",
-    "status": "em_andamento",
-    "workspaceId": "ws-matriz",
-    "workspaceName": "Matriz de Projetos",
-    "ownerEmail": "henrique.ferrazms@gmail.com",
-    "userId": "",
-    "currentStage": "Produção",
-    "progressPercent": 50,
-    "deliveryDate": "15/12/2026",
-    "contractDate": "01/10/2026",
-    "totalValue": 15000,
-    "pixKey": "11999998888",
-    "daysWithoutUpdate": 0,
-    "needsAttention": false,
-    "lastInteractionText": "Hoje (Projeto cadastrado)",
-    "lastInteractionDate": "Hoje",
-    "lastInteractionType": "whatsapp",
-    "installments": [
-      {
-        "number": 1,
-        "label": "1ª Parcela (50%)",
-        "percentage": 50,
-        "amount": 7500,
-        "status": "pending",
-        "dueDate": "2026-10-01",
-        "paymentMethod": "Pix Dinâmico",
-        "pixQrCode": "00020101021126360014br.gov.bcb.pix0114+551199999888852040000530398654077500.005802BR5918MATRIZ DE PROJETOS6009SAO PAULO62070503***630493F8"
-      },
-      {
-        "number": 2,
-        "label": "2ª Parcela (50%)",
-        "percentage": 50,
-        "amount": 7500,
-        "status": "pending",
-        "dueDate": "2026-11-01",
-        "paymentMethod": "Pix Dinâmico",
-        "pixQrCode": "00020101021126360014br.gov.bcb.pix0114+551199999888852040000530398654077500.005802BR5918MATRIZ DE PROJETOS6009SAO PAULO62070503***630493F8"
-      }
-    ],
-    "stages": [
-      {
-        "id": "s-1",
-        "name": "Briefing",
-        "description": "Briefing",
-        "status": "completed",
-        "date": "01/10/2026"
-      },
-      {
-        "id": "s-2",
-        "name": "Produção",
-        "description": "Produção",
-        "status": "current",
-        "date": "15/12/2026",
-        "detail": "Em andamento"
-      }
-    ],
-    "updates": [
-      {
-        "id": "upd-1790878366783",
-        "timestamp": "Hoje, recém-criado",
-        "author": "Responsável Técnico",
-        "role": "Gestor do Projeto",
-        "stageId": "s-1",
-        "stageName": "Briefing",
-        "message": "Projeto iniciado com sucesso! Seja muito bem-vindo(a), Cliente Teste Completo. Você acompanhará cada detalhe da execução por este portal sem senha.",
-        "whatsappSent": true,
-        "photos": []
-      }
-    ],
-    "billing": {
-      "id": "573dc7eb-0ef4-4ad3-bee7-72eec24d9e6e",
-      "project_id": "p-6777",
-      "billing_model": "installments",
-      "payment_method": "pix",
-      "total_amount": 15000,
-      "installments_count": 2,
-      "status": "active",
-      "invoices": [
-        {
-          "id": "6a7046b1-bf3a-4a65-84e4-443252440ae0",
-          "project_billing_id": "573dc7eb-0ef4-4ad3-bee7-72eec24d9e6e",
-          "project_stage_id": null,
-          "installment_number": 1,
-          "amount": 7500,
-          "due_date": "2026-10-01",
-          "payment_link": "https://bomprojeto.com/pay/6a7046b1-bf3a-4a65-84e4-443252440ae0",
-          "pix_code": "00020101021126360014br.gov.bcb.pix0114+551199999888852040000530398654077500.005802BR5918MATRIZ DE PROJETOS6009SAO PAULO62070503***630493F8",
-          "status": "pending",
-          "paid_at": null,
-          "created_at": "2026-10-01T18:12:46.778Z",
-          "updated_at": "2026-10-01T18:12:46.778Z"
-        },
-        {
-          "id": "42bd691d-07ea-4b0b-921a-730f2c866e67",
-          "project_billing_id": "573dc7eb-0ef4-4ad3-bee7-72eec24d9e6e",
-          "project_stage_id": null,
-          "installment_number": 2,
-          "amount": 7500,
-          "due_date": "2026-11-01",
-          "payment_link": "https://bomprojeto.com/pay/42bd691d-07ea-4b0b-921a-730f2c866e67",
-          "pix_code": "00020101021126360014br.gov.bcb.pix0114+551199999888852040000530398654077500.005802BR5918MATRIZ DE PROJETOS6009SAO PAULO62070503***630493F8",
-          "status": "pending",
-          "paid_at": null,
-          "created_at": "2026-10-01T18:12:46.778Z",
-          "updated_at": "2026-10-01T18:12:46.778Z"
-        }
-      ],
-      "created_at": "2026-10-01T18:12:46.778Z",
-      "updated_at": "2026-10-01T18:12:46.778Z"
-    },
-    "invoices": [
-      {
-        "id": "6a7046b1-bf3a-4a65-84e4-443252440ae0",
-        "project_billing_id": "573dc7eb-0ef4-4ad3-bee7-72eec24d9e6e",
-        "project_stage_id": null,
-        "installment_number": 1,
-        "amount": 7500,
-        "due_date": "2026-10-01",
-        "payment_link": "https://bomprojeto.com/pay/6a7046b1-bf3a-4a65-84e4-443252440ae0",
-        "pix_code": "00020101021126360014br.gov.bcb.pix0114+551199999888852040000530398654077500.005802BR5918MATRIZ DE PROJETOS6009SAO PAULO62070503***630493F8",
-        "status": "pending",
-        "paid_at": null,
-        "created_at": "2026-10-01T18:12:46.778Z",
-        "updated_at": "2026-10-01T18:12:46.778Z"
-      },
-      {
-        "id": "42bd691d-07ea-4b0b-921a-730f2c866e67",
-        "project_billing_id": "573dc7eb-0ef4-4ad3-bee7-72eec24d9e6e",
-        "project_stage_id": null,
-        "installment_number": 2,
-        "amount": 7500,
-        "due_date": "2026-11-01",
-        "payment_link": "https://bomprojeto.com/pay/42bd691d-07ea-4b0b-921a-730f2c866e67",
-        "pix_code": "00020101021126360014br.gov.bcb.pix0114+551199999888852040000530398654077500.005802BR5918MATRIZ DE PROJETOS6009SAO PAULO62070503***630493F8",
-        "status": "pending",
-        "paid_at": null,
-        "created_at": "2026-10-01T18:12:46.778Z",
-        "updated_at": "2026-10-01T18:12:46.778Z"
-      }
-    ]
-  },
-  {
     "id": "proj-1",
     "code": "PROJ-101",
-    "clientName": "Luis Henrique Ferraz",
-    "clientPhone": "+55 67 99988-1234",
-    "title": "Cozinha Gourmet & Marcenaria Integrada",
-    "category": "marcenaria",
+    "clientName": "Carlos Drummond (E-commerce Alpha)",
+    "clientPhone": "+55 11 99988-1234",
+    "title": "Escala de Tráfego Pago & Setup de Tracking GA4/CAPI",
+    "category": "media_buyer",
     "unit": "São Paulo - SP",
     "status": "em_andamento",
-    "currentStage": "Usinagem e Corte CNC",
-    "progressPercent": 30,
+    "workspaceId": "ws-matriz",
+    "workspaceName": "Nexus Growth & Performance",
+    "ownerEmail": "henrique.ferrazms@gmail.com",
+    "currentStage": "Subida de Campanhas & Teste de Tracking",
+    "progressPercent": 60,
     "deliveryDate": "28/11/2026",
     "contractDate": "10/09/2026",
-    "totalValue": 9533,
-    "workspaceId": "ws-matriz",
-    "workspaceName": "Marcenaria Ferraz & Design",
+    "totalValue": 9500,
+    "daysWithoutUpdate": 0,
+    "needsAttention": false,
+    "lastInteractionText": "Campanhas ativas no Meta Ads e Google Ads com tracking CAPI validado",
+    "lastInteractionDate": "Hoje",
+    "lastInteractionType": "whatsapp",
     "installments": [
       {
         "number": 1,
-        "label": "1ª Parcela (Entrada)",
+        "label": "1ª Parcela (Setup & Acessos)",
         "percentage": 50,
-        "amount": 4766.5,
+        "amount": 4750,
         "status": "paid",
-        "dueDate": "10/09/2026",
+        "dueDate": "2026-09-10",
         "paidDate": "10/09/2026",
-        "paymentMethod": "Pix",
-        "pixQrCode": "00020101021126490014br.gov.bcb.pix0127henrique.ferrazms@gmail.com52040000530398654074766.505802BR5925MARCENARIA FERRAZ  DESIGN6009SAO PAULO62070503***6304A02B"
+        "paymentMethod": "Pix Dinâmico",
+        "pixQrCode": "00020101021126440014br.gov.bcb.pix0122henrique.ferrazms@gmail.com52040000530398654074750.005802BR5918NEXUS PERFORMANCE6009SAO PAULO62070503***6304C822"
       },
       {
         "number": 2,
-        "label": "2ª Parcela (Produção)",
+        "label": "2ª Parcela (Fechamento do Ciclo / ROAS)",
         "percentage": 50,
-        "amount": 4766.5,
-        "status": "paid",
-        "dueDate": "19/10/2026",
-        "pixQrCode": "00020101021126490014br.gov.bcb.pix0127henrique.ferrazms@gmail.com52040000530398654074766.505802BR5925MARCENARIA FERRAZ  DESIGN6009SAO PAULO62070503***6304A02B",
-        "paidDate": "19/10/2026",
-        "paymentMethod": "Cartão de Crédito (3x)",
-        "authCode": "MP-F3410CEC9C"
+        "amount": 4750,
+        "status": "pending",
+        "dueDate": "2026-10-19",
+        "paymentMethod": "Pix Dinâmico",
+        "pixQrCode": "00020101021126440014br.gov.bcb.pix0122henrique.ferrazms@gmail.com52040000530398654074750.005802BR5918NEXUS PERFORMANCE6009SAO PAULO62070503***6304C822"
       }
     ],
     "stages": [
       {
         "id": "stg-1",
-        "name": "Medição & Projeto 3D",
-        "description": "Conferência técnica no local",
+        "name": "Onboarding e Acesso às Contas (BM, GA4, GTM, Tag Manager)",
+        "description": "Concessão de acessos aos ativos, contas de anúncios e pixel.",
         "status": "completed",
-        "date": "12/09/2026"
+        "date": "12/09/2026",
+        "action_type": "billing_payment",
+        "whatsapp_template": "🎯 Olá, {{cliente}}! Seja muito bem-vindo(a) à {{empresa}}. O projeto de tráfego pago e escala *{{projeto}}* foi oficialmente iniciado! 🚀\n\nAcesse o link seguro para acompanhar o roadmap e confirmar a entrada via Pix:\n👉 {{link_pix}}",
+        "ai_context_instruction": "Orientar o cliente com clareza sobre permissões de administrador no Meta BM e GA4."
       },
       {
         "id": "stg-2",
-        "name": "Usinagem e Corte CNC",
-        "description": "Corte e furação milimétrica",
-        "status": "current",
-        "date": "24/09/2026",
-        "detail": "Atualizado recentemente"
+        "name": "Planejamento Estratégico & Briefing de Criativos",
+        "description": "Definição de públicos-alvo, personas, funil de vendas, metas de CPA/ROAS e roteiros de criativos.",
+        "status": "completed",
+        "date": "20/09/2026",
+        "action_type": "approval_request",
+        "whatsapp_template": "📋 Olá, {{cliente}}! O planejamento estratégico e o briefing dos criativos do projeto *{{projeto}}* estão prontos para validação.\n\nAcesse e aprove com 1 clique:\n👉 {{link_aprovacao}}",
+        "ai_context_instruction": "Explicar a tese de validação de públicos frios e remarketing."
       },
       {
         "id": "stg-3",
-        "name": "Montagem em Bancada",
-        "description": "Pré-montagem estrutural e teste de ferragens",
-        "status": "upcoming"
+        "name": "Criação e Validação dos Anúncios / Copys",
+        "description": "Produção das artes, carrosséis, vídeos de alta conversão e redação persuasiva.",
+        "status": "completed",
+        "date": "24/09/2026",
+        "action_type": "approval_request",
+        "whatsapp_template": "🎨 {{cliente}}, os anúncios e copys de alta conversão do *{{projeto}}* estão prontos no portal!\n\nConfira as peças e aprove para subida:\n👉 {{link_aprovacao}}",
+        "ai_context_instruction": "Apresentar variações de ganchos e headlines para teste A/B."
       },
       {
         "id": "stg-4",
-        "name": "Acabamento & Pintura",
-        "description": "Aplicação de laca e fitamento",
-        "status": "upcoming"
+        "name": "Subida de Campanhas & Teste de Tracking",
+        "description": "Configuração técnica das campanhas, teste de eventos de conversão e tracking de métricas.",
+        "status": "current",
+        "date": "28/09/2026",
+        "action_type": "notification_only",
+        "whatsapp_template": "⚡ Campanhas no ar, {{cliente}}! O projeto *{{projeto}}* está ativo nas plataformas e o tracking de métricas e conversões já está disparando perfeitamente.\n\nAcompanhe no portal:\n👉 {{link_portal}}",
+        "ai_context_instruction": "Informar que as campanhas estão na fase de aprendizado do algoritmo."
       },
       {
         "id": "stg-5",
-        "name": "Instalação & Entrega",
-        "description": "Montagem final na casa do cliente",
-        "status": "upcoming"
+        "name": "Otimização Contínua & Fechamento de Ciclo / Relatório Quinzenal",
+        "description": "Otimização de lances, corte de criativos saturados, escala horizontal e envio do dashboard de ROAS.",
+        "status": "upcoming",
+        "action_type": "billing_payment",
+        "whatsapp_template": "📊 Relatório quinzenal disponível, {{cliente}}! Seu ciclo de tráfego do *{{projeto}}* teve métricas consolidadas.\n\nAcesse seu relatório de ROAS e a fatura do novo ciclo no link seguro:\n👉 {{link_pix}}",
+        "ai_context_instruction": "Apresentar os dados consolidados de ROAS, custo por lead e retorno financeiro."
       }
     ],
     "updates": [
       {
-        "id": "upd-1792432835036",
-        "timestamp": "Hoje, pagamento confirmado",
-        "author": "Gateway BOMProjeto",
-        "role": "Financeiro",
-        "stageId": "stg-1",
-        "stageName": "Faturamento",
-        "message": "💳 Pagamento da 2ª Parcela (Produção) no valor de R$ 4766.50 confirmado via Cartão de Crédito! Código de autorização: MP-F3410CEC9C.",
-        "clientReactions": [
-          "💳 Pagamento Aprovado"
-        ],
-        "whatsappSent": false,
-        "photos": []
-      },
-      {
-        "id": "upd-1790937314538",
-        "timestamp": "Hoje, 10:35",
-        "author": "Equipe Técnica",
-        "role": "Responsável pelo Projeto",
-        "stageId": "stg-2",
-        "stageName": "Usinagem e Corte CNC",
-        "message": "Etapa de montagem avançada com fotos, vídeo e documento de aprovação.",
-        "photos": [
-          {
-            "title": "Foto da Bancada",
-            "url": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
-            "type": "image"
-          },
-          {
-            "title": "Vídeo do Teste de Roldana",
-            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-            "type": "video"
-          },
-          {
-            "title": "Memorial Descritivo.pdf",
-            "url": "https://bomprojeto.com/docs/memorial.pdf",
-            "type": "document",
-            "fileSize": "1.2 MB"
-          }
-        ],
-        "whatsappSent": false,
-        "clientReactions": []
-      },
-      {
-        "id": "upd-1790877094727",
-        "timestamp": "Hoje, 17:51",
-        "author": "Equipe Técnica",
-        "role": "Responsável pelo Projeto",
-        "stageId": "stg-2",
-        "stageName": "Usinagem e Corte CNC",
-        "message": "Avançamos para a etapa de Direção de Arte com conferência aprovada.",
-        "photos": [],
-        "whatsappSent": true,
-        "clientReactions": []
-      },
-      {
         "id": "upd-1",
         "timestamp": "Hoje 09:30",
         "author": "Henrique Ferraz",
-        "role": "Mestre Marceneiro",
-        "stageId": "stg-2",
-        "stageName": "Usinagem e Corte CNC",
-        "message": "Chapas de MDF cortadas com perfeição na CNC. Iniciando alinhamento milimétrico e fitamento das bordas.",
+        "role": "Media Buyer / Gestor de Performance",
+        "stageId": "stg-4",
+        "stageName": "Subida de Campanhas & Teste de Tracking",
+        "message": "Campanhas no ar nas plataformas Meta Ads e Google Ads. Tag Manager validado com disparos de eventos Purchase e Lead via API de Conversões (CAPI).",
         "photos": [
           {
-            "title": "Corte CNC",
-            "url": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80",
-            "caption": "Conferência de esquadro milimétrico"
+            "title": "Dashboard de Campanhas",
+            "url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80",
+            "caption": "Tracking GA4 e Meta Ads validado"
           }
         ],
         "whatsappSent": true
       }
     ],
-    "lastInteractionText": "Pagou Parcela #2 via Cartão",
-    "lastInteractionDate": "Hoje",
-    "lastInteractionType": "whatsapp",
-    "daysWithoutUpdate": 0,
-    "needsAttention": false,
-    "roomDetails": {
-      "dimensions": "4.20m x 2.80m",
-      "finish": "MDF Louro Freijó e Grafite Matt",
-      "hardware": "Dobradiças com amortecedor Blum",
-      "materials": "MDF Ultra resistente à umidade"
-    },
     "documents": [
       {
-        "name": "Contrato-OS-101.pdf",
+        "id": "doc-seed-1",
+        "name": "Contrato-Prestacao-Servicos-Trafego.pdf",
         "type": "application/pdf",
         "size": "1.2 MB",
-        "description": "Contrato de prestação de serviços assinado"
+        "description": "Contrato de gestão de tráfego e fee mensal assinado",
+        "category": "contrato",
+        "uploadedAt": "18/09/2026 às 14:00",
+        "uploadedBy": "Henrique Ferraz",
+        "uploadedByRole": "Administrador",
+        "url": ""
+      }
+    ]
+  },
+  {
+    "id": "proj-2",
+    "code": "PROJ-102",
+    "clientName": "Mariana Vasconcelos (Clínica Vita)",
+    "clientPhone": "+55 11 97777-4321",
+    "title": "Agente de IA e Automação de Agendamentos WhatsApp",
+    "category": "ai_agency",
+    "unit": "São Paulo - SP",
+    "status": "em_andamento",
+    "workspaceId": "ws-matriz",
+    "workspaceName": "Nexus Growth & Performance",
+    "ownerEmail": "henrique.ferrazms@gmail.com",
+    "currentStage": "Configuração de Prompts / Base de Conhecimento / Agentes",
+    "progressPercent": 50,
+    "deliveryDate": "15/12/2026",
+    "contractDate": "15/09/2026",
+    "totalValue": 12800,
+    "daysWithoutUpdate": 0,
+    "needsAttention": false,
+    "lastInteractionText": "Prompts e embeddings da base médica calibrados com sucesso",
+    "lastInteractionDate": "Hoje",
+    "lastInteractionType": "whatsapp",
+    "installments": [
+      {
+        "number": 1,
+        "label": "1ª Parcela (Setup & Requisitos)",
+        "percentage": 50,
+        "amount": 6400,
+        "status": "paid",
+        "dueDate": "2026-09-15",
+        "paidDate": "15/09/2026",
+        "paymentMethod": "Pix Dinâmico",
+        "pixQrCode": "00020101021126440014br.gov.bcb.pix0122henrique.ferrazms@gmail.com52040000530398654076400.005802BR5918NEXUS PERFORMANCE6009SAO PAULO62070503***6304C822"
       },
       {
-        "name": "Projeto-Executivo-3D.pdf",
-        "type": "application/pdf",
-        "size": "3.4 MB",
-        "description": "Plantas técnicas de corte e furação"
+        "number": 2,
+        "label": "2ª Parcela (Go-Live em Produção)",
+        "percentage": 50,
+        "amount": 6400,
+        "status": "pending",
+        "dueDate": "2026-10-30",
+        "paymentMethod": "Pix Dinâmico",
+        "pixQrCode": "00020101021126440014br.gov.bcb.pix0122henrique.ferrazms@gmail.com52040000530398654076400.005802BR5918NEXUS PERFORMANCE6009SAO PAULO62070503***6304C822"
       }
     ],
-    "ownerEmail": "henrique.ferrazms@gmail.com",
-    "previousStatus": "em_andamento",
-    "isDeleted": false,
-    "pixKey": "henrique.ferrazms@gmail.com"
+    "stages": [
+      {
+        "id": "stg-ai-1",
+        "name": "Mapeamento de Processos e Levantamento de Requisitos",
+        "description": "Diagnóstico da arquitetura atual, mapeamento de gargalos e definição do fluxo de automação.",
+        "status": "completed",
+        "date": "15/09/2026",
+        "action_type": "billing_payment",
+        "whatsapp_template": "🤖 Olá, {{cliente}}! Seja bem-vindo(a) à {{empresa}}. A implementação da sua solução de IA e automação *{{projeto}}* foi oficialmente iniciada!\n\nAcompanhe os fluxos e realize a entrada Pix no link seguro:\n👉 {{link_pix}}"
+      },
+      {
+        "id": "stg-ai-2",
+        "name": "Integração de APIs / Webhooks / Make / n8n",
+        "description": "Conexão dos endpoints, webhooks de CRM, WhatsApp API oficial, banco de dados e gateways.",
+        "status": "completed",
+        "date": "22/09/2026",
+        "action_type": "notification_only",
+        "whatsapp_template": "🔌 {{cliente}}, os webhooks e integrações de API do projeto *{{projeto}}* foram estruturados e conectados com sucesso.\n\nVeja o status dos nós no portal:\n👉 {{link_portal}}"
+      },
+      {
+        "id": "stg-ai-3",
+        "name": "Configuração de Prompts / Base de Conhecimento / Agentes",
+        "description": "Engenharia de prompts, embeddings na base de conhecimento, regras de negócio e tom de voz.",
+        "status": "current",
+        "date": "29/09/2026",
+        "action_type": "approval_request",
+        "whatsapp_template": "🧠 {{cliente}}, os prompts e a base de conhecimento do agente IA do projeto *{{projeto}}* foram configurados!\n\nValide as respostas e o tom no link seguro:\n👉 {{link_aprovacao}}"
+      },
+      {
+        "id": "stg-ai-4",
+        "name": "Ambiente de Homologação / Testes Internos",
+        "description": "Simulação de estresse, bateria de testes com cenários edge-case e validação de tempo de resposta.",
+        "status": "upcoming",
+        "action_type": "approval_request",
+        "whatsapp_template": "🧪 {{cliente}}, sua solução de IA *{{projeto}}* está no ambiente de homologação para testes reais com sua equipe!\n\nAcesse o ambiente de sandbox e aprove o go-live:\n👉 {{link_aprovacao}}"
+      },
+      {
+        "id": "stg-ai-5",
+        "name": "Treinamento do Cliente & Go-Live (Produção)",
+        "description": "Deploy definitivo em produção, treinamento da equipe interna e documentação técnica.",
+        "status": "upcoming",
+        "action_type": "billing_payment",
+        "whatsapp_template": "🚀 Parabéns, {{cliente}}! O projeto de automação *{{projeto}}* está no ar em produção gerando eficiência real.\n\nTermo de entrega técnica, gravação do treinamento e quitação no link:\n👉 {{link_pix}}"
+      }
+    ],
+    "updates": [
+      {
+        "id": "upd-ai-1",
+        "timestamp": "Hoje 11:20",
+        "author": "Henrique Ferraz",
+        "role": "Consultor de IA & Automação",
+        "stageId": "stg-ai-3",
+        "stageName": "Configuração de Prompts / Base de Conhecimento / Agentes",
+        "message": "Agente de triagem conectado ao n8n com integração ao Google Agenda e Prontuário Eletrônico.",
+        "photos": [],
+        "whatsappSent": true
+      }
+    ],
+    "documents": []
   }
 ]

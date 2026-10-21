@@ -73,9 +73,9 @@ export const AiCustomerServiceView: React.FC<AiCustomerServiceViewProps> = ({
   // Estados exclusivos do Envio Massivo de Notificações com IA
   const [massTarget, setMassTarget] = useState<'all_active' | 'in_execution' | 'billing_pending'>('all_active');
   const [massTone, setMassTone] = useState<'acolhedor' | 'tecnico' | 'comercial'>('acolhedor');
-  const [massCustomPrompt, setMassCustomPrompt] = useState('Atualização de progresso das etapas de produção e link do portal');
+  const [massCustomPrompt, setMassCustomPrompt] = useState('Atualização de progresso das sprints, entregáveis e link do portal');
   const [massDraftMessage, setMassDraftMessage] = useState(
-    'Olá {cliente}! 👋 Aqui é da {oficina}. Passando para avisar que a sua OS {codigo} ({projeto}) está na etapa de {etapa}. Você pode acompanhar as fotos reais e o andamento no link seguro: {link}'
+    'Olá {cliente}! 👋 Aqui é da {empresa}. Passando para avisar que a sua sprint/projeto {codigo} ({projeto}) está na etapa de {etapa}. Você pode acompanhar os entregáveis, relatórios e o andamento no link seguro: {link}'
   );
   const [isGeneratingMass, setIsGeneratingMass] = useState(false);
   const [isSendingMass, setIsSendingMass] = useState(false);
@@ -139,8 +139,8 @@ export const AiCustomerServiceView: React.FC<AiCustomerServiceViewProps> = ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           clientName: 'Mariana Costa',
-          stageName: 'Montagem Final',
-          projectTitle: 'Cozinha Planejada e Painel Ripado',
+          stageName: 'Otimização Contínua & ROAS',
+          projectTitle: 'Escala de Tráfego Pago & Campanhas Meta Ads',
           keywords: config.customBillingPrompt || 'Parcela 2 com vencimento pendente, chave Pix para baixa automática',
           tone: config.billingTone === 'firme' ? 'firme, assertivo, formal' : 'acolhedor, amigável, transparente'
         })
@@ -148,7 +148,7 @@ export const AiCustomerServiceView: React.FC<AiCustomerServiceViewProps> = ({
       const data = await res.json();
       setTestedBillingMsg(data.message || 'Mensagem de cobrança gerada com sucesso pela IA!');
     } catch {
-      setTestedBillingMsg(`Olá Mariana! Passando para lembrar da 2ª parcela referente ao seu projeto de marcenaria. A chave Pix para pagamento foi gerada pelo sistema. Qualquer dúvida estamos à disposição!`);
+      setTestedBillingMsg(`Olá Mariana! Passando para lembrar da 2ª parcela referente ao seu projeto de tráfego e performance. A chave Pix para pagamento foi gerada pelo sistema. Qualquer dúvida estamos à disposição!`);
     } finally {
       setIsGeneratingTest(false);
     }
@@ -811,7 +811,7 @@ export const AiCustomerServiceView: React.FC<AiCustomerServiceViewProps> = ({
                 </span>
               </div>
               <p className="text-xs text-[#73736c] mt-1">
-                Conecte o smartphone oficial da sua marcenaria ao sistema BOMProjeto para atendimento inteligente, respostas a clientes e envio de fotos dos projetos.
+                Conecte o smartphone oficial da sua agência ou operação digital ao sistema BOMProjeto para atendimento inteligente, respostas a clientes e envio de atualizações das entregas.
               </p>
             </div>
 
@@ -1285,7 +1285,7 @@ export const AiCustomerServiceView: React.FC<AiCustomerServiceViewProps> = ({
                   <div className="flex items-center gap-2">
                     <ShieldAlert className="w-4 h-4 text-orange-600 shrink-0" />
                     <span>
-                      Para desativar a identificação da oficina nas mensagens, mude para o <strong>Plano Start</strong> (R$ 149/mês) ou <strong>Scala</strong> (R$ 299/mês).
+                      Para desativar a identificação da empresa/agência nas mensagens, mude para o <strong>Plano Start</strong> (R$ 149/mês) ou <strong>Scala</strong> (R$ 299/mês).
                     </span>
                   </div>
                   <button 
@@ -1523,7 +1523,7 @@ export const AiCustomerServiceView: React.FC<AiCustomerServiceViewProps> = ({
                         const data = await res.json();
                         if (data.message) {
                           setMassDraftMessage(
-                            `Olá {cliente}! 👋\n\n${data.message}\n\n📸 Acompanhe fotos e cronograma em tempo real:\n🔗 {link}\n\n_{oficina}_`
+                            `Olá {cliente}! 👋\n\n${data.message}\n\n📸 Acompanhe fotos e cronograma em tempo real:\n🔗 {link}\n\n_{empresa}_`
                           );
                         }
                       } catch (err) {
@@ -1542,7 +1542,7 @@ export const AiCustomerServiceView: React.FC<AiCustomerServiceViewProps> = ({
                   type="text"
                   value={massCustomPrompt}
                   onChange={(e) => setMassCustomPrompt(e.target.value)}
-                  placeholder="Ex: Avisar que a medição final foi confirmada e que a montagem começa amanhã"
+                  placeholder="Ex: Avisar que as campanhas foram subidas e o tracking de métricas já está ativo"
                   className="w-full p-2.5 rounded-xl border border-[#ded8cd] bg-[#fcfaf7] focus:bg-white text-xs text-[#1c1c1a]"
                 />
               </div>
@@ -1554,7 +1554,7 @@ export const AiCustomerServiceView: React.FC<AiCustomerServiceViewProps> = ({
                     Mensagem a ser disparada no WhatsApp:
                   </label>
                   <span className="text-[10px] text-[#73736c]">
-                    Tags: {'{cliente}'}, {'{projeto}'}, {'{codigo}'}, {'{etapa}'}, {'{link}'}, {'{oficina}'}
+                    Tags: {'{cliente}'}, {'{projeto}'}, {'{codigo}'}, {'{etapa}'}, {'{link}'}, {'{empresa}'}
                   </span>
                 </div>
                 <textarea

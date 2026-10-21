@@ -23,12 +23,11 @@ interface WorkspaceSwitcherProps {
 
 const getSegmentIcon = (segment: string) => {
   switch (segment) {
-    case 'serralheria': return '⚡';
-    case 'vidracaria': return '🪟';
-    case 'marmoraria': return '🏛️';
-    case 'arquitetura': return '📐';
-    case 'outro': return '🏭';
-    default: return '🪚';
+    case 'marketing_agency': return '🚀';
+    case 'ai_agency': return '🤖';
+    case 'media_buyer': return '🎯';
+    case 'projetos': return '⚡';
+    default: return '🚀';
   }
 };
 
@@ -66,7 +65,7 @@ export const WorkspaceSwitcher: React.FC<WorkspaceSwitcherProps> = ({
         title="Alternar ambiente ou filial"
       >
         <div className="w-6 h-6 rounded-lg bg-white border border-[#EAECEF] flex items-center justify-center shrink-0 font-medium text-xs shadow-2xs">
-          {getSegmentIcon(currentWorkspace?.segment || 'marcenaria')}
+          {getSegmentIcon(currentWorkspace?.segment || 'marketing_agency')}
         </div>
 
         <div className="flex flex-col min-w-0 pr-1 max-w-[140px] sm:max-w-[190px]">
@@ -79,7 +78,7 @@ export const WorkspaceSwitcher: React.FC<WorkspaceSwitcherProps> = ({
             </span>
           </div>
           <span className="font-semibold text-xs text-[#0F172A] truncate leading-tight">
-            {currentWorkspace?.name || 'Marcenaria Ferraz'}
+            {currentWorkspace?.name || 'Nexus Performance & Automações'}
           </span>
         </div>
 

@@ -29,7 +29,7 @@ interface WhatsAppSimulatorModalProps {
 
 interface ChatMessage {
   id: string;
-  sender: 'client' | 'marcenaria';
+  sender: 'client' | 'agencia';
   text: string;
   time: string;
   photoUrl?: string;
@@ -45,17 +45,17 @@ export const WhatsAppSimulatorModal: React.FC<WhatsAppSimulatorModalProps> = ({
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'm1',
-      sender: 'marcenaria',
+      sender: 'agencia',
       text: `Olá ${project.clientName.split(' ')[0]}! Tudo bem? Aqui é da equipe de gestão do projeto ${project.code}. Você pode acompanhar cada atualização da execução pelo seu link seguro: ${buildClientPortalUrl(project.id)}`,
       time: 'Ontem 14:20',
       isAi: true
     },
     {
       id: 'm2',
-      sender: 'marcenaria',
-      text: `Boletim do Projeto: As etapas estruturais do seu projeto já avançaram para execução técnica e acabamento. Todos os testes de qualidade foram 100% aprovados!`,
+      sender: 'agencia',
+      text: `Boletim do Projeto: As etapas estratégicas e campanhas do seu projeto já avançaram para execução técnica e tracking. Todos os eventos de conversão foram 100% validados!`,
       time: 'Hoje 11:16',
-      photoUrl: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80',
+      photoUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80',
       isAi: true
     },
     {
@@ -97,7 +97,7 @@ export const WhatsAppSimulatorModal: React.FC<WhatsAppSimulatorModalProps> = ({
       
       const aiMsg: ChatMessage = {
         id: `ai-${Date.now()}`,
-        sender: 'marcenaria',
+        sender: 'agencia',
         text: data.reply || `Olá! O seu projeto está na etapa de ${project.currentStage} com entrega para ${project.deliveryDate}.`,
         time: 'Agora',
         isAi: true
@@ -109,8 +109,8 @@ export const WhatsAppSimulatorModal: React.FC<WhatsAppSimulatorModalProps> = ({
         ...prev,
         {
           id: `ai-err-${Date.now()}`,
-          sender: 'marcenaria',
-          text: `Olá! Seu projeto (${project.title}) está na etapa de "${project.currentStage}" e a entrega segue confirmada para ${project.deliveryDate}.`,
+          sender: 'agencia',
+          text: `Olá! Seu projeto (${project.title}) está na etapa de "${project.currentStage}" e as entregas seguem confirmadas para ${project.deliveryDate}.`,
           time: 'Agora',
           isAi: true
         }

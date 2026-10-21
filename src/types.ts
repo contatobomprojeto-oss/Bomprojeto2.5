@@ -41,9 +41,9 @@ export interface ProjectStage {
   detail?: string;
   notes?: string;
   photoUrl?: string;
-  whatsapp_template?: string;
-  ai_context_instruction?: string;
-  action_type?: string;
+  whatsapp_template?: string | null;
+  ai_context_instruction?: string | null;
+  action_type?: string | null;
   completedBy?: string;
   completedAt?: string;
   completedByRole?: string;
@@ -62,13 +62,15 @@ export interface ProjectDocument {
   url: string;
 }
 
+export type BusinessType = 'marketing_agency' | 'ai_agency' | 'media_buyer';
+
 export interface Project {
   id: string;
   code: string;
   clientName: string;
   clientPhone: string;
   title: string;
-  category: 'projetos' | 'marcenaria' | 'serralheria' | 'vidracaria' | 'interiores' | 'arquitetura' | 'marmoraria' | 'reformas' | 'geral';
+  category: BusinessType | string;
   templateId?: string;
   industrySector?: string;
   unit: string;
@@ -307,12 +309,10 @@ export interface AiSettingsConfig {
 export type SubscriptionPlan = 'start' | 'escala' | 'free';
 
 export type WorkspaceSegment = 
+  | 'marketing_agency'
+  | 'ai_agency'
+  | 'media_buyer'
   | 'projetos'
-  | 'marcenaria' 
-  | 'serralheria' 
-  | 'vidracaria' 
-  | 'marmoraria' 
-  | 'arquitetura' 
   | 'outro';
 
 export interface Workspace {
@@ -352,7 +352,7 @@ export interface UserProfile {
   id: string;
   name: string;
   email: string;
-  role: 'admin' | 'marcenaria' | 'gestor' | 'client';
+  role: 'admin' | 'gestor' | 'media_buyer' | 'client';
   teamRole?: TeamRole;
   phone?: string;
   workshopName?: string;
@@ -441,10 +441,10 @@ export const TEAM_ROLE_CONFIGS: Record<TeamRole, {
     label: 'Parceiro',
     badge: 'Operacional (Sem Financeiro)',
     badgeClass: 'bg-amber-100 text-amber-800 border-amber-200',
-    description: 'Acesso somente a dados de dashboard, abertura de OS, sem acesso a dados financeiros.',
+    description: 'Acesso somente a dados de dashboard, sprints e entregáveis, sem acesso a dados financeiros.',
     permissionsList: [
       'Acesso ao dashboard operacional de prazos e etapas',
-      'Abertura de OS (cadastro de novos projetos)',
+      'Abertura de novos projetos e sprints',
       'Visualização do status de execução em tempo real',
       'Sem acesso a faturamento, valores em R$ ou parcelas Pix',
       'Sem acesso a notificações IA e configurações fiscais'

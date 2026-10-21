@@ -359,7 +359,7 @@ export const BillingScheduleSection: React.FC<BillingScheduleSectionProps> = ({
                   <h4 className="font-medium text-xs text-[#202124]">Comercial Padrão</h4>
                   <p className="text-[11px] text-[#5F6368] font-medium mt-0.5">09:00 às 18:00</p>
                   <p className="text-[10px] text-[#5F6368] mt-1.5 leading-snug">
-                    Ideal para projetos de marcenaria e arquitetura residencial. Pausa almoço ativa.
+                    Ideal para agências de marketing, tráfego pago e automação de IA. Pausa almoço ativa.
                   </p>
                 </div>
                 <div className="mt-2.5 pt-2 border-t border-[#E8EAED] flex items-center justify-between text-[10px] text-[#5F6368] font-medium">
@@ -457,7 +457,7 @@ export const BillingScheduleSection: React.FC<BillingScheduleSectionProps> = ({
                     {currentSchedule.startTime} às {currentSchedule.endTime}
                   </p>
                   <p className="text-[10px] text-[#5F6368] mt-1.5 leading-snug">
-                    Ajuste manualmente início, término e intervalo de almoço conforme a sua oficina.
+                    Ajuste manualmente início, término e intervalo de almoço conforme a sua agência ou operação.
                   </p>
                 </div>
                 <div className="mt-2.5 pt-2 border-t border-[#E8EAED] flex items-center justify-between text-[10px] text-[#5F6368] font-medium">

@@ -71,7 +71,7 @@ export async function dispatchStageUpdate(
   // 2. Busca o template da etapa
   let messageTemplate = '';
   const templateId = (project as any).templateId;
-  const sector = (project as any).industrySector || project.category || 'marcenaria';
+  const sector = (project as any).industrySector || project.category || 'media_buyer';
 
   if ((stage as any)?.whatsapp_template) {
     messageTemplate = (stage as any).whatsapp_template;

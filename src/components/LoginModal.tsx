@@ -29,7 +29,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   onSelectView,
   onOpenVideoModal
 }) => {
-  const [activeTab, setActiveTab] = useState<'marcenaria' | 'client'>('marcenaria');
+  const [activeTab, setActiveTab] = useState<'gestor' | 'client'>('gestor');
 
   // Client OS state
   const [osCode, setOsCode] = useState('#PRJ-204');
@@ -72,7 +72,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   };
 
   // Login Oficial com Google OAuth (Único Método de Autenticação)
-  const handleGoogleLogin = async (role: 'marcenaria' | 'client') => {
+  const handleGoogleLogin = async (role: 'gestor' | 'client') => {
     setIsLoading(true);
     setErrorMsg('');
 
@@ -83,7 +83,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         console.warn('LocalStorage notice:', e);
       }
 
-      trackLeadConversion(role === 'marcenaria' ? 'cadastro_google_gestor' : 'acesso_google_cliente');
+      trackLeadConversion(role === 'gestor' ? 'cadastro_google_gestor' : 'acesso_google_cliente');
       const origin = typeof window !== 'undefined' ? window.location.origin : 'https://bomprojeto.com';
       await signInWithGoogle(`${origin}/#painel`);
     } catch (err: any) {
@@ -131,14 +131,14 @@ export const LoginModal: React.FC<LoginModalProps> = ({
           {/* Alternador Principal: Painel de Gestão vs Área do Cliente */}
           <div className="fleetly-tabs-container w-full mt-3 sm:mt-4 grid grid-cols-2">
             <button
-              id="login-tab-marcenaria"
+              id="login-tab-gestor"
               type="button"
               onClick={() => {
-                setActiveTab('marcenaria');
+                setActiveTab('gestor');
                 setErrorMsg('');
               }}
               className={`fleetly-tab-btn flex items-center justify-center gap-1.5 py-2 ${
-                activeTab === 'marcenaria' ? 'fleetly-tab-btn-active' : 'fleetly-tab-btn-inactive'
+                activeTab === 'gestor' ? 'fleetly-tab-btn-active' : 'fleetly-tab-btn-inactive'
               }`}
             >
               <Building className="w-3.5 h-3.5" />
@@ -172,7 +172,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
           )}
 
           {/* TAB 1: PAINEL DE GESTÃO (EXCLUSIVO GOOGLE AUTH) */}
-          {activeTab === 'marcenaria' && (
+          {activeTab === 'gestor' && (
             <div className="space-y-4">
               
               <div className="text-center py-2 space-y-1">
@@ -181,15 +181,15 @@ export const LoginModal: React.FC<LoginModalProps> = ({
                   <span>Autenticação Oficial Google</span>
                 </span>
                 <p className="text-xs text-slate-600 pt-1">
-                  Entre com sua conta Google. Gestores e administradores são reconhecidos automaticamente pelo seu e-mail.
+                  Entre com sua conta Google. Gestores, media buyers e administradores são reconhecidos automaticamente pelo seu e-mail.
                 </p>
               </div>
 
               {/* Botão Oficial Principal Google Sign-In */}
               <button
-                id="btn-google-login-marcenaria"
+                id="btn-google-login-gestor"
                 type="button"
-                onClick={() => handleGoogleLogin('marcenaria')}
+                onClick={() => handleGoogleLogin('gestor')}
                 disabled={isLoading}
                 className="w-full h-12 rounded-2xl border-2 border-[#0F172A] bg-white hover:bg-slate-50 text-[#0F172A] font-bold text-sm transition-all flex items-center justify-center gap-3 shadow-xs hover:shadow-md cursor-pointer group active:scale-[0.99]"
               >

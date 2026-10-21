@@ -497,6 +497,9 @@ export interface ProjectStage {
   date?: string;
   detail?: string;
   photoUrl?: string;
+  whatsapp_template?: string | null;
+  ai_context_instruction?: string | null;
+  action_type?: string | null;
   completedBy?: string;
   completedByRole?: string;
   completedAt?: string;
@@ -521,7 +524,7 @@ export interface Project {
   clientName: string;
   clientPhone: string;
   title: string;
-  category: 'projetos' | 'marcenaria' | 'serralheria' | 'vidracaria' | 'interiores' | 'arquitetura' | 'marmoraria' | 'reformas' | 'geral';
+  category: 'marketing_agency' | 'ai_agency' | 'media_buyer' | 'projetos' | 'geral';
   unit: string;
   status: 'proposta_aprovada' | 'em_andamento' | 'atencao' | 'concluido' | 'excluido';
   isDeleted?: boolean;
@@ -561,25 +564,25 @@ export interface Project {
 const defaultSeedProject: Project = {
   id: 'proj-1',
   code: 'PROJ-101',
-  clientName: 'Luis Henrique Ferraz',
-  clientPhone: '+55 67 99988-1234',
-  title: 'Cozinha Gourmet & Marcenaria Integrada',
-  category: 'marcenaria',
+  clientName: 'Carlos Drummond (E-commerce Alpha)',
+  clientPhone: '+55 11 99988-1234',
+  title: 'Escala de Tráfego Pago & Setup de Tracking GA4/CAPI',
+  category: 'media_buyer',
   unit: 'São Paulo - SP',
   status: 'em_andamento',
-  currentStage: 'Usinagem e Corte CNC',
-  progressPercent: 45,
+  currentStage: 'Subida de Campanhas & Teste de Tracking',
+  progressPercent: 60,
   deliveryDate: '28/11/2026',
   contractDate: '10/09/2026',
-  totalValue: 9533.00,
+  totalValue: 9500.00,
   workspaceId: 'ws-matriz',
-  workspaceName: 'Marcenaria Ferraz & Design',
+  workspaceName: 'Nexus Growth & Performance',
   installments: [
     {
       number: 1,
-      label: '1ª Parcela (Entrada)',
+      label: '1ª Parcela (Setup & Acessos)',
       percentage: 50,
-      amount: 4766.50,
+      amount: 4750.00,
       status: 'paid',
       dueDate: '10/09/2026',
       paidDate: '10/09/2026',
@@ -587,53 +590,86 @@ const defaultSeedProject: Project = {
     },
     {
       number: 2,
-      label: '2ª Parcela (Produção)',
+      label: '2ª Parcela (Fechamento do Ciclo / ROAS)',
       percentage: 50,
-      amount: 4766.50,
+      amount: 4750.00,
       status: 'pending',
       dueDate: '19/10/2026'
     }
   ],
   stages: [
-    { id: 'stg-1', name: 'Medição & Projeto 3D', description: 'Conferência técnica no local', status: 'completed', date: '12/09/2026' },
-    { id: 'stg-2', name: 'Usinagem e Corte CNC', description: 'Corte e furação milimétrica', status: 'current', date: '24/09/2026' },
-    { id: 'stg-3', name: 'Montagem em Bancada', description: 'Pré-montagem estrutural e teste de ferragens', status: 'upcoming' },
-    { id: 'stg-4', name: 'Acabamento & Pintura', description: 'Aplicação de laca e fitamento', status: 'upcoming' },
-    { id: 'stg-5', name: 'Instalação & Entrega', description: 'Montagem final na casa do cliente', status: 'upcoming' }
+    { 
+      id: 'stg-1', 
+      name: 'Onboarding e Acesso às Contas (BM, GA4, GTM, Tag Manager)', 
+      description: 'Concessão de acessos aos ativos, contas de anúncios e pixel', 
+      status: 'completed', 
+      date: '12/09/2026',
+      action_type: 'billing_payment',
+      whatsapp_template: '🎯 Olá, {{cliente}}! Seja muito bem-vindo(a) à {{empresa}}. O projeto de tráfego pago e escala *{{projeto}}* foi oficialmente iniciado! 🚀\n\nAcesse o link seguro para acompanhar o roadmap e confirmar a entrada via Pix:\n👉 {{link_pix}}'
+    },
+    { 
+      id: 'stg-2', 
+      name: 'Planejamento Estratégico & Briefing de Criativos', 
+      description: 'Definição de públicos-alvo, personas, funil de vendas e roteiros de criativos', 
+      status: 'completed', 
+      date: '20/09/2026',
+      action_type: 'approval_request',
+      whatsapp_template: '📋 Olá, {{cliente}}! O planejamento de público e o briefing dos criativos do projeto *{{projeto}}* estão prontos para validação.\n\nAcesse e aprove com 1 clique:\n👉 {{link_aprovacao}}'
+    },
+    { 
+      id: 'stg-3', 
+      name: 'Criação e Validação dos Anúncios / Copys', 
+      description: 'Produção das artes, carrosséis, vídeos em alta conversão e copywriting', 
+      status: 'completed', 
+      date: '24/09/2026',
+      action_type: 'approval_request',
+      whatsapp_template: '🎨 {{cliente}}, os anúncios e copys de alta conversão do *{{projeto}}* estão prontos no portal!\n\nConfira as peças e valide para subida:\n👉 {{link_aprovacao}}'
+    },
+    { 
+      id: 'stg-4', 
+      name: 'Subida de Campanhas & Teste de Tracking', 
+      description: 'Configuração das campanhas na Meta/Google Ads, teste de eventos de conversão e CAPI ativa', 
+      status: 'current', 
+      date: '28/09/2026',
+      action_type: 'notification_only',
+      whatsapp_template: '⚡ Campanhas no ar, {{cliente}}! O projeto *{{projeto}}* está ativo nas plataformas e o tracking de métricas e conversões já está disparando perfeitamente.\n\nAcompanhe no portal:\n👉 {{link_portal}}'
+    },
+    { 
+      id: 'stg-5', 
+      name: 'Otimização Contínua & Fechamento de Ciclo / Relatório Quinzenal', 
+      description: 'Otimização de lances, corte de criativos saturados, escala horizontal e envio do dashboard de ROAS', 
+      status: 'upcoming',
+      action_type: 'billing_payment',
+      whatsapp_template: '📊 Relatório quinzenal disponível, {{cliente}}! Seu ciclo de tráfego do *{{projeto}}* teve métricas consolidadas.\n\nAcesse seu relatório de ROAS e a fatura do novo ciclo no link seguro:\n👉 {{link_pix}}'
+    }
   ],
   updates: [
     {
       id: 'upd-1',
       timestamp: 'Hoje 09:30',
       author: 'Henrique Ferraz',
-      role: 'Mestre Marceneiro',
-      stageId: 'stg-2',
-      stageName: 'Usinagem e Corte CNC',
-      message: 'Chapas de MDF cortadas com perfeição na CNC. Iniciando alinhamento milimétrico e fitamento das bordas.',
+      role: 'Media Buyer / Gestor de Performance',
+      stageId: 'stg-4',
+      stageName: 'Subida de Campanhas & Teste de Tracking',
+      message: 'Campanhas no ar nas plataformas Meta Ads e Google Ads. Tag Manager validado com disparos de eventos Purchase e Lead via API de Conversões (CAPI).',
       photos: [
-        { title: 'Corte CNC', url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80', caption: 'Conferência de esquadro milimétrico' }
+        { title: 'Dashboard de Campanhas', url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80', caption: 'Tracking GA4 e Meta Ads validado' }
       ],
       whatsappSent: true
     }
   ],
-  lastInteractionText: 'Boletim de Produção enviado via WhatsApp',
+  lastInteractionText: 'Relatório de Campanhas e Tracking enviado via WhatsApp',
   lastInteractionDate: 'Hoje',
   lastInteractionType: 'whatsapp',
   daysWithoutUpdate: 0,
   needsAttention: false,
-  roomDetails: {
-    dimensions: '4.20m x 2.80m',
-    finish: 'MDF Louro Freijó e Grafite Matt',
-    hardware: 'Dobradiças com amortecedor Blum',
-    materials: 'MDF Ultra resistente à umidade'
-  },
   documents: [
     { 
       id: 'doc-seed-1', 
-      name: 'Contrato-OS-101.pdf', 
+      name: 'Contrato-Prestacao-Servicos-Trafego.pdf', 
       type: 'application/pdf', 
       size: '1.2 MB', 
-      description: 'Contrato de prestação de serviços assinado',
+      description: 'Contrato de gestão de tráfego e fee mensal assinado',
       category: 'contrato',
       uploadedAt: '18/09/2026 às 14:00',
       uploadedBy: 'Henrique Ferraz',
@@ -642,14 +678,14 @@ const defaultSeedProject: Project = {
     },
     { 
       id: 'doc-seed-2', 
-      name: 'Projeto-Executivo-3D.pdf', 
+      name: 'Planejamento-Estrategico-Publicos.pdf', 
       type: 'application/pdf', 
-      size: '3.4 MB', 
-      description: 'Plantas técnicas de corte e furação',
+      size: '2.8 MB', 
+      description: 'Estrutura de funil, criativos validados e metas de CPA/ROAS',
       category: 'planta',
       uploadedAt: '19/09/2026 às 09:30',
-      uploadedBy: 'Carlos Marceneiro',
-      uploadedByRole: 'Marceneiro',
+      uploadedBy: 'Ana Clara',
+      uploadedByRole: 'Media Buyer',
       url: ''
     }
   ],
@@ -1087,7 +1123,7 @@ app.post('/api/projects', (req, res) => {
 
   const newId = `p-${Date.now().toString().slice(-4)}`;
   const val = Number(totalValue) || 12000;
-  const cat = (category || (industrySector ? normalizeSectorKey(industrySector) : 'marcenaria')) as Project['category'];
+  const cat = (category || (industrySector ? normalizeSectorKey(industrySector) : 'media_buyer')) as Project['category'];
 
   // Build stages from custom input, selected template, or niche template
   let stages: ProjectStage[] = [];
@@ -2404,9 +2440,9 @@ app.post('/api/whatsapp/send-charge', async (req, res) => {
   }
 
   const messageText = customMessage || 
-    `Olá ${project.clientName.split(' ')[0]}! 👋 Tudo bem? Aqui é da equipe de ${workshopSign}.\n\nPassando para enviar o lembrete da ${inst.label || `parcela ${inst.number}`} referente ao seu projeto *${project.title}* (OS ${project.code}).\n\n💰 *Valor:* R$ ${inst.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}\n📅 *Vencimento:* ${inst.dueDate}\n🔑 *Chave Pix:* ${effectivePixKey}\n\n` +
+    `Olá ${project.clientName.split(' ')[0]}! 👋 Tudo bem? Aqui é da equipe de ${workshopSign}.\n\nPassando para enviar o lembrete da ${inst.label || `parcela ${inst.number}`} referente ao projeto *${project.title}* (${project.code}).\n\n💰 *Valor:* R$ ${inst.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}\n📅 *Vencimento:* ${inst.dueDate}\n🔑 *Chave Pix:* ${effectivePixKey}\n\n` +
     (validPixCode ? `📋 *Código Pix Copia e Cola:*\n${validPixCode}\n\n` : '') +
-    `📱 Você pode visualizar os detalhes e acompanhar o andamento da obra pelo seu link exclusivo:\n🔗 ${portalUrl}\n\nQualquer dúvida estamos à disposição!`;
+    `📱 Você pode visualizar os detalhes e acompanhar o roadmap e métricas pelo seu link exclusivo:\n🔗 ${portalUrl}\n\nQualquer dúvida estamos à disposição!`;
 
   const cleanPhone = normalizeWhatsAppNumber(project.clientPhone);
   const waMeUrl = buildWhatsAppDirectLink(cleanPhone, messageText);
@@ -3343,7 +3379,7 @@ app.post('/api/admin/subscribers', (req, res) => {
   } = req.body;
 
   if (!workshopName || !ownerName) {
-    return res.status(400).json({ error: 'Nome da marcenaria e responsável são obrigatórios' });
+    return res.status(400).json({ error: 'Nome da agência/empresa e responsável são obrigatórios' });
   }
 
   // Ensure date is on or after 24/09/2026
@@ -3353,7 +3389,7 @@ app.post('/api/admin/subscribers', (req, res) => {
     id: `sub_${Date.now().toString(36)}`,
     workshopName,
     ownerName,
-    email: email || 'cliente@marcenaria.com.br',
+    email: email || 'cliente@agenciadigital.com.br',
     phone: phone || '+55 11 99999-0000',
     city,
     state,
@@ -3637,7 +3673,7 @@ app.post('/api/subscriptions/subscribe', async (req, res) => {
           title: 'E-mail do Pagador Conflitante',
           message: 'O e-mail informado para a assinatura pertence à própria conta recebedora do Mercado Pago (henrique.ferrazms@gmail.com).',
           reasonCode: 'same_user',
-          actionPrompt: 'Informe o e-mail real da oficina/cliente assinante no campo de faturamento.',
+          actionPrompt: 'Informe o e-mail real da agência/cliente assinante no campo de faturamento.',
           canRetry: true,
           suggestPix: false
         }

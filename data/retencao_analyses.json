@@ -98,33 +98,33 @@
     "pillars": {
       "communicationFriction": {
         "score": 10,
-        "justification": "Comunicação fluida, com atualizações no mesmo dia, envio de fotos, vídeos e alinhamentos claros sobre a etapa de corte e usinagem.",
+        "justification": "Comunicação fluida, com atualizações no mesmo dia, envio de prévias de criativos, relatórios e alinhamentos claros sobre a etapa de validação de copys.",
         "level": "BAIXO"
       },
       "operationalReliability": {
         "score": 92,
-        "justification": "Cronograma rigorosamente em dia, corte CNC executado com precisão e transição organizada para a fase de montagem em bancada.",
+        "justification": "Cronograma rigorosamente em dia, tracking GA4 e pixel validados com precisão e transição organizada para a fase de subida de campanhas.",
         "level": "ALTO"
       },
       "perceivedValue": {
         "score": 90,
-        "justification": "Cliente recebe registros visuais do processo fabril, destacando cortes milimétricos e materiais de qualidade superior.",
+        "justification": "Cliente recebe registros visuais das artes e copys, destacando alta taxa de conversão esperada e dashboards de ROAS.",
         "level": "ALTO"
       },
       "contractualRisk": {
         "score": 12,
-        "justification": "Entrada de 50% quitada sem atrasos e segunda parcela programada conforme o fluxo produtivo contratual.",
+        "justification": "Taxa de setup quitada sem atrasos e fee mensal programado conforme o contrato de performance.",
         "level": "BAIXO"
       }
     },
     "positiveWords": [
       {
-        "text": "perfeição",
+        "text": "alta conversão",
         "count": 1,
         "sentimentWeight": 0.95
       },
       {
-        "text": "alinhamento milimétrico",
+        "text": "alinhamento estratégico",
         "count": 1,
         "sentimentWeight": 0.9
       },
@@ -134,7 +134,7 @@
         "sentimentWeight": 0.85
       },
       {
-        "text": "corte CNC",
+        "text": "escala de ROAS",
         "count": 2,
         "sentimentWeight": 0.8
       }
