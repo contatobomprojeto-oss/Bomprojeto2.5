@@ -80,9 +80,27 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
   activeSectorTemplate,
   onCreateProject
 }) => {
-  const [clientName, setClientName] = useState('');
-  const [clientPhone, setClientPhone] = useState('+55 11 9');
-  const [title, setTitle] = useState('');
+  const [clientName, setClientName] = useState(() => {
+    try {
+      return sessionStorage.getItem('bomprojeto_draft_clientName') || '';
+    } catch {
+      return '';
+    }
+  });
+  const [clientPhone, setClientPhone] = useState(() => {
+    try {
+      return sessionStorage.getItem('bomprojeto_draft_clientPhone') || '+55 11 9';
+    } catch {
+      return '+55 11 9';
+    }
+  });
+  const [title, setTitle] = useState(() => {
+    try {
+      return sessionStorage.getItem('bomprojeto_draft_title') || '';
+    } catch {
+      return '';
+    }
+  });
   const [category, setCategory] = useState<Project['category']>(() => {
     if (activeSectorTemplate?.sector_key) {
       return activeSectorTemplate.sector_key as Project['category'];
@@ -90,7 +108,40 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
     return 'marcenaria';
   });
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string>(currentWorkspaceId || (workspaces[0]?.id || 'ws-matriz'));
-  const [totalValue, setTotalValue] = useState('14500');
+  const [totalValue, setTotalValue] = useState(() => {
+    try {
+      return sessionStorage.getItem('bomprojeto_draft_totalValue') || '14500';
+    } catch {
+      return '14500';
+    }
+  });
+
+  // Salva rascunho automaticamente para proteção contra perda acidental
+  useEffect(() => {
+    try {
+      if (clientName) sessionStorage.setItem('bomprojeto_draft_clientName', clientName);
+      if (clientPhone) sessionStorage.setItem('bomprojeto_draft_clientPhone', clientPhone);
+      if (title) sessionStorage.setItem('bomprojeto_draft_title', title);
+      if (totalValue) sessionStorage.setItem('bomprojeto_draft_totalValue', totalValue);
+    } catch {}
+  }, [clientName, clientPhone, title, totalValue]);
+
+  const clearDraft = () => {
+    try {
+      sessionStorage.removeItem('bomprojeto_draft_clientName');
+      sessionStorage.removeItem('bomprojeto_draft_clientPhone');
+      sessionStorage.removeItem('bomprojeto_draft_title');
+      sessionStorage.removeItem('bomprojeto_draft_totalValue');
+    } catch {}
+  };
+
+  const handleCancel = () => {
+    clearDraft();
+    setClientName('');
+    setClientPhone('+55 11 9');
+    setTitle('');
+    onClose();
+  };
 
   // Helpers para o seletor de calendário e padrão brasileiro (DD/MM/AAAA)
   const formatToYmd = (d: Date): string => {
@@ -128,14 +179,7 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
     setFormError(null);
   }, [deliveryDateYmd]);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
-
+  // Bloqueio intencional de Escape: o modal só fecha ao clicar nos botões explícitos
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [useAiTemplate, setUseAiTemplate] = useState<boolean>(Boolean(activeSectorTemplate));
   const [previewExpandedStageIdx, setPreviewExpandedStageIdx] = useState<number | null>(null);
@@ -265,6 +309,7 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
           })) : undefined
         }
       });
+      clearDraft();
       onClose();
     } catch (err: any) {
       setFormError(err?.message || 'Falha ao salvar projeto. Verifique os dados e tente novamente.');
@@ -277,10 +322,15 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
     <div 
       className="fixed inset-0 z-50 bg-[#0F172A]/45 backdrop-blur-xs flex items-center justify-center p-2.5 sm:p-4 md:p-6 overflow-hidden font-sans select-none animate-in fade-in duration-150"
       onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
+        // Bloqueio intencional: NÃO fecha ao clicar fora da tela.
+        // O modal só pode fechar ao clicar no botão de cadastro (Criar Projeto) ou em Cancelar.
+        e.stopPropagation();
       }}
     >
-      <div className="bg-white rounded-2xl sm:rounded-3xl max-w-xl w-full shadow-2xl border border-[#EAECEF] max-h-[92vh] sm:max-h-[88vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-150">
+      <div 
+        className="bg-white rounded-2xl sm:rounded-3xl max-w-xl w-full shadow-2xl border border-[#EAECEF] max-h-[92vh] sm:max-h-[88vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-150"
+        onClick={(e) => e.stopPropagation()}
+      >
         
         {/* Modal Sticky Header */}
         <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#EAECEF] flex items-center justify-between shrink-0 bg-white">
@@ -294,9 +344,11 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
             </div>
           </div>
           <button 
-            onClick={onClose} 
+            type="button"
+            onClick={handleCancel} 
             className="p-1.5 sm:p-2 rounded-xl hover:bg-[#F8F9FA] text-[#94A3B8] hover:text-[#0F172A] transition-colors cursor-pointer"
             aria-label="Fechar"
+            title="Cancelar cadastro"
           >
             <X className="w-5 h-5" />
           </button>
@@ -819,7 +871,7 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
             <div className="flex items-center gap-2.5 ml-auto">
               <button
                 type="button"
-                onClick={onClose}
+                onClick={handleCancel}
                 className="fleetly-btn-secondary py-2 px-3.5 text-xs font-semibold cursor-pointer"
               >
                 Cancelar
