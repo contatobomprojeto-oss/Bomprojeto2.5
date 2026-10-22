@@ -137,9 +137,18 @@ const parseCurrentUrlView = (): ActiveView => {
       return 'retencao_pro';
     }
 
-    // 4. Admin dashboard
-    if (hash === '#admin' || hash === '#admin_dashboard') {
-      return 'admin_dashboard';
+    // 4. Admin dashboard (restrito estritamente a henrique.ferrazms@gmail.com)
+    if (hash === '#admin' || hash === '#admin_dashboard' || viewParam === 'admin') {
+      try {
+        const savedUser = localStorage.getItem('bomprojeto_user');
+        if (savedUser) {
+          const parsed = JSON.parse(savedUser);
+          if (parsed && (parsed.email || '').trim().toLowerCase() === SAAS_OWNER_EMAIL.toLowerCase()) {
+            return 'admin_dashboard';
+          }
+        }
+      } catch {}
+      return 'dashboard';
     }
 
     // 5. Auth callbacks, tokens or explicit dashboard routes
