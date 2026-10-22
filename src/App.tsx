@@ -2117,12 +2117,7 @@ export default function App() {
               {activeView === 'admin_dashboard' && (
                 isFounder ? (
                   <AdminDashboardView
-                    projects={projects.filter(p => 
-                      !globalSearch || 
-                      p.clientName.toLowerCase().includes(globalSearch.toLowerCase()) || 
-                      p.title.toLowerCase().includes(globalSearch.toLowerCase()) ||
-                      p.code.toLowerCase().includes(globalSearch.toLowerCase())
-                    )}
+                    projects={projects}
                     workspaces={workspaces}
                     currentWorkspace={currentWorkspace}
                     currentUser={currentUser}
