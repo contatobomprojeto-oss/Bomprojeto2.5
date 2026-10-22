@@ -224,50 +224,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
         )}
 
-        {/* Workspace Switcher Trigger */}
-        {effectiveCollapsed ? (
-          <div className="my-2 flex justify-center">
-            <button
-              type="button"
-              onClick={onOpenWorkspaceModal}
-              className="w-10 h-10 rounded-xl bg-[#F8F9FA] hover:bg-[#F1F3F4] border border-[#E8EAED] text-[#5F6368] hover:text-[#202124] flex items-center justify-center transition-colors cursor-pointer relative group"
-              aria-label="Alternar workspace"
-            >
-              <Building2 className="w-4 h-4 text-[#5F6368]" />
-              {/* Tooltip */}
-              <div className="absolute left-[calc(100%+12px)] top-1/2 -translate-y-1/2 px-2.5 py-1.5 bg-[#202124] text-white text-xs font-medium rounded-lg shadow-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity z-50 whitespace-nowrap flex flex-col gap-0.5">
-                <span className="font-semibold text-white">
-                  {currentWorkspace?.name || currentUser?.workshopName || 'Gestão de Projetos'}
-                </span>
-                <span className="text-[10px] text-white/70">
-                  {currentWorkspace?.segmentLabel || 'Workspace'} • Clique para alternar
-                </span>
-              </div>
-            </button>
-          </div>
-        ) : (
-          <button
-            type="button"
-            onClick={onOpenWorkspaceModal}
-            className="w-full bg-[#F8F9FA] hover:bg-[#F1F3F4] transition-colors rounded-xl p-2.5 border border-[#E8EAED] flex items-center justify-between cursor-pointer text-left shadow-2xs"
-            title="Clique para gerenciar workspaces e filiais"
-          >
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="w-7 h-7 rounded-lg bg-white border border-[#E8EAED] text-[#5F6368] flex items-center justify-center shrink-0">
-                <Building2 className="w-3.5 h-3.5" />
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-semibold text-[#202124] truncate leading-tight">
-                  {currentWorkspace?.name || currentUser?.workshopName || 'Gestão de Projetos'}
-                </p>
-                <p className="text-[11px] text-[#80868B] truncate leading-tight mt-0.5 font-medium">
-                  {currentWorkspace?.segmentLabel || 'Projetos'}
-                </p>
-              </div>
-            </div>
-            <ChevronsUpDown className="w-3.5 h-3.5 text-[#80868B] shrink-0 ml-1" />
-          </button>
-        )}
+
 
         {/* Quick Action: Novo Projeto (Fleetly Style #111827) */}
         {effectiveCollapsed ? (
