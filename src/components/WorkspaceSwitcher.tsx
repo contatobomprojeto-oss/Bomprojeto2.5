@@ -61,14 +61,15 @@ export const WorkspaceSwitcher: React.FC<WorkspaceSwitcherProps> = ({
         id="workspace-switcher-trigger"
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[#EAECEF] bg-[#F8F9FA] hover:bg-[#F1F5F9] text-left transition-colors cursor-pointer"
+        className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 rounded-xl border border-[#EAECEF] bg-[#F8F9FA] hover:bg-[#F1F5F9] text-left transition-colors cursor-pointer shrink-0 max-w-[125px] sm:max-w-none"
         title="Alternar ambiente ou filial"
       >
         <div className="w-6 h-6 rounded-lg bg-white border border-[#EAECEF] flex items-center justify-center shrink-0 font-medium text-xs shadow-2xs">
           {getSegmentIcon(currentWorkspace?.segment || 'marketing_agency')}
         </div>
 
-        <div className="flex flex-col min-w-0 pr-1 max-w-[140px] sm:max-w-[190px]">
+        {/* Desktop View: Tipo + Cidade + Nome Completo */}
+        <div className="hidden sm:flex flex-col min-w-0 pr-1 max-w-[140px] sm:max-w-[190px]">
           <div className="flex items-center gap-1.5">
             <span className="text-[10px] font-semibold uppercase tracking-wider text-[#0F172A]">
               {currentWorkspace?.type === 'matriz' ? 'Matriz' : currentWorkspace?.type === 'filial' ? 'Filial' : 'Segmento'}
@@ -82,6 +83,11 @@ export const WorkspaceSwitcher: React.FC<WorkspaceSwitcherProps> = ({
           </span>
         </div>
 
+        {/* Mobile View: Nome resumido sem estourar o cabeçalho */}
+        <span className="sm:hidden font-semibold text-xs text-[#0F172A] max-w-[65px] truncate">
+          {currentWorkspace?.name?.split(' ')[0] || 'Matriz'}
+        </span>
+
         <ChevronDown className={`w-3.5 h-3.5 text-[#94A3B8] transition-transform shrink-0 ${
           isOpen ? 'rotate-180' : ''
         }`} />
@@ -89,7 +95,7 @@ export const WorkspaceSwitcher: React.FC<WorkspaceSwitcherProps> = ({
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute left-0 mt-2 w-72 sm:w-80 rounded-2xl bg-white border border-[#EAECEF] shadow-xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+        <div className="absolute left-0 mt-2 w-72 sm:w-80 max-w-[calc(100vw-2rem)] rounded-2xl bg-white border border-[#EAECEF] shadow-xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
           
           {/* Header with Plan Quota */}
           <div className="p-3.5 bg-[#F8F9FA] border-b border-[#EAECEF]">

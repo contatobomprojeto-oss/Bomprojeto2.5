@@ -92,6 +92,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
 }) => {
   const { hideFinancials, toggleHideFinancials } = useFinancialPrivacy();
   const searchRef = useRef<HTMLInputElement>(null);
+  const userMenuRef = useRef<HTMLDivElement>(null);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(Boolean(searchQuery));
@@ -106,6 +107,17 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
     unread: boolean;
     tag: string;
   }>>([]);
+
+  // Close User Menu on click outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Global Keyboard Shortcut: Cmd + K / Ctrl + K to focus search
   useEffect(() => {
@@ -183,9 +195,9 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
               <Menu className="w-5 h-5" />
             </button>
 
-            {/* Logomarca oficial visível no Mobile com as mesmas cores do Desktop */}
-            <div className="flex md:hidden items-center shrink-0 pr-1">
-              <BrandLogo variant="full" size="sm" theme="light" showSubtitle={false} />
+            {/* Logomarca oficial visível no Mobile: Ícone elegante compacto para não estourar o layout */}
+            <div className="flex md:hidden items-center shrink-0">
+              <BrandLogo variant="mark" size="sm" theme="light" />
             </div>
 
             {/* Desktop Sidebar Toggle */}
@@ -274,7 +286,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
             <button
               type="button"
               onClick={() => setIsMobileSearchOpen(true)}
-              className={`sm:hidden p-2 rounded-xl min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors cursor-pointer relative ${
+              className={`sm:hidden p-1.5 rounded-xl min-h-[36px] min-w-[36px] flex items-center justify-center transition-colors cursor-pointer relative shrink-0 ${
                 searchQuery 
                   ? 'bg-orange-50 text-[#F97316] border border-orange-200' 
                   : 'text-[#5F6368] hover:bg-[#F8F9FA]'
@@ -282,9 +294,9 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
               title="Buscar projetos e clientes"
               aria-label="Abrir pesquisa"
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-4 h-4" />
               {searchQuery && (
-                <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#F97316]" />
+                <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-[#F97316]" />
               )}
             </button>
 
@@ -295,23 +307,23 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
                 id="top-header-admin-btn"
                 onClick={onOpenAdminDashboard}
                 title="Área de Administrador • Telemetria, MRR e Acesso Total"
-                className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-xs hover:shadow-md cursor-pointer shrink-0"
+                className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-1 transition-all shadow-xs hover:shadow-md cursor-pointer shrink-0"
               >
-                <ShieldCheck className="w-4 h-4 text-white" />
+                <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white shrink-0" />
                 <span className="hidden sm:inline">Área de Admin</span>
-                <span className="text-[10px] bg-white/25 text-white px-1.5 py-0.2 rounded font-extrabold uppercase">
+                <span className="text-[9px] sm:text-[10px] bg-white/25 text-white px-1.5 py-0.2 rounded font-extrabold uppercase">
                   Admin
                 </span>
               </button>
             )}
 
-            {/* WhatsApp Connection Status Indicator */}
+            {/* WhatsApp Connection Status Indicator - Exibido apenas em telas sm+ (no mobile já está na barra inferior) */}
             <button
               type="button"
               id="top-header-whatsapp-status"
               onClick={onOpenWhatsAppModal || onOpenAiSettings}
               title={whatsappConnected ? "WhatsApp Conectado e Ativo • Clique para Gerenciar" : "Conectar WhatsApp Business • Clique para Ler QR Code"}
-              className={`p-2 sm:px-2.5 sm:py-1.5 rounded-xl sm:rounded-lg border text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer select-none min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 ${
+              className={`hidden sm:flex px-2.5 py-1.5 rounded-lg border text-[11px] font-semibold items-center justify-center gap-1.5 transition-colors cursor-pointer select-none shrink-0 ${
                 whatsappConnected
                   ? 'bg-[#E6F4EA] hover:bg-[#D7EEDF] text-[#137333] border-[#CEEAD6]'
                   : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-300 shadow-2xs'
@@ -320,36 +332,37 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
               {whatsappConnected ? (
                 <>
                   <span className="w-2 h-2 rounded-full bg-[#188038]"></span>
-                  <MessageSquare className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-[#188038] shrink-0" />
+                  <MessageSquare className="w-3.5 h-3.5 text-[#188038] shrink-0" />
                   <span className="whitespace-nowrap hidden md:inline">WhatsApp Ativo</span>
                 </>
               ) : (
                 <>
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                  <MessageSquare className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-emerald-700 shrink-0" />
+                  <MessageSquare className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
                   <span className="whitespace-nowrap hidden sm:inline">Conectar WhatsApp</span>
                 </>
               )}
             </button>
 
-            {/* Financial Privacy Toggle (Ocultar dados financeiros / Modo Blur) */}
-            <FinancialPrivacyToggle
-              id="top-header-financial-privacy"
-              size="sm"
-              variant="default"
-              showLabel={false}
-              className="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0"
-            />
+            {/* Financial Privacy Toggle (Ocultar dados financeiros / Modo Blur) - Exibido em sm+ para não sobrecarregar mobile */}
+            <div className="hidden sm:block shrink-0">
+              <FinancialPrivacyToggle
+                id="top-header-financial-privacy"
+                size="sm"
+                variant="default"
+                showLabel={false}
+              />
+            </div>
 
             {/* Notifications Icon with Fleetly Badge Indicator */}
-            <div className="relative">
+            <div className="relative shrink-0">
               <button 
                 id="top-btn-notifications"
                 onClick={() => {
                   setIsNotificationsOpen(!isNotificationsOpen);
                   if (isUserMenuOpen) setIsUserMenuOpen(false);
                 }}
-                className={`relative p-2 rounded-xl transition-all cursor-pointer border min-h-[40px] min-w-[40px] flex items-center justify-center ${
+                className={`relative p-1.5 sm:p-2 rounded-xl transition-all cursor-pointer border min-h-[36px] min-w-[36px] sm:min-h-[40px] sm:min-w-[40px] flex items-center justify-center ${
                   unreadAlertsCount > 0 
                     ? 'text-red-700 bg-red-50 border-red-200' 
                     : isNotificationsOpen
@@ -360,7 +373,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
               >
                 <Bell className="w-4 h-4 text-[#64748B]" />
                 {totalUnread > 0 && (
-                  <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#111827] text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white">
+                  <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full bg-[#111827] text-white text-[9px] font-bold flex items-center justify-center ring-2 ring-white">
                     {totalUnread}
                   </span>
                 )}
@@ -481,13 +494,13 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
         </div>
 
         {/* User Profile dropdown */}
-        <div className="relative">
+        <div className="relative shrink-0" ref={userMenuRef}>
           <button
             id="top-user-profile-btn"
             onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-            className="flex items-center gap-2 p-1 rounded-lg hover:bg-[#F8F9FA] transition-colors text-left cursor-pointer border border-transparent hover:border-[#E8EAED]"
+            className="flex items-center gap-1.5 sm:gap-2 p-0.5 sm:p-1 rounded-lg hover:bg-[#F8F9FA] transition-colors text-left cursor-pointer border border-transparent hover:border-[#E8EAED] shrink-0"
           >
-            <div className="w-8 h-8 rounded-full bg-[#202124] text-white flex items-center justify-center font-medium text-xs overflow-hidden shrink-0">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#202124] text-white flex items-center justify-center font-medium text-xs overflow-hidden shrink-0">
               {currentUser?.avatarUrl ? (
                 <img src={currentUser.avatarUrl} alt={userName} className="w-full h-full object-cover" />
               ) : (
