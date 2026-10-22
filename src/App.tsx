@@ -230,24 +230,6 @@ export default function App() {
     } catch (e) {
       console.error('Error reading user from localStorage', e);
     }
-    // Se o usuário não executou logout explícito, inicializa autenticado como o Administrador titular
-    const isExplicitLogout = typeof window !== 'undefined' && localStorage.getItem('bomprojeto_logged_out') === 'true';
-    if (!isExplicitLogout) {
-      const defaultAdmin: UserProfile = {
-        id: 'usr-admin-henrique',
-        name: 'Henrique Ferraz',
-        email: SAAS_OWNER_EMAIL,
-        role: 'admin',
-        teamRole: 'admin',
-        plan: 'escala',
-        workshopName: 'Gestão de Projetos Integrada'
-      };
-      try {
-        localStorage.setItem('bomprojeto_user', JSON.stringify(defaultAdmin));
-        localStorage.setItem('bomprojeto_user_email', SAAS_OWNER_EMAIL);
-      } catch {}
-      return defaultAdmin;
-    }
     return null;
   });
 
