@@ -758,15 +758,57 @@ export const NewProjectModal: React.FC<NewProjectModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#0F172A] mb-1.5">
-                Previsão de Entrega
-              </label>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-xs font-semibold text-[#0F172A]">
+                  Tempo de Projeto
+                </label>
+                <span className="text-[10px] text-[#64748B] font-medium">
+                  Previsão: {deliveryDateFormatted}
+                </span>
+              </div>
+
+              {/* Preset Duration Buttons */}
+              <div className="grid grid-cols-5 gap-1 mb-2">
+                {[
+                  { label: '1 Mês', days: 30 },
+                  { label: '2 Meses', days: 60 },
+                  { label: '3 Meses', days: 90 },
+                  { label: '6 Meses', days: 180 },
+                  { label: '12 Meses', days: 365 }
+                ].map(preset => {
+                  const target = new Date();
+                  target.setDate(target.getDate() + preset.days);
+                  const targetYmd = formatToYmd(target);
+                  const isSelected = deliveryDateYmd === targetYmd;
+
+                  return (
+                    <button
+                      key={preset.days}
+                      type="button"
+                      onClick={() => {
+                        const d = new Date();
+                        d.setDate(d.getDate() + preset.days);
+                        setDeliveryDateYmd(formatToYmd(d));
+                      }}
+                      className={`py-1.5 px-0.5 rounded-lg text-[10px] sm:text-[11px] font-semibold transition-all cursor-pointer text-center truncate ${
+                        isSelected 
+                          ? 'bg-[#111827] text-white shadow-xs' 
+                          : 'bg-[#F1F5F9] text-[#475569] hover:bg-[#E2E8F0] hover:text-[#0F172A]'
+                      }`}
+                      title={`Definir prazo para ${preset.label}`}
+                    >
+                      {preset.label}
+                    </button>
+                  );
+                })}
+              </div>
+
               <input
                 type="date"
                 value={deliveryDateYmd}
                 min={todayYmd}
                 onChange={(e) => setDeliveryDateYmd(e.target.value)}
-                className="w-full h-11 px-3.5 text-xs rounded-xl border border-[#EAECEF] bg-[#F8F9FA] focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-900/10 text-[#0F172A] cursor-pointer transition-all"
+                className="w-full h-10 px-3 text-xs rounded-xl border border-[#EAECEF] bg-[#F8F9FA] focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-900/10 text-[#0F172A] cursor-pointer transition-all"
               />
             </div>
           </div>
