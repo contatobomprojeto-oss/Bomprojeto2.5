@@ -14,6 +14,9 @@ export function mapSupabaseUserToProfile(
   const isOwner = email === SAAS_OWNER_EMAIL.toLowerCase();
 
   const userMeta = sbUser.user_metadata || {};
+  const emailUsername = email.split('@')[0] || 'Usuário';
+  const defaultClientName = emailUsername.charAt(0).toUpperCase() + emailUsername.slice(1);
+
   let pendingRole: string | null = null;
   try {
     if (typeof window !== 'undefined') {
@@ -30,24 +33,21 @@ export function mapSupabaseUserToProfile(
 
   return {
     id: sbUser.id,
-    name:
-      extraProfileData?.name ||
-      userMeta.name ||
-      userMeta.full_name ||
-      (isOwner ? 'Henrique Ferraz' : 'Gestor de Projetos'),
+    name: isOwner 
+      ? 'Henrique Ferraz' 
+      : (extraProfileData?.name || userMeta.name || userMeta.full_name || defaultClientName),
     email: email,
     role: assignedRole,
-    teamRole: extraProfileData?.teamRole || (isOwner ? 'admin' : (assignedRole === 'admin' ? 'admin' : 'ceo')),
+    teamRole: isOwner ? 'admin' : (extraProfileData?.teamRole || (assignedRole === 'admin' ? 'admin' : 'ceo')),
     phone: extraProfileData?.phone || userMeta.phone,
-    workshopName:
-      extraProfileData?.workshopName ||
-      userMeta.workshop_name ||
-      (isOwner ? 'Nexus Performance & Automações' : 'Minha Agência'),
+    workshopName: isOwner 
+      ? 'Nexus Performance & Automações' 
+      : (extraProfileData?.workshopName || userMeta.workshop_name || 'Minha Empresa'),
     avatarUrl:
       extraProfileData?.avatarUrl ||
       userMeta.avatar_url ||
       userMeta.picture,
-    plan: extraProfileData?.plan || 'free',
+    plan: isOwner ? 'escala' : (extraProfileData?.plan || 'free'),
     pixKey: extraProfileData?.pixKey,
     pixKeyType: extraProfileData?.pixKeyType,
   };
